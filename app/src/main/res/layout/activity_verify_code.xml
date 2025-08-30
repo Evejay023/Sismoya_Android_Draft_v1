@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:padding="@dimen/padding_xl">
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="@dimen/logo_size_small"
+        android:layout_height="@dimen/logo_size_small"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/sismoya_logo"
+        android:contentDescription="@string/app_name" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_xl"
+        android:text="@string/verify_code"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_display"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto_bold" />
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_marginTop="@dimen/margin_large"
+        android:text="@string/verify_code_desc"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_medium"
+        android:fontFamily="@font/r_regular"
+        android:gravity="center" />
+
+    <EditText
+        android:id="@+id/et_code"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height"
+        android:layout_below="@id/tv_description"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/edittext_background"
+        android:hint="@string/hint_code"
+        android:inputType="number"
+        android:maxLength="6"
+        android:paddingHorizontal="@dimen/padding_medium"
+        android:textColor="@color/text_dark"
+        android:textColorHint="@color/hint_color"
+        android:fontFamily="@font/r_regular"
+        android:gravity="center"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_didnt_receive_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_code"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_large"
+        android:text="@string/didnt_receive_code"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_medium"
+        android:fontFamily="@font/r_medium"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/padding_small" />
+
+    <Button
+        android:id="@+id/btn_verify"
+        style="@style/PrimaryButton"
+        android:layout_below="@id/tv_didnt_receive_code"
+        android:layout_marginTop="@dimen/margin_xl"
+        android:text="@string/verify" />
+
+</RelativeLayout>

@@ -1,9 +1,53 @@
+<!-- res/values/themes.xml - COMPLETE SOLUTION -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
+    <!-- Base application theme -->
     <style name="Base.Theme.WaterRefillDraftV1" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">#35A3FD</item>
+        <item name="colorPrimaryVariant">#2980B9</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSecondary">#35A3FD</item>
+        <item name="colorSecondaryVariant">#2980B9</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="android:statusBarColor">#35A3FD</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
+    <!-- Main app theme -->
     <style name="Theme.WaterRefillDraftV1" parent="Base.Theme.WaterRefillDraftV1" />
+
+    <!-- Splash Theme -->
+    <style name="SplashTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:screenOrientation">portrait</item>
+    </style>
+
+    <!-- Button Styles -->
+    <style name="PrimaryButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@drawable/button_primary</item>
+        <item name="android:textColor">@android:color/white</item>          ← White text on dark
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+
+    <style name="SecondaryButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@drawable/button_secondary</item>
+        <item name="android:textColor">@color/primary_blue</item>           ← Blue text on white
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+
 </resources>

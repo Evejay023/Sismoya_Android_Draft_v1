@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Circle Background -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M60,10 A50,50 0 1,1 60,110 A50,50 0 1,1 60,10 Z"/>
+
+    <!-- Water Drop Shape -->
+    <path
+        android:fillColor="#35A3FD"
+        android:pathData="M60,25 C55,35 45,45 45,60 C45,75 52.5,85 60,85 C67.5,85 75,75 75,60 C75,45 65,35 60,25 Z"/>
+
+    <!-- Text "S" -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M55,55 Q52,52 55,50 Q65,45 65,55 Q68,58 65,60 Q55,65 55,75 Q52,78 55,80 Q65,75 65,65"/>
+
+</vector>

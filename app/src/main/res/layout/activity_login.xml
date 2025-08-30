@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:padding="@dimen/padding_xl">
+
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="@dimen/logo_size_small"
+        android:layout_height="@dimen/logo_size_small"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/sismoya_logo"
+        android:contentDescription="@string/app_name" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_xl"
+        android:text="@string/login"
+        android:textColor="@android:color/white"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto_bold" />
+
+    <!-- Form Container -->
+    <LinearLayout
+        android:id="@+id/form_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
+
+        <!-- Username/Email -->
+        <EditText
+            android:id="@+id/et_username"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:background="@drawable/edittext_background"
+            android:hint="@string/hint_username_email"
+            android:inputType="text"
+            android:paddingHorizontal="@dimen/padding_medium"
+            android:textColor="@color/text_dark"
+            android:textColorHint="@color/hint_color"
+            android:fontFamily="@font/r_regular" />
+
+        <!-- Password -->
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginBottom="@dimen/margin_medium"
+            android:background="@drawable/edittext_background"
+            android:hint="@string/hint_password"
+            android:inputType="textPassword"
+            android:paddingHorizontal="@dimen/padding_medium"
+            android:textColor="@color/text_dark"
+            android:textColorHint="@color/hint_color"
+            android:fontFamily="@font/r_regular" />
+
+        <!-- Forgot Password -->
+        <TextView
+            android:id="@+id/tv_forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginBottom="@dimen/margin_xl"
+            android:text="@string/forgot_password"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_medium"
+            android:fontFamily="@font/r_medium"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/padding_tiny" />
+
+        <!-- Login Button -->
+        <Button
+            android:id="@+id/btn_login"
+            style="@style/PrimaryButton"
+            android:background="@drawable/button_login"
+            android:layout_marginBottom="@dimen/margin_xl"
+            android:text="@string/login" />
+
+        <!-- Register Link -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dont_have_account"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_medium"
+                android:fontFamily="@font/r_regular" />
+
+            <TextView
+                android:id="@+id/tv_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/register"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"
+                android:fontFamily="@font/r_medium"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/padding_tiny" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

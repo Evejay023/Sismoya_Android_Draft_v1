@@ -1,3 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WaterRefillDraftV1</string>
+    <!-- App Info -->
+    <string name="app_name">Sismoya Water</string>
+    <string name="app_tagline">Pure Water Delivery</string>
+
+    <!-- Splash & Launch -->
+    <string name="welcome_message">Welcome to Sismoya Water</string>
+    <string name="clean_water_tagline">Clean, cold, and refreshing water delivered to you</string>
+    <string name="delivery_description">Get fresh water delivered to your doorstep in easy steps.</string>
+
+    <!-- Navigation -->
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="back_to_login">Back To Login</string>
+
+    <!-- Forms -->
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="contact_no">Contact No</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+
+    <!-- Hints -->
+    <string name="hint_username_email">Enter your username/email</string>
+    <string name="hint_password">Enter your password</string>
+    <string name="hint_code">Enter 6-digit code</string>
+
+    <!-- Password Recovery -->
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="forgot_password_title">Forgot Password</string>
+    <string name="forgot_password_desc">Please provide your email address to reset your account password.</string>
+    <string name="verify_code">Verify Code</string>
+    <string name="verify_code_desc">Check your email. A verification code has been sent.\nEnter the code here to continue.</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="reset_password_desc">Create a new password</string>
+    <string name="send_code">Send Code</string>
+    <string name="verify">Verify</string>
+    <string name="didnt_receive_code">Didnt receive code? Resend</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard">Dashboard</string>
+    <string name="choose_delivery">Choose Delivery</string>
+    <string name="select_container_desc">Select your preferred water container size</string>
+    <string name="available_containers">Available Containers</string>
+    <string name="containers">Containers</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="order_placed">Order Placed</string>
+
+    <!-- Account Links -->
+    <string name="already_have_account">Already have an account?</string>
+    <string name="dont_have_account">Dont have an account?</string>
+
+    <!-- Status -->
+    <string name="available">Available</string>
+    <string name="out_of_stock">Out of Stock</string>
+    <string name="logout">Logout</string>
+    <string name="logout_message">Are you sure you want to logout?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!-- Extra -->
+    <string name="get_started">Get Started</string>
+    <string name="get_started_description">Ready to experience pure, refreshing water delivery? Lets begin your journey with Sismoya Water.</string>
+
+
 </resources>

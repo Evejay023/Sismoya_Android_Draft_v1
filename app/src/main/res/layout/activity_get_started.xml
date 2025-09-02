@@ -10,7 +10,7 @@
         android:layout_width="@dimen/logo_size_wid"
         android:layout_height="@dimen/logo_size_ht"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="@dimen/logo_margin_top"
         android:src="@drawable/sismoya_logo"
         android:contentDescription="@string/app_name" />
 

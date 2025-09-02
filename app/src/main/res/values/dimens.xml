@@ -46,6 +46,11 @@
     <dimen name="text_size_title">20sp</dimen>
     <dimen name="text_size_header">24sp</dimen>
     <dimen name="text_size_display">28sp</dimen>
+    
+    
+    <!-- Logo Placement -->
+
+    <dimen name="logo_margin_top">100dp</dimen>
 
 
 

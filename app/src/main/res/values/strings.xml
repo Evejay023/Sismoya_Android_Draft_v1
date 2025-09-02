@@ -7,7 +7,7 @@
     <!-- Splash & Launch -->
     <string name="welcome_message">Welcome to Sismoya Water</string>
     <string name="clean_water_tagline">Clean, cold, and refreshing water delivered to you</string>
-    <string name="delivery_description">Get fresh water delivered to your doorstep in easy steps.</string>
+    <string name="delivery_description">Safe and refreshing drinking water for your  family and community.</string>
 
     <!-- Navigation -->
     <string name="login">Login</string>
@@ -67,7 +67,6 @@
 
     <!-- Extra -->
     <string name="get_started">Get Started</string>
-    <string name="get_started_description">Ready to experience pure, refreshing water delivery? Lets begin your journey with Sismoya Water.</string>
 
 
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Primary Colors from Design -->
-    <color name="primary_blue">#35A3FD</color>
+    <color name="primary_blue">#2D8CBB</color>
     <color name="light_cream">#FDFDFC</color>
 
     <!-- UI Colors -->
@@ -11,6 +11,8 @@
     <color name="success_green">#4CAF50</color>
     <color name="error_red">#F44336</color>
     <color name="warning_orange">#FF9800</color>
+
+    <color name="welcome_mssg">#2D8CBB</color>
 
     <!-- Background Colors -->
     <color name="background_white">#FFFFFF</color>

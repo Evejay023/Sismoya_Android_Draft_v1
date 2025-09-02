@@ -53,6 +53,7 @@ public class GetStartedActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // Close the app when back is pressed on get started screen
+        super.onBackPressed();
         finishAffinity();
     }
 }

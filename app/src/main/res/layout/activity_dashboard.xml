@@ -22,8 +22,8 @@
             android:layout_marginBottom="@dimen/margin_large">
 
             <ImageView
-                android:layout_width="@dimen/logo_size_tiny"
-                android:layout_height="@dimen/logo_size_tiny"
+                android:layout_width="@dimen/logo_size_wid"
+                android:layout_height="@dimen/logo_size_ht"
                 android:src="@drawable/sismoya_logo"
                 android:contentDescription="@string/app_name" />
 

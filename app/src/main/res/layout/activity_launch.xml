@@ -7,91 +7,69 @@
     <!-- Top Logo -->
     <ImageView
         android:id="@+id/iv_logo_top"
-        android:layout_width="@dimen/logo_size_medium"
-        android:layout_height="@dimen/logo_size_medium"
+        android:layout_width="@dimen/logo_size_wid"
+        android:layout_height="@dimen/logo_size_ht"
+        android:layout_marginTop="80dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
         android:src="@drawable/sismoya_logo"
         android:contentDescription="@string/app_name" />
 
-    <!-- Water Container Illustration -->
-    <ImageView
-        android:id="@+id/iv_water_container"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+    <!-- Welcome Message -->
+    <TextView
+        android:id="@+id/tv_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/iv_logo_top"
+        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
+        android:text="Welcome to\nSismoya Water"
+        android:textColor="@color/welcome_mssg"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="center" />
+
+    <!-- Login Button -->
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="268dp"
+        android:layout_height="70dp"
+        android:layout_below="@id/tv_welcome"
+        android:layout_marginTop="120dp"
+        android:layout_centerHorizontal="true"
+        android:text="Login"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:fontFamily="@font/roboto_bold"
+        android:textStyle="bold"
+        />
+
+    <!-- Register Button -->
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="268dp"
+        android:layout_height="70dp"
+        android:layout_below="@id/btn_login"
         android:layout_marginTop="40dp"
-        android:src="@drawable/water_container_illustration"
-        android:contentDescription="Water Container" />
-
-    <!-- Main Title -->
+        android:layout_centerHorizontal="true"
+        android:text="Register"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:fontFamily="@font/roboto_bold"
+        android:textStyle="bold"
+        />
     <TextView
-        android:id="@+id/tv_main_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/iv_water_container"
+        android:layout_below="@id/iv_logo_top"
+        android:layout_marginTop="570dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/margin_xl"
-        android:text="Clean, cold, and refreshing"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_title"
+        android:text=" © 2025 Sismoya"
+        android:textColor="@android:color/black"
+        android:textSize="13sp"
         android:textStyle="bold"
         android:fontFamily="@font/roboto_bold"
         android:gravity="center" />
 
-    <!-- Subtitle -->
-    <TextView
-        android:id="@+id/tv_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_main_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/margin_small"
-        android:text="water delivered to you"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_title"
-        android:textStyle="bold"
-        android:fontFamily="@font/roboto_bold"
-        android:gravity="center" />
-
-    <!-- Description -->
-    <TextView
-        android:id="@+id/tv_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_subtitle"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:text="@string/delivery_description"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_medium"
-        android:fontFamily="@font/r_regular"
-        android:gravity="center"
-        android:alpha="0.9" />
-
-    <!-- Button Container -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginHorizontal="@dimen/margin_xl"
-        android:layout_marginBottom="50dp"
-        android:orientation="vertical">
-
-        <!-- Login Button -->
-        <Button
-            android:id="@+id/btn_login"
-            style="@style/PrimaryButton"
-            android:layout_marginBottom="@dimen/margin_medium"
-            android:text="@string/login" />
-
-        <!-- Register Button -->
-        <Button
-            android:id="@+id/btn_register"
-            style="@style/PrimaryButton"
-            android:text="@string/register" />
-
-    </LinearLayout>
 
 </RelativeLayout>

@@ -22,8 +22,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/margin_xl"
         android:text="@string/verify_code"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_display"
+        android:textColor="@color/primary_blue"
+        android:textSize="26sp"
         android:textStyle="bold"
         android:fontFamily="@font/roboto_bold" />
 
@@ -34,8 +34,8 @@
         android:layout_below="@id/tv_title"
         android:layout_marginTop="@dimen/margin_large"
         android:text="@string/verify_code_desc"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_medium"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
         android:fontFamily="@font/r_regular"
         android:gravity="center" />
 
@@ -61,10 +61,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/et_code"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginTop="4dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
         android:text="@string/didnt_receive_code"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:textSize="@dimen/text_size_medium"
         android:fontFamily="@font/r_medium"
         android:background="?attr/selectableItemBackground"
@@ -75,6 +76,9 @@
         style="@style/PrimaryButton"
         android:layout_below="@id/tv_didnt_receive_code"
         android:layout_marginTop="@dimen/margin_xl"
-        android:text="@string/verify" />
+        android:text="@string/verify"
+        android:textSize="15sp"
+        android:fontFamily="@font/r_medium"
+        />
 
 </RelativeLayout>

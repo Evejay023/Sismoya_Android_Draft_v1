@@ -29,8 +29,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_large"
             android:text="@string/register"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_display"
+            android:textColor="@color/primary_blue"
+            android:textSize="40sp"
             android:textStyle="bold"
             android:fontFamily="@font/roboto_bold" />
 
@@ -40,30 +40,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_title"
-            android:layout_marginTop="@dimen/margin_xl"
+            android:layout_marginTop="33dp"
             android:orientation="vertical">
 
             <!-- First & Last Name Row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="@dimen/margin_medium">
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:orientation="horizontal">
 
                 <!-- First Name -->
                 <EditText
                     android:id="@+id/et_first_name"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/edittext_height"
-                    android:layout_weight="1"
                     android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
                     android:background="@drawable/edittext_background"
+                    android:fontFamily="@font/r_regular"
                     android:hint="@string/first_name"
                     android:inputType="textPersonName"
                     android:paddingHorizontal="@dimen/padding_medium"
                     android:textColor="@color/text_dark"
-                    android:textColorHint="@color/hint_color"
-                    android:fontFamily="@font/r_regular" />
+                    android:textColorHint="@color/hint_color" />
 
                 <!-- Last Name -->
                 <EditText
@@ -72,12 +72,12 @@
                     android:layout_height="@dimen/edittext_height"
                     android:layout_weight="1"
                     android:background="@drawable/edittext_background"
+                    android:fontFamily="@font/r_regular"
                     android:hint="@string/last_name"
                     android:inputType="textPersonName"
                     android:paddingHorizontal="@dimen/padding_medium"
                     android:textColor="@color/text_dark"
-                    android:textColorHint="@color/hint_color"
-                    android:fontFamily="@font/r_regular" />
+                    android:textColorHint="@color/hint_color" />
 
             </LinearLayout>
 
@@ -89,12 +89,12 @@
                 android:layout_height="@dimen/edittext_height"
                 android:layout_marginBottom="@dimen/margin_medium"
                 android:background="@drawable/edittext_background"
+                android:fontFamily="@font/r_regular"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:paddingHorizontal="@dimen/padding_medium"
                 android:textColor="@color/text_dark"
-                android:textColorHint="@color/hint_color"
-                android:fontFamily="@font/r_regular" />
+                android:textColorHint="@color/hint_color" />
 
             <!-- Contact Number -->
             <EditText
@@ -103,26 +103,26 @@
                 android:layout_height="@dimen/edittext_height"
                 android:layout_marginBottom="@dimen/margin_medium"
                 android:background="@drawable/edittext_background"
+                android:fontFamily="@font/r_regular"
                 android:hint="@string/contact_no"
                 android:inputType="phone"
                 android:paddingHorizontal="@dimen/padding_medium"
                 android:textColor="@color/text_dark"
-                android:textColorHint="@color/hint_color"
-                android:fontFamily="@font/r_regular" />
+                android:textColorHint="@color/hint_color" />
 
             <!-- Username -->
             <EditText
                 android:id="@+id/et_username"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/edittext_height"
-                android:layout_marginBottom="@dimen/margin_medium"
+                android:layout_marginBottom="40dp"
                 android:background="@drawable/edittext_background"
+                android:fontFamily="@font/r_regular"
                 android:hint="@string/username"
                 android:inputType="text"
                 android:paddingHorizontal="@dimen/padding_medium"
                 android:textColor="@color/text_dark"
-                android:textColorHint="@color/hint_color"
-                android:fontFamily="@font/r_regular" />
+                android:textColorHint="@color/hint_color" />
 
             <!-- Password -->
             <EditText
@@ -131,12 +131,12 @@
                 android:layout_height="@dimen/edittext_height"
                 android:layout_marginBottom="@dimen/margin_medium"
                 android:background="@drawable/edittext_background"
+                android:fontFamily="@font/r_regular"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:paddingHorizontal="@dimen/padding_medium"
                 android:textColor="@color/text_dark"
-                android:textColorHint="@color/hint_color"
-                android:fontFamily="@font/r_regular" />
+                android:textColorHint="@color/hint_color" />
 
             <!-- Confirm Password -->
             <EditText
@@ -145,19 +145,24 @@
                 android:layout_height="@dimen/edittext_height"
                 android:layout_marginBottom="@dimen/margin_large"
                 android:background="@drawable/edittext_background"
+                android:fontFamily="@font/r_regular"
                 android:hint="@string/confirm_password"
                 android:inputType="textPassword"
                 android:paddingHorizontal="@dimen/padding_medium"
                 android:textColor="@color/text_dark"
-                android:textColorHint="@color/hint_color"
-                android:fontFamily="@font/r_regular" />
+                android:textColorHint="@color/hint_color" />
 
             <!-- Sign Up Button -->
             <Button
                 android:id="@+id/btn_sign_up"
                 style="@style/PrimaryButton"
                 android:layout_marginBottom="@dimen/margin_large"
-                android:text="@string/sign_up" />
+                android:text="@string/sign_up"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/roboto_bold"
+                />
 
             <!-- Login Link -->
             <LinearLayout
@@ -169,23 +174,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/r_regular"
                     android:text="@string/already_have_account"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_medium"
-                    android:fontFamily="@font/r_regular" />
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@string/login"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_medium"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/r_medium"
                     android:background="?attr/selectableItemBackground"
-                    android:padding="@dimen/padding_tiny" />
+                    android:fontFamily="@font/r_medium"
+                    android:padding="@dimen/padding_tiny"
+                    android:text="@string/login"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

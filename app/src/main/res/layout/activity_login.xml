@@ -25,8 +25,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/margin_xl"
         android:text="@string/login"
-        android:textColor="@android:color/white"
-        android:textSize="32sp"
+        android:textColor="@color/primary_blue"
+        android:textSize="40sp"
         android:textStyle="bold"
         android:fontFamily="@font/roboto_bold" />
 
@@ -72,11 +72,11 @@
             android:id="@+id/tv_forgot_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_gravity="center"
             android:layout_marginBottom="@dimen/margin_xl"
             android:text="@string/forgot_password"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_medium"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
             android:fontFamily="@font/r_medium"
             android:background="?attr/selectableItemBackground"
             android:padding="@dimen/padding_tiny" />
@@ -87,7 +87,9 @@
             style="@style/PrimaryButton"
             android:background="@drawable/button_login"
             android:layout_marginBottom="@dimen/margin_xl"
-            android:text="@string/login" />
+            android:text="@string/login"
+            android:fontFamily="@font/roboto_bold"
+            />
 
         <!-- Register Link -->
         <LinearLayout
@@ -100,8 +102,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/dont_have_account"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_medium"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
                 android:fontFamily="@font/r_regular" />
 
             <TextView
@@ -110,8 +112,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="@string/register"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_medium"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/r_medium"
                 android:background="?attr/selectableItemBackground"

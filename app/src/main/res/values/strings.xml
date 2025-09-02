@@ -36,7 +36,10 @@
     <string name="forgot_password_title">Forgot Password</string>
     <string name="forgot_password_desc">Please provide your email address to reset your account password.</string>
     <string name="verify_code">Verify Code</string>
-    <string name="verify_code_desc">Check your email. A verification code has been sent.\nEnter the code here to continue.</string>
+    <string name="verify_code_desc">Check your email. A confirmation code has been sent.
+        Enter the code here to continue.</string>
+
+
     <string name="reset_password">Reset Password</string>
     <string name="reset_password_desc">Create a new password</string>
     <string name="send_code">Send Code</string>

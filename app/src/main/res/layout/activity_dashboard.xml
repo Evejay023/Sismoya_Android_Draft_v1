@@ -1,111 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
-    android:orientation="vertical">
+    android:background="@drawable/gradient_background">
 
-    <!-- Header Section -->
-    <LinearLayout
+    <!-- Fragment Container -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/padding_large"
-        android:background="@android:color/transparent">
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_navigation" />
 
-        <!-- Logo and User Info -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="@dimen/margin_large">
-
-            <ImageView
-                android:layout_width="@dimen/logo_size_wid"
-                android:layout_height="@dimen/logo_size_ht"
-                android:src="@drawable/sismoya_logo"
-                android:contentDescription="@string/app_name" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginStart="@dimen/margin_medium">
-
-                <TextView
-                    android:id="@+id/tv_welcome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Welcome, User!"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/roboto_bold" />
-
-                <TextView
-                    android:id="@+id/tv_user_email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="user@email.com"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_medium"
-                    android:fontFamily="@font/r_regular"
-                    android:alpha="0.8" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- Dashboard Title -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/choose_delivery"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_header"
-            android:textStyle="bold"
-            android:fontFamily="@font/roboto_bold"
-            android:layout_marginBottom="@dimen/margin_small" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/select_container_desc"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_medium"
-            android:fontFamily="@font/r_regular"
-            android:alpha="0.9" />
-
-    </LinearLayout>
-
-    <!-- Containers Section -->
-    <LinearLayout
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/background_white"
-        android:orientation="vertical"
-        android:padding="@dimen/padding_large">
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_nav_background"
+        android:elevation="8dp"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/available_containers"
-            android:textColor="@color/text_dark"
-            android:textSize="@dimen/text_size_title"
-            android:textStyle="bold"
-            android:fontFamily="@font/roboto_bold"
-            android:layout_marginBottom="@dimen/margin_medium" />
-
-        <!-- RecyclerView for containers -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_containers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

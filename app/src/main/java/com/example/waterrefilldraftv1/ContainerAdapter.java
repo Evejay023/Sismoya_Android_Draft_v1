@@ -17,14 +17,14 @@ import java.util.List;
  */
 public class ContainerAdapter extends RecyclerView.Adapter<ContainerAdapter.ContainerViewHolder> {
 
-    private List<DashboardActivity.WaterContainer> containerList;
+    private List<ContainersFragment.WaterContainer> containerList;
     private OnContainerClickListener clickListener;
 
     /**
      * Interface for handling container item clicks
      */
     public interface OnContainerClickListener {
-        void onContainerClick(DashboardActivity.WaterContainer container);
+        void onContainerClick(ContainersFragment.WaterContainer container);
     }
 
     /**
@@ -32,7 +32,7 @@ public class ContainerAdapter extends RecyclerView.Adapter<ContainerAdapter.Cont
      * @param containerList List of water containers
      * @param clickListener Click listener for container items
      */
-    public ContainerAdapter(List<DashboardActivity.WaterContainer> containerList, OnContainerClickListener clickListener) {
+    public ContainerAdapter(List<ContainersFragment.WaterContainer> containerList, OnContainerClickListener clickListener) {
         this.containerList = containerList;
         this.clickListener = clickListener;
     }
@@ -47,7 +47,7 @@ public class ContainerAdapter extends RecyclerView.Adapter<ContainerAdapter.Cont
 
     @Override
     public void onBindViewHolder(@NonNull ContainerViewHolder holder, int position) {
-        DashboardActivity.WaterContainer container = containerList.get(position);
+        ContainersFragment.WaterContainer container = containerList.get(position);
         holder.bind(container, clickListener);
     }
 
@@ -80,16 +80,13 @@ public class ContainerAdapter extends RecyclerView.Adapter<ContainerAdapter.Cont
          * @param container Water container object
          * @param clickListener Click listener for the item
          */
-        public void bind(DashboardActivity.WaterContainer container, OnContainerClickListener clickListener) {
-            // Set container information
+        public void bind(ContainersFragment.WaterContainer container, OnContainerClickListener clickListener) {
             tvName.setText(container.getName());
-            tvCapacity.setText(container.getCapacity());
+            tvCapacity.setText(container.getLiters());
             tvPrice.setText(container.getPrice());
 
-            // Set container image (placeholder for now)
-            ivContainer.setImageResource(R.drawable.ic_water_container);
+            ivContainer.setImageResource(container.getImageResourceId());
 
-            // Set availability status
             if (container.isAvailable()) {
                 tvStatus.setText("Available");
                 tvStatus.setTextColor(itemView.getContext().getResources().getColor(android.R.color.holo_green_dark));
@@ -102,7 +99,6 @@ public class ContainerAdapter extends RecyclerView.Adapter<ContainerAdapter.Cont
                 itemView.setAlpha(0.6f);
             }
 
-            // Set click listener
             itemView.setOnClickListener(v -> {
                 if (clickListener != null) {
                     clickListener.onContainerClick(container);

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
+    android:background="@drawable/bg_gradient_background"
     android:padding="@dimen/padding_xl">
 
     <ImageView
@@ -11,7 +11,7 @@
         android:layout_height="@dimen/logo_size_ht"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/logo_margin_top"
-        android:src="@drawable/sismoya_logo"
+        android:src="@drawable/img_sismoya_logo"
         android:contentDescription="@string/app_name" />
 
 
@@ -53,19 +53,37 @@
             android:textColorHint="@color/hint_color"
             android:fontFamily="@font/r_regular" />
 
-        <!-- Password -->
-        <EditText
-            android:id="@+id/et_password"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/edittext_height"
-            android:layout_marginBottom="@dimen/margin_medium"
-            android:background="@drawable/edittext_background"
-            android:hint="@string/hint_password"
-            android:inputType="textPassword"
-            android:paddingHorizontal="@dimen/padding_medium"
-            android:textColor="@color/text_dark"
-            android:textColorHint="@color/hint_color"
-            android:fontFamily="@font/r_regular" />
+            android:layout_marginBottom="@dimen/margin_medium">
+
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:background="@drawable/edittext_background"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:paddingHorizontal="@dimen/padding_medium"
+                android:paddingEnd="48dp"
+                android:textColor="@color/text_dark"
+                android:textColorHint="@color/hint_color"
+                android:fontFamily="sans-serif" />
+
+            <ImageView
+                android:id="@+id/iv_password_toggle"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/ic_eye_off"
+                android:contentDescription="Toggle password visibility"
+                android:background="?attr/selectableItemBackground"
+                android:padding="4dp" />
+
+        </RelativeLayout>
 
         <!-- Forgot Password -->
         <TextView

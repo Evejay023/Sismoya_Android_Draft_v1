@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    android:background="@drawable/bg_gradient_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,25 +16,216 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="5dp"
+            android:backgroundTint="#FFE4E1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Top Row -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_alignParentLeft="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sismoya Water"
+                            android:textSize="24sp"
+                            android:textColor="#4A90E2"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Welcome,"
+                            android:textSize="14sp"
+                            android:textColor="#666666" />
+
+                        <TextView
+                            android:id="@+id/tv_customer_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chrisha Dalmacio"
+                            android:textSize="16sp"
+                            android:textColor="#333333"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/img_sismoya_logo" />
+                </RelativeLayout>
+
+                <!-- Water Gallons Image -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginBottom="20dp">
+
+                    <ImageView
+                        android:layout_width="200dp"
+                        android:layout_height="120dp"
+                        android:src="@drawable/img_dashboard_center"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
+
+                <!-- Statistics Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_pending_orders"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:textSize="24sp"
+                            android:textColor="#4A90E2"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pending Orders"
+                            android:textSize="10sp"
+                            android:textColor="#666666"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_completed_orders"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="23"
+                            android:textSize="24sp"
+                            android:textColor="#4A90E2"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Completed Orders"
+                            android:textSize="10sp"
+                            android:textColor="#666666"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_cancelled_orders"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:textSize="24sp"
+                            android:textColor="#4A90E2"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cancelled Orders"
+                            android:textSize="10sp"
+                            android:textColor="#666666"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_total_orders"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="25"
+                            android:textSize="24sp"
+                            android:textColor="#4A90E2"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total Orders"
+                            android:textSize="10sp"
+                            android:textColor="#666666"
+                            android:gravity="center" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Orders Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Orders"
+            android:textSize="18sp"
+            android:textColor="#333333"
+            android:textStyle="bold"
+            android:layout_marginBottom="15dp" />
+
+        <!-- Mini Gallon Order -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             app:cardCornerRadius="15dp"
-            app:cardElevation="8dp"
-            android:background="@drawable/card_background">
+            app:cardElevation="3dp"
+            android:backgroundTint="#FFE4E1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="20dp">
+                android:padding="15dp"
+                android:gravity="center_vertical">
 
-                <!-- Logo -->
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="15dp"
-                    android:src="@drawable/sismoya_logo"
-                    android:contentDescription="Logo" />
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/img_mini_container"
+                    android:layout_marginRight="15dp" />
 
-                <!-- Welcome Text -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -42,233 +233,138 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_welcome"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Welcome,\nChrisha Dalmacio"
-                        android:textColor="@color/text_dark"
+                        android:text="Mini Gallon"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:fontFamily="sans-serif-medium" />
+                        android:textColor="#333333"
+                        android:textStyle="bold" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status: Completed"
+                        android:textSize="12sp"
+                        android:textColor="#666666" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="View Details"
+                        android:textSize="12sp"
+                        android:textColor="#4A90E2"
+                        android:textStyle="bold" />
                 </LinearLayout>
-
-                <!-- SISMOYA Logo -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="SIS\nMOYA"
-                    android:textColor="@color/primary_blue"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="center" />
-
             </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-            <!-- Water Container Image -->
+        <!-- Round Gallon Order -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="3dp"
+            android:backgroundTint="#FFE4E1">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="70dp"
-                android:gravity="center"
-                android:padding="20dp">
+                android:orientation="horizontal"
+                android:padding="15dp"
+                android:gravity="center_vertical">
 
                 <ImageView
-                    android:layout_width="150dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/dashboard_water_containers"
-                    android:contentDescription="Water Containers"
-                    android:scaleType="centerInside" />
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/img_round_container"
+                    android:layout_marginRight="15dp" />
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Round Gallon"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status: Completed"
+                        android:textSize="12sp"
+                        android:textColor="#666666" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="View Details"
+                        android:textSize="12sp"
+                        android:textColor="#4A90E2"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
-
         </androidx.cardview.widget.CardView>
 
-        <!-- Order Stats Cards -->
-        <LinearLayout
+        <!-- Slim Gallon Order -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <!-- Current Orders -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="10dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp"
-                android:background="@drawable/card_background">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/tv_current_orders"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="4"
-                        android:textColor="@color/text_dark"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:fontFamily="sans-serif-medium" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Total\nOrders"
-                        android:textColor="@color/text_light"
-                        android:textSize="10sp"
-                        android:fontFamily="sans-serif"
-                        android:gravity="center" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <!-- Pending Orders -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="5dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp"
-                android:background="@drawable/card_background">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/tv_pending_orders"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="5"
-                        android:textColor="@color/text_dark"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:fontFamily="sans-serif-medium" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pending\nOrders"
-                        android:textColor="@color/text_light"
-                        android:textSize="10sp"
-                        android:fontFamily="sans-serif"
-                        android:gravity="center" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <!-- Total Orders -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_weight="1"
-                android:layout_marginStart="10dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp"
-                android:background="@drawable/card_background">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/tv_total_orders"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="4"
-                        android:textColor="@color/text_dark"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:fontFamily="sans-serif-medium" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Total\nOrders"
-                        android:textColor="@color/text_light"
-                        android:textSize="10sp"
-                        android:fontFamily="sans-serif"
-                        android:gravity="center" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
-
-        <!-- Order History Card -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_order_history"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
             app:cardCornerRadius="15dp"
-            app:cardElevation="6dp"
-            android:background="@drawable/card_background"
-            android:foreground="?attr/selectableItemBackground">
+            app:cardElevation="3dp"
+            android:backgroundTint="#FFE4E1">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="20dp">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="15dp"
+                android:gravity="center_vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/img_slim_container"
+                    android:layout_marginRight="15dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="See Order History"
-                    android:textColor="@color/text_dark"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:fontFamily="sans-serif-medium"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <!-- Table lines for design -->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/border_light"
-                    android:layout_marginBottom="8dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Slim Gallon"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
+                        android:textStyle="bold" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/border_light"
-                    android:layout_marginBottom="8dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status: Completed"
+                        android:textSize="12sp"
+                        android:textColor="#666666" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/border_light"
-                    android:layout_marginBottom="8dp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/border_light" />
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="View Details"
+                        android:textSize="12sp"
+                        android:textColor="#4A90E2"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
-
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>
-
 </ScrollView>

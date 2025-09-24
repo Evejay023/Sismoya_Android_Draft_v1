@@ -52,7 +52,7 @@
             android:background="@drawable/button_secondary"
             android:backgroundTint="@null"
             android:text="Back to Dashboard"
-            android:textColor="@color/primary_blue"
+            android:textColor="@color/background_white"
             android:textSize="14sp"
             android:textStyle="bold"
             android:fontFamily="sans-serif-medium" />

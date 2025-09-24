@@ -9,8 +9,9 @@
         <item name="colorSecondaryVariant">#2980B9</item>
         <item name="colorOnSecondary">@android:color/white</item>
         <item name="android:statusBarColor">#35A3FD</item>
-        <item name="android:buttonStyle">@android:style/Widget.Button</item>
+        <item name="android:buttonStyle">@style/PrimaryButton</item>
         <item name="android:windowLightStatusBar">false</item>
+
     </style>
 
     <!-- Main app theme -->
@@ -24,6 +25,18 @@
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:screenOrientation">portrait</item>
     </style>
+
+    <style name="GetStartedButtonStyle">
+        <item name="android:background">@drawable/button_orange</item>
+        <item name="android:backgroundTint">@null</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+
 
     <!-- Button Styles -->
     <style name="PrimaryButton">

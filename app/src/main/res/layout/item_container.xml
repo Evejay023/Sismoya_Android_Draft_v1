@@ -20,7 +20,7 @@
             android:layout_width="@dimen/container_image_size"
             android:layout_height="@dimen/container_image_size"
             android:layout_marginBottom="@dimen/margin_medium"
-            android:src="@drawable/slim_container"
+            android:src="@drawable/img_slim_container"
             android:contentDescription="Water Container" />
 
         <!-- Container Name -->

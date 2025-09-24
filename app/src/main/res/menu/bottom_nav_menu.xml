@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_dashboard"
-        android:icon="@drawable/ic_dashboard"
+        android:icon="@drawable/icon_customer_dashboard"
         android:title="Dashboard" />
 
     <item
         android:id="@+id/nav_containers"
-        android:icon="@drawable/ic_containers"
-        android:title="Containers" />
-
-    <item
-        android:id="@+id/nav_orders"
-        android:icon="@drawable/ic_orders"
+        android:icon="@drawable/icon_customer_orders"
         android:title="Orders" />
 
     <item
+        android:id="@+id/nav_orders"
+        android:icon="@drawable/icon_customer_order_history"
+        android:title="Order History" />
+
+    <item
         android:id="@+id/nav_profile"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/icon_customer_profile"
         android:title="Profile" />
 </menu>

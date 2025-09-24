@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background">
+    android:background="@drawable/bg_gradient_background">
 
     <!-- Top Logo -->
     <ImageView
@@ -11,7 +11,7 @@
         android:layout_height="@dimen/logo_size_ht"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/logo_margin_top"
-        android:src="@drawable/sismoya_logo"
+        android:src="@drawable/img_sismoya_logo"
         android:contentDescription="@string/app_name" />
 
     <!-- Main Title -->
@@ -67,10 +67,9 @@
         android:layout_below="@id/tv_description"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:src="@drawable/get_started_images"
+        android:src="@drawable/img_get_started_images"
         android:contentDescription="Water Container" />
 
-    <!-- Get Started Button -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_get_started"
         android:layout_width="match_parent"
@@ -78,12 +77,12 @@
         android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="32dp"
         android:layout_marginBottom="60dp"
-        android:background="@drawable/button_orange"
-        android:backgroundTint="@null"
+        style="@style/GetStartedButtonStyle"
         android:text="Get Started"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:gravity="center"
+        android:includeFontPadding="false" />
+
+
 
     <!-- Copyright -->
     <TextView

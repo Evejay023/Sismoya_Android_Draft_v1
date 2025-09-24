@@ -32,7 +32,7 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:layout_marginBottom="16dp"
-            android:src="@drawable/round_container"
+            android:src="@drawable/img_round_container"
             android:contentDescription="Container" />
 
         <!-- Container Details -->

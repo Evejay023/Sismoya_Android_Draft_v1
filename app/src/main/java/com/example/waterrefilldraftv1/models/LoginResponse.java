@@ -16,6 +16,7 @@ public class LoginResponse {
     @SerializedName("token")
     private String token;
 
+    // Constructor
     public LoginResponse(boolean error, String message, User user, String token) {
         this.error = error;
         this.message = message;
@@ -23,18 +24,16 @@ public class LoginResponse {
         this.token = token;
     }
 
-    public LoginResponse(boolean error, String message, User user) {
-        this.error = error;
-        this.message = message;
-        this.user = user;
-    }
-
+    // Getters
     public boolean isError() { return error; }
-
-    // ✅ Add this
     public boolean isSuccess() { return !error; }
-
     public String getMessage() { return message; }
     public User getUser() { return user; }
     public String getToken() { return token; }
+
+    // Setters
+    public void setError(boolean error) { this.error = error; }
+    public void setMessage(String message) { this.message = message; }
+    public void setUser(User user) { this.user = user; }
+    public void setToken(String token) { this.token = token; }
 }

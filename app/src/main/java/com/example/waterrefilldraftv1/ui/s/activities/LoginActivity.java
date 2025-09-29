@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,6 +19,8 @@ import com.google.gson.Gson;
 import com.example.waterrefilldraftv1.models.LoginResponse;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private static final String TAG = "LoginActivity";
 
     private EditText etUsername, etPassword;
     private Button btnLogin;
@@ -93,26 +96,60 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResponse response) {
                 progressDialog.dismiss();
-                if (response.isSuccess() && response.getUser() != null) {
-                    Toast.makeText(LoginActivity.this,
-                            "Welcome " + response.getUser().getFirstName() + "!", Toast.LENGTH_SHORT).show();
 
+                Log.d(TAG, "Login Response received");
+                Log.d(TAG, "Success: " + response.isSuccess());
+                Log.d(TAG, "Message: " + response.getMessage());
+                Log.d(TAG, "User: " + (response.getUser() != null ? response.getUser().getFirstName() : "null"));
+
+                // ✅ MAIN FIX: Check success properly and ensure user exists
+                if (response.isSuccess() && response.getUser() != null) {
+
+                    Toast.makeText(LoginActivity.this,
+                            "Welcome " + response.getUser().getFirstName() + "!",
+                            Toast.LENGTH_SHORT).show();
+
+                    // ✅ Navigate to Dashboard with proper data
                     Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+
+                    // Convert user to JSON for passing to dashboard
                     Gson gson = new Gson();
-                    intent.putExtra("user_data", gson.toJson(response.getUser()));
+                    String userJson = gson.toJson(response.getUser());
+                    intent.putExtra("user_data", userJson);
+
+                    Log.d(TAG, "Navigating to Dashboard with user data: " + userJson);
+
+                    // Clear activity stack and start dashboard
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
+
                 } else {
-                    Toast.makeText(LoginActivity.this,
-                            response.getMessage() != null ? response.getMessage() : "Login failed",
-                            Toast.LENGTH_SHORT).show();
+                    // Login failed
+                    String errorMessage = response.getMessage();
+                    if (errorMessage == null || errorMessage.isEmpty()) {
+                        errorMessage = "Login failed. Please check your credentials.";
+                    }
+
+                    Log.w(TAG, "Login failed: " + errorMessage);
+                    Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onError(String error) {
                 progressDialog.dismiss();
-                Toast.makeText(LoginActivity.this, "Login error: " + error, Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Login error: " + error);
+
+                // Show user-friendly error message
+                String userMessage = "Login failed. Please check your internet connection and try again.";
+                if (error.contains("401") || error.contains("Unauthorized")) {
+                    userMessage = "Invalid username/email or password.";
+                } else if (error.contains("500")) {
+                    userMessage = "Server error. Please try again later.";
+                }
+
+                Toast.makeText(LoginActivity.this, userMessage, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -120,7 +157,11 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
-        if (networkManager != null) networkManager.shutdown();
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+        if (networkManager != null) {
+            networkManager.shutdown();
+        }
     }
 }

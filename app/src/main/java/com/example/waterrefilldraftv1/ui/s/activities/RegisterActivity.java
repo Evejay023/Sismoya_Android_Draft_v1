@@ -22,6 +22,8 @@ import com.example.waterrefilldraftv1.network.NetworkManager;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private static final String TAG = "RegisterActivity";
+
     private EditText etFirstName, etLastName, etEmail, etContactNo, etUsername, etPassword, etConfirmPassword;
     private Button btnSignUp;
     private TextView tvLogin;
@@ -120,59 +122,138 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        // Show progress and disable button to prevent double registration
         progressDialog.show();
+        btnSignUp.setEnabled(false);
 
-        User newUser = new User(firstName, lastName, email, contactNo, username, password, "user");
+        User newUser = new User(firstName, lastName, email, contactNo, username, password, "customer");
 
         networkManager.registerUser(newUser, new NetworkManager.ApiCallback<ApiResponse>() {
             @Override
             public void onSuccess(ApiResponse response) {
                 progressDialog.dismiss();
+                btnSignUp.setEnabled(true);
 
-                Log.d("Registration", "Response: " + response.isSuccess() + ", Message: " + response.getMessage());
+                Log.d(TAG, "Registration Response - Success: " + response.isSuccess() + ", Message: " + response.getMessage());
 
+                // ✅ MAIN FIX: Check success properly
                 if (response.isSuccess()) {
-                    Toast.makeText(RegisterActivity.this, "Registration successful! Please login.", Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "Registration successful, navigating to login");
 
+                    Toast.makeText(RegisterActivity.this,
+                            "Registration successful! Redirecting to login...", Toast.LENGTH_LONG).show();
+
+                    // ✅ Navigate to login after successful registration
                     new Handler().postDelayed(() -> {
                         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                         intent.putExtra("prefill_email", email);
+
+                        // Clear activity stack
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                         startActivity(intent);
                         finish();
-                    }, 1500);
+                    }, 2000); // 2 second delay to show success message
+
                 } else {
-                    Toast.makeText(RegisterActivity.this, response.getMessage(), Toast.LENGTH_LONG).show();
+                    // Registration failed - show backend error message
+                    Log.w(TAG, "Registration failed: " + response.getMessage());
+
+                    String errorMessage = response.getMessage();
+                    if (errorMessage == null || errorMessage.isEmpty()) {
+                        errorMessage = "Registration failed. Please try again.";
+                    }
+
+                    Toast.makeText(RegisterActivity.this, errorMessage, Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onError(String error) {
                 progressDialog.dismiss();
-                Log.e("Registration", "Error: " + error);
-                Toast.makeText(RegisterActivity.this, "Registration failed: " + error, Toast.LENGTH_LONG).show();
+                btnSignUp.setEnabled(true);
+
+                Log.e(TAG, "Registration Network Error: " + error);
+
+                // Show user-friendly error message
+                String userMessage = "Registration failed. Please check your internet connection and try again.";
+                if (error.contains("409") || error.contains("Conflict")) {
+                    userMessage = "Email or username already exists. Please use different credentials.";
+                } else if (error.contains("422") || error.contains("Validation")) {
+                    userMessage = "Please check your information and try again.";
+                } else if (error.contains("500")) {
+                    userMessage = "Server error. Please try again later.";
+                }
+
+                Toast.makeText(RegisterActivity.this, userMessage, Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private boolean validateInput(String firstName, String lastName, String email,
                                   String contactNo, String username, String password, String confirmPassword) {
-        if (TextUtils.isEmpty(firstName)) { etFirstName.setError("First name is required"); etFirstName.requestFocus(); return false; }
-        if (TextUtils.isEmpty(lastName)) { etLastName.setError("Last name is required"); etLastName.requestFocus(); return false; }
-        if (TextUtils.isEmpty(email)) { etEmail.setError("Email is required"); etEmail.requestFocus(); return false; }
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) { etEmail.setError("Please enter a valid email"); etEmail.requestFocus(); return false; }
-        if (TextUtils.isEmpty(contactNo)) { etContactNo.setError("Contact number is required"); etContactNo.requestFocus(); return false; }
-        if (TextUtils.isEmpty(username)) { etUsername.setError("Username is required"); etUsername.requestFocus(); return false; }
-        if (TextUtils.isEmpty(password)) { etPassword.setError("Password is required"); etPassword.requestFocus(); return false; }
-        if (password.length() < 6) { etPassword.setError("Password must be at least 6 characters"); etPassword.requestFocus(); return false; }
-        if (TextUtils.isEmpty(confirmPassword)) { etConfirmPassword.setError("Please confirm your password"); etConfirmPassword.requestFocus(); return false; }
-        if (!password.equals(confirmPassword)) { etConfirmPassword.setError("Passwords do not match"); etConfirmPassword.requestFocus(); return false; }
+
+        if (TextUtils.isEmpty(firstName)) {
+            etFirstName.setError("First name is required");
+            etFirstName.requestFocus();
+            return false;
+        }
+        if (TextUtils.isEmpty(lastName)) {
+            etLastName.setError("Last name is required");
+            etLastName.requestFocus();
+            return false;
+        }
+        if (TextUtils.isEmpty(email)) {
+            etEmail.setError("Email is required");
+            etEmail.requestFocus();
+            return false;
+        }
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.setError("Please enter a valid email");
+            etEmail.requestFocus();
+            return false;
+        }
+        if (TextUtils.isEmpty(contactNo)) {
+            etContactNo.setError("Contact number is required");
+            etContactNo.requestFocus();
+            return false;
+        }
+        if (TextUtils.isEmpty(username)) {
+            etUsername.setError("Username is required");
+            etUsername.requestFocus();
+            return false;
+        }
+        if (TextUtils.isEmpty(password)) {
+            etPassword.setError("Password is required");
+            etPassword.requestFocus();
+            return false;
+        }
+        if (password.length() < 6) {
+            etPassword.setError("Password must be at least 6 characters");
+            etPassword.requestFocus();
+            return false;
+        }
+        if (TextUtils.isEmpty(confirmPassword)) {
+            etConfirmPassword.setError("Please confirm your password");
+            etConfirmPassword.requestFocus();
+            return false;
+        }
+        if (!password.equals(confirmPassword)) {
+            etConfirmPassword.setError("Passwords do not match");
+            etConfirmPassword.requestFocus();
+            return false;
+        }
         return true;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
-        if (networkManager != null) networkManager.shutdown();
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+        if (networkManager != null) {
+            networkManager.shutdown();
+        }
     }
 }

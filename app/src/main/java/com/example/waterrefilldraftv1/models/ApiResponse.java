@@ -1,17 +1,33 @@
 package com.example.waterrefilldraftv1.models;
 
+import com.google.gson.annotations.SerializedName;
+
+/**
+ * Generic API response wrapper.
+ * Some APIs return {"error": false, "message": "..."}
+ * others return {"success": true, "message": "..."}.
+ * This class handles both.
+ */
 public class ApiResponse {
-    private boolean success;
+    @SerializedName("error")
+    private Boolean error;
+
+    @SerializedName("success")
+    private Boolean success;
+
+    @SerializedName("message")
     private String message;
 
-    public ApiResponse(boolean success, String message) {
-        this.success = success;
-        this.message = message;
+    public boolean isSuccess() {
+        if (success != null) return success;
+        if (error != null) return !error;
+        return false;
     }
 
-    public boolean isSuccess() { return success; }
     public String getMessage() { return message; }
 
-    public void setSuccess(boolean success) { this.success = success; }
+    // Optional setters
+    public void setError(Boolean error) { this.error = error; }
+    public void setSuccess(Boolean success) { this.success = success; }
     public void setMessage(String message) { this.message = message; }
 }

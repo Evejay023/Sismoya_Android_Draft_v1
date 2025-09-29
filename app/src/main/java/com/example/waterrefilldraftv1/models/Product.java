@@ -6,7 +6,7 @@ public class Product {
     private String type;
     private int liters;
     private double price;
-    private int imageResource;
+    private int imageResource; // ⚠️ check if from API or local drawable
 
     public Product(int id, String name, String type, int liters, double price, int imageResource) {
         this.id = id;

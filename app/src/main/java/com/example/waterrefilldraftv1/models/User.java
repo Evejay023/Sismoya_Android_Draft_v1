@@ -35,7 +35,7 @@ public class User {
     private String updatedAt;
 
     @SerializedName("status")
-    private int status;
+    private String status;
 
     @SerializedName("reset_code")
     private String resetCode;
@@ -63,7 +63,7 @@ public class User {
     // 2️⃣ Full constructor for API login response
     public User(int userId, String firstName, String lastName, String email,
                 String contactNo, String username, String role,
-                String createdAt, String updatedAt, int status,
+                String createdAt, String updatedAt, String status,
                 String resetCode, String resetCodeExp, int resetVerified) {
         this.userId = userId;
         this.firstName = firstName;
@@ -115,7 +115,7 @@ public class User {
     public String getPassword() { return password; }
     public String getCreatedAt() { return createdAt; }
     public String getUpdatedAt() { return updatedAt; }
-    public int getStatus() { return status; }
+    public String getStatus() { return status; }
     public String getResetCode() { return resetCode; }
     public String getResetCodeExp() { return resetCodeExp; }
     public int getResetVerified() { return resetVerified; }

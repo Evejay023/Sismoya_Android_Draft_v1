@@ -7,10 +7,16 @@
     import com.example.waterrefilldraftv1.models.VerifyCodeRequest;
     import com.example.waterrefilldraftv1.models.ResetPasswordRequest;
     import com.example.waterrefilldraftv1.models.User;
+    import com.example.waterrefilldraftv1.models.Address;
+    import com.example.waterrefilldraftv1.models.ProductDto;
 
     import retrofit2.Call;
     import retrofit2.http.Body;
     import retrofit2.http.POST;
+    import retrofit2.http.GET;
+    import retrofit2.http.PUT;
+    import retrofit2.http.DELETE;
+    import retrofit2.http.Path;
 
     public interface ApiService {
 
@@ -34,5 +40,32 @@
         @POST("reset_password")
         Call<ApiResponse> resetPassword(@Body ResetPasswordRequest request);
 
-        // Add more endpoints here (containers, products, orders...) as needed
+        // ================= Additional endpoints based on PHP backend =================
+
+        // Gallons / Products
+        @GET("gallons")
+        Call<java.util.List<ProductDto>> getGallons();
+
+        @GET("gallons/{id}")
+        Call<ProductDto> getGallon(@Path("id") int id);
+
+        // Addresses (requires Authorization header on client)
+        @GET("addresses")
+        Call<java.util.List<Address>> getAddresses();
+
+        @POST("addresses")
+        Call<ApiResponse> createAddress(@Body Address body);
+
+        @PUT("addresses/{id}")
+        Call<ApiResponse> updateAddress(@Path("id") int id, @Body Address body);
+
+        @DELETE("addresses/{id}")
+        Call<ApiResponse> deleteAddress(@Path("id") int id);
+
+        @POST("addresses/{id}/default")
+        Call<ApiResponse> setDefaultAddress(@Path("id") int id);
+
+        // Orders
+        @POST("orders")
+        Call<ApiResponse> placeOrder(@Body com.example.waterrefilldraftv1.models.OrderRequest request);
     }

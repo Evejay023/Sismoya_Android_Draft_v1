@@ -1,5 +1,6 @@
 package com.example.waterrefilldraftv1.ui.s.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -48,11 +49,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                         Toast.makeText(ForgotPasswordActivity.this, response.getMessage(), Toast.LENGTH_LONG).show();
 
                         if (response.isSuccess()) {
-                            // 👉 If success, go to VerifyCodeActivity
-                            // Example navigation:
-                            // Intent intent = new Intent(ForgotPasswordActivity.this, VerifyCodeActivity.class);
-                            // intent.putExtra("email", email);
-                            // startActivity(intent);
+                            // Navigate to verification screen on success
+                            Intent intent = new Intent(ForgotPasswordActivity.this, VerifyCodeActivity.class);
+                            intent.putExtra("email", email);
+                            startActivity(intent);
+                            finish();
                         }
                     }
 

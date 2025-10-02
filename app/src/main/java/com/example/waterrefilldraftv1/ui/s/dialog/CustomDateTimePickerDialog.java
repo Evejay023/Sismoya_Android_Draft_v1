@@ -61,7 +61,7 @@ public class CustomDateTimePickerDialog extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_custom_datetime_picker, container, false);
+        View view = inflater.inflate(R.layout.dialog_datetime_picker, container, false);
 
         initViews(view);
         setupCalendar();

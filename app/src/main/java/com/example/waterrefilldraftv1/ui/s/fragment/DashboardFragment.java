@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.models.User;
+import com.google.gson.Gson;
 
 public class DashboardFragment extends Fragment {
 
@@ -20,7 +21,7 @@ public class DashboardFragment extends Fragment {
     public static DashboardFragment newInstance(User user) {
         DashboardFragment fragment = new DashboardFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_USER, new com.google.gson.Gson().toJson(user));
+        args.putString(ARG_USER, new Gson().toJson(user));
         fragment.setArguments(args);
         return fragment;
     }
@@ -34,12 +35,14 @@ public class DashboardFragment extends Fragment {
 
         if (getArguments() != null) {
             String userJson = getArguments().getString(ARG_USER);
-            currentUser = new com.google.gson.Gson().fromJson(userJson, User.class);
+            currentUser = new Gson().fromJson(userJson, User.class);
         }
 
-        TextView tvWelcome = view.findViewById(R.id.tv_welcome);
-        if (currentUser != null) {
-            tvWelcome.setText("Welcome, " + currentUser.getFirstName() + "!");
+        // FIX: use tv_customer_name instead of tv_welcome
+        TextView tvCustomerName = view.findViewById(R.id.tv_customer_name);
+        if (tvCustomerName != null && currentUser != null) {
+            String fullName = currentUser.getFirstName() + " " + currentUser.getLastName();
+            tvCustomerName.setText(fullName);
         }
 
         return view;

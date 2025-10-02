@@ -10,6 +10,9 @@ import com.example.waterrefilldraftv1.models.ForgotPasswordRequest;
 import com.example.waterrefilldraftv1.models.VerifyCodeRequest;
 import com.example.waterrefilldraftv1.models.ResetPasswordRequest;
 import com.example.waterrefilldraftv1.models.User;
+import com.example.waterrefilldraftv1.models.Address;
+import com.example.waterrefilldraftv1.models.ProductDto;
+import com.example.waterrefilldraftv1.models.OrderRequest;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,6 +39,135 @@ public class NetworkManager {
         String identifier = user.getEmail() != null && !user.getEmail().isEmpty() ?
                 user.getEmail() : user.getUsername();
         loginUser(identifier, user.getPassword(), callback);
+    }
+
+    // =================== Gallons / Products ===================
+    public void fetchGallons(ApiCallback<java.util.List<ProductDto>> callback) {
+        apiService.getGallons().enqueue(new Callback<java.util.List<ProductDto>>() {
+            @Override
+            public void onResponse(Call<java.util.List<ProductDto>> call, Response<java.util.List<ProductDto>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Failed to load products: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<java.util.List<ProductDto>> call, Throwable t) {
+                callback.onError(t.getMessage() == null ? "Network error" : t.getMessage());
+            }
+        });
+    }
+
+    // =================== Addresses ===================
+    public void getAddresses(ApiCallback<java.util.List<Address>> callback) {
+        apiService.getAddresses().enqueue(new Callback<java.util.List<Address>>() {
+            @Override
+            public void onResponse(Call<java.util.List<Address>> call, Response<java.util.List<Address>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Failed to load addresses: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<java.util.List<Address>> call, Throwable t) {
+                callback.onError(t.getMessage() == null ? "Network error" : t.getMessage());
+            }
+        });
+    }
+
+    public void createAddress(Address address, ApiCallback<ApiResponse> callback) {
+        apiService.createAddress(address).enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Create address failed: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                callback.onError(t.getMessage() == null ? "Network error" : t.getMessage());
+            }
+        });
+    }
+
+    public void updateAddress(int id, Address address, ApiCallback<ApiResponse> callback) {
+        apiService.updateAddress(id, address).enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Update address failed: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                callback.onError(t.getMessage() == null ? "Network error" : t.getMessage());
+            }
+        });
+    }
+
+    public void deleteAddress(int id, ApiCallback<ApiResponse> callback) {
+        apiService.deleteAddress(id).enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Delete address failed: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                callback.onError(t.getMessage() == null ? "Network error" : t.getMessage());
+            }
+        });
+    }
+
+    public void setDefaultAddress(int id, ApiCallback<ApiResponse> callback) {
+        apiService.setDefaultAddress(id).enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Set default failed: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                callback.onError(t.getMessage() == null ? "Network error" : t.getMessage());
+            }
+        });
+    }
+
+    // =================== Orders ===================
+    public void placeOrder(OrderRequest request, ApiCallback<ApiResponse> callback) {
+        apiService.placeOrder(request).enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Order failed: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                callback.onError(t.getMessage() == null ? "Network error" : t.getMessage());
+            }
+        });
     }
 
     // Primary login method used by UI (identifier = username or email)

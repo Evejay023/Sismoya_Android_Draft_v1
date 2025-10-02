@@ -7,7 +7,7 @@ android {
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.waterrefilldraftv1"  // ← Your actual package name
+        applicationId "com.example.waterrefilldraftv1"  // make this match your namespace
         minSdk 24
         targetSdk 34
         versionCode 1

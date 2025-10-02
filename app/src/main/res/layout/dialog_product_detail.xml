@@ -132,7 +132,6 @@
                     android:textColor="#333333"
                     android:textStyle="bold"
                     android:gravity="center"
-                    android:background="@drawable/quantity_display_background"
                     android:layout_marginHorizontal="10dp" />
 
                 <ImageButton

@@ -10,6 +10,9 @@ import android.widget.Switch;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.waterrefilldraftv1.R;
+import com.example.waterrefilldraftv1.models.Address;
+import com.example.waterrefilldraftv1.models.ApiResponse;
+import com.example.waterrefilldraftv1.network.NetworkManager;
 
 public class AddAddressActivity extends AppCompatActivity {
 
@@ -17,6 +20,7 @@ public class AddAddressActivity extends AppCompatActivity {
     private EditText etLabel, etAddress;
     private Switch switchDefault;
     private Button btnSave;
+    private NetworkManager networkManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,7 @@ public class AddAddressActivity extends AppCompatActivity {
 
         initViews();
         setupClickListeners();
+        networkManager = new NetworkManager(this);
     }
 
     private void initViews() {
@@ -57,15 +62,34 @@ public class AddAddressActivity extends AppCompatActivity {
             return;
         }
 
-        // In a real app, you would save this to database/preferences
-        // For now, we'll just return the new address
-        String newAddress = label + ": " + address;
+        btnSave.setEnabled(false);
 
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra("new_address", newAddress);
-        setResult(RESULT_OK, resultIntent);
+        Address body = new Address();
+        body.setLabel(label);
+        body.setAddress(address);
+        body.setDefault(switchDefault.isChecked());
 
-        Toast.makeText(this, "Address saved successfully!", Toast.LENGTH_SHORT).show();
-        finish();
+        networkManager.createAddress(body, new NetworkManager.ApiCallback<ApiResponse>() {
+            @Override
+            public void onSuccess(ApiResponse response) {
+                btnSave.setEnabled(true);
+                if (response.isSuccess()) {
+                    String newAddress = label + ": " + address;
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("new_address", newAddress);
+                    setResult(RESULT_OK, resultIntent);
+                    Toast.makeText(AddAddressActivity.this, "Address saved successfully!", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(AddAddressActivity.this, response.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                btnSave.setEnabled(true);
+                Toast.makeText(AddAddressActivity.this, "Save failed: " + error, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

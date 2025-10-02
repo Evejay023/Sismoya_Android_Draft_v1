@@ -30,7 +30,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginBottom="16dp"
-            android:src="@drawable/ic_paypal"
+            android:src="@drawable/img_paypal"
             android:contentDescription="PayPal" />
 
         <TextView

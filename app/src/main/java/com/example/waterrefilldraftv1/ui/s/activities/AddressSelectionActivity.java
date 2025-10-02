@@ -6,11 +6,15 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import com.example.waterrefilldraftv1.R;
+import com.example.waterrefilldraftv1.models.Address;
+import com.example.waterrefilldraftv1.network.NetworkManager;
+import android.widget.Toast;
 
 public class AddressSelectionActivity extends AppCompatActivity {
 
     private ImageView ivBack;
     private CardView cardHomeAddress, cardOfficeAddress, cardAddAddress;
+    private NetworkManager networkManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +23,8 @@ public class AddressSelectionActivity extends AppCompatActivity {
 
         initViews();
         setupClickListeners();
+        networkManager = new NetworkManager(this);
+        loadAddresses();
     }
 
     private void initViews() {
@@ -42,6 +48,28 @@ public class AddressSelectionActivity extends AppCompatActivity {
         cardAddAddress.setOnClickListener(v -> {
             Intent intent = new Intent(this, AddAddressActivity.class);
             startActivityForResult(intent, 200);
+        });
+    }
+
+    private void loadAddresses() {
+        networkManager.getAddresses(new NetworkManager.ApiCallback<java.util.List<Address>>() {
+            @Override
+            public void onSuccess(java.util.List<Address> addresses) {
+                // For now, bind the first two into the two cards; can be improved to RecyclerView
+                if (!addresses.isEmpty()) {
+                    Address a = addresses.get(0);
+                    cardHomeAddress.setOnClickListener(v -> returnSelectedAddress(a.getLabel() + ": " + a.getAddress()));
+                }
+                if (addresses.size() > 1) {
+                    Address a2 = addresses.get(1);
+                    cardOfficeAddress.setOnClickListener(v -> returnSelectedAddress(a2.getLabel() + ": " + a2.getAddress()));
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(AddressSelectionActivity.this, "Failed to load addresses: " + error, Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

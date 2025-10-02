@@ -21,7 +21,7 @@
                 android:id="@+id/iv_back"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_back"
+                android:src="@drawable/ic_back_arrow"
                 android:layout_centerVertical="true"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:padding="2dp" />
@@ -203,7 +203,7 @@
                         android:id="@+id/iv_gallon_image"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/round_gallon"
+                        android:src="@drawable/img_round_container"
                         android:layout_marginRight="10dp" />
 
                     <LinearLayout

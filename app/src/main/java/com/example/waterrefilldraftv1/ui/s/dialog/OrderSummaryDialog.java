@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.waterrefilldraftv1.ui.s.fragment.ContainersFragment;
 import com.example.waterrefilldraftv1.R;
+import com.example.waterrefilldraftv1.models.WaterContainer;
 
 public class OrderSummaryDialog extends DialogFragment {
 
@@ -22,7 +22,7 @@ public class OrderSummaryDialog extends DialogFragment {
     private TextView tvContainerType, tvQuantity, tvTotalAmount;
     private Button btnPlaceOrder;
 
-    public static OrderSummaryDialog newInstance(ContainersFragment.WaterContainer container, int quantity) {
+    public static OrderSummaryDialog newInstance(WaterContainer container, int quantity) {
         OrderSummaryDialog dialog = new OrderSummaryDialog();
         Bundle args = new Bundle();
         args.putString("container_name", container.getName());

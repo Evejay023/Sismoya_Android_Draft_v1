@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.network.NetworkManager;
 import com.google.gson.Gson;
+import com.example.waterrefilldraftv1.utils.SessionStore;
 import com.example.waterrefilldraftv1.models.LoginResponse;
 
 public class LoginActivity extends AppCompatActivity {
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private NetworkManager networkManager;
     private ProgressDialog progressDialog;
     private boolean isPasswordVisible = false;
+    private SessionStore sessionStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) getSupportActionBar().hide();
 
         networkManager = new NetworkManager(this);
+        sessionStore = new SessionStore(this);
 
         etUsername = findViewById(R.id.et_username);
         etPassword = findViewById(R.id.et_password);
@@ -108,6 +111,12 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this,
                             "Welcome " + response.getUser().getFirstName() + "!",
                             Toast.LENGTH_SHORT).show();
+
+                    // Save token & user for protected endpoints
+                    if (response.getToken() != null) {
+                        sessionStore.saveToken(response.getToken());
+                    }
+                    sessionStore.saveUser(response.getUser());
 
                     // ✅ Navigate to Dashboard with proper data
                     Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);

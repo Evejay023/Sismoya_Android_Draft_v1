@@ -33,7 +33,7 @@ public class DashboardActivity extends AppCompatActivity {
                 openFragment(DashboardFragment.newInstance(currentUser));
                 return true;
             } else if (id == R.id.nav_containers) {
-                openFragment(ContainersFragment.newInstance());
+                openFragment(new ContainersFragment());
                 return true;
             } else if (id == R.id.nav_orders) {
                 return true; // Orders placeholder

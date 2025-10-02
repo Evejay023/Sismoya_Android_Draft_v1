@@ -8,6 +8,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.models.CartItem;
+import com.example.waterrefilldraftv1.models.OrderRequest;
+import com.example.waterrefilldraftv1.models.ApiResponse;
+import com.example.waterrefilldraftv1.network.NetworkManager;
 import com.example.waterrefilldraftv1.ui.s.dialog.CustomDateTimePickerDialog;
 import com.example.waterrefilldraftv1.utils.CartManager;
 import java.util.List;
@@ -24,6 +27,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
     private String selectedPickupTime = ""; // For backend (YYYY-MM-DD HH:mm:ss)
     private String selectedPickupDisplay = ""; // For display
     private String selectedPaymentMethod = "Cash on Delivery";
+    private NetworkManager networkManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order_summary);
 
         cartManager = CartManager.getInstance();
+        networkManager = new NetworkManager(this);
 
         initViews();
         setupClickListeners();
@@ -145,9 +150,39 @@ public class OrderSummaryActivity extends AppCompatActivity {
             intent.putExtra("pickup_datetime", selectedPickupTime);
             startActivity(intent);
         } else {
-            // Cash on delivery - go directly to order confirmation
-            showOrderConfirmation();
+            // Cash on delivery - send order to backend
+            submitCodOrder();
         }
+    }
+
+    private void submitCodOrder() {
+        List<CartItem> cartItems = cartManager.getCartItems();
+        java.util.ArrayList<OrderRequest.OrderRequestItem> items = new java.util.ArrayList<>();
+        for (CartItem item : cartItems) {
+            items.add(new OrderRequest.OrderRequestItem(item.getProduct().getId(), item.getQuantity()));
+        }
+
+        // address_id null for now -> backend uses default; we pass pickup time and COD
+        OrderRequest request = new OrderRequest(items, null, selectedPickupTime, "COD");
+
+        btnPlaceOrder.setEnabled(false);
+        networkManager.placeOrder(request, new NetworkManager.ApiCallback<ApiResponse>() {
+            @Override
+            public void onSuccess(ApiResponse response) {
+                btnPlaceOrder.setEnabled(true);
+                if (response.isSuccess()) {
+                    showOrderConfirmation();
+                } else {
+                    android.widget.Toast.makeText(OrderSummaryActivity.this, response.getMessage(), android.widget.Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                btnPlaceOrder.setEnabled(true);
+                android.widget.Toast.makeText(OrderSummaryActivity.this, "Order failed: " + error, android.widget.Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void showOrderConfirmation() {

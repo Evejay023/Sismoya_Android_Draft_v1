@@ -6,29 +6,30 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.waterrefilldraftv1.ui.s.fragment.ContainersFragment;
 import com.example.waterrefilldraftv1.R;
+import com.example.waterrefilldraftv1.models.WaterContainer;  // ✅ use model here
 
 import java.util.List;
 
 public class ContainerOrderAdapter extends RecyclerView.Adapter<ContainerOrderAdapter.ViewHolder> {
 
-    private List<ContainersFragment.WaterContainer> containerList;
+    private List<WaterContainer> containerList;   // ✅ updated
     private OnAddToCartClickListener addToCartListener;
     private OnOrderNowClickListener orderNowListener;
 
     public interface OnAddToCartClickListener {
-        void onAddToCartClick(ContainersFragment.WaterContainer container);
+        void onAddToCartClick(WaterContainer container);   // ✅ updated
     }
 
     public interface OnOrderNowClickListener {
-        void onOrderNowClick(ContainersFragment.WaterContainer container);
+        void onOrderNowClick(WaterContainer container);    // ✅ updated
     }
 
-    public ContainerOrderAdapter(List<ContainersFragment.WaterContainer> containerList,
+    public ContainerOrderAdapter(List<WaterContainer> containerList,
                                  OnAddToCartClickListener addToCartListener,
                                  OnOrderNowClickListener orderNowListener) {
         this.containerList = containerList;
@@ -46,7 +47,7 @@ public class ContainerOrderAdapter extends RecyclerView.Adapter<ContainerOrderAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ContainersFragment.WaterContainer container = containerList.get(position);
+        WaterContainer container = containerList.get(position);   // ✅ updated
         holder.bind(container, addToCartListener, orderNowListener);
     }
 
@@ -72,7 +73,7 @@ public class ContainerOrderAdapter extends RecyclerView.Adapter<ContainerOrderAd
             btnOrderNow = itemView.findViewById(R.id.btn_order_now);
         }
 
-        public void bind(ContainersFragment.WaterContainer container,
+        public void bind(WaterContainer container,
                          OnAddToCartClickListener addToCartListener,
                          OnOrderNowClickListener orderNowListener) {
 

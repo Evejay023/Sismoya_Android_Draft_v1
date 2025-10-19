@@ -105,15 +105,16 @@
             android:textColor="@color/text_dark"
             android:textColorHint="@color/hint_color" />
 
-        <RelativeLayout
+        <!-- Password Container with Toggle Icon -->
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/edittext_height"
-            android:layout_marginBottom="@dimen/margin_small">
+            android:layout_marginBottom="@dimen/margin_medium">
 
             <EditText
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/edittext_height"
+                android:layout_height="match_parent"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:background="@drawable/edittext_background"
@@ -126,47 +127,14 @@
                 android:id="@+id/iv_password_toggle"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical|end"
                 android:layout_marginEnd="12dp"
                 android:src="@drawable/ic_eye_off"
                 android:contentDescription="Toggle password visibility"
                 android:background="?attr/selectableItemBackground"
                 android:padding="4dp" />
+        </FrameLayout>
 
-        </RelativeLayout>
-
-        <!-- Confirm Password Section with Eye Toggle -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
-            android:layout_marginBottom="@dimen/margin_medium">
-
-            <EditText
-                android:id="@+id/et_confirm_password"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edittext_height"
-                android:hint="@string/confirm_password"
-                android:inputType="textPassword"
-                android:background="@drawable/edittext_background"
-                android:paddingHorizontal="@dimen/padding_small"
-                android:paddingEnd="48dp"
-                android:textColor="@color/text_dark"
-                android:textColorHint="@color/hint_color" />
-
-            <ImageView
-                android:id="@+id/iv_confirm_password_toggle"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="12dp"
-                android:src="@drawable/ic_eye_off"
-                android:contentDescription="Toggle confirm password visibility"
-                android:background="?attr/selectableItemBackground"
-                android:padding="4dp" />
-
-        </RelativeLayout>
         <!-- Sign Up Button -->
         <Button
             android:id="@+id/btn_sign_up"

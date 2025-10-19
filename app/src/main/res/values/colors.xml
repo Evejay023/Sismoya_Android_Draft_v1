@@ -17,11 +17,16 @@
     <!-- Background Colors -->
     <color name="background_white">#FFFFFF</color>
     <color name="background_light">#F8F9FA</color>
+    <color name="header_background">#F5F5F5</color>
     <color name="border_light">#E0E0E0</color>
     <color name="border_focus">#35A3FD</color>
 
     <!-- Button Colors -->
     <color name="button_dark">#4A4A4A</color>
     <color name="button_dark_pressed">#3A3A3A</color>
+
+    <!-- Checkout Buttons -->
+    <color name="checkout_orange">#FF8C42</color>
+    <color name="checkout_orange_pressed">#E67A32</color>
 
 </resources>

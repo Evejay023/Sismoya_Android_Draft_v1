@@ -9,64 +9,69 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="16dp"
+        android:background="#00000000">
 
         <!-- Header Card -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="16dp"
             app:cardCornerRadius="20dp"
-            app:cardElevation="5dp"
-            android:backgroundTint="#FFE4E1">
+            app:cardElevation="3dp"
+            android:backgroundTint="#E8F4FF">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="16dp">
 
                 <!-- Top Row -->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp">
+                    android:layout_marginBottom="12dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_alignParentLeft="true">
+                        android:layout_alignParentStart="true">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Sismoya Water"
-                            android:textSize="24sp"
-                            android:textColor="#4A90E2"
+                            android:textSize="22sp"
+                            android:textColor="#2E7DD8"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Welcome,"
-                            android:textSize="14sp"
-                            android:textColor="#666666" />
+                            android:textSize="13sp"
+                            android:textColor="#888888"
+                            android:layout_marginTop="4dp" />
 
                         <TextView
                             android:id="@+id/tv_customer_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Chrisha Dalmacio"
-                            android:textSize="16sp"
+                            android:textSize="15sp"
                             android:textColor="#333333"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:layout_marginTop="2dp" />
                     </LinearLayout>
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_alignParentRight="true"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_alignParentEnd="true"
                         android:src="@drawable/img_sismoya_logo" />
                 </RelativeLayout>
 
@@ -75,11 +80,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_marginBottom="20dp">
+                    android:background="#FFFFFF"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="8dp">
 
                     <ImageView
                         android:layout_width="200dp"
-                        android:layout_height="120dp"
+                        android:layout_height="100dp"
                         android:src="@drawable/img_dashboard_center"
                         android:scaleType="fitCenter" />
                 </LinearLayout>
@@ -89,106 +96,124 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="4">
+                    android:weightSum="4"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp">
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="78dp"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:background="#FFFFFF"
+                        android:padding="12dp"
+                        android:layout_margin="6dp">
 
                         <TextView
                             android:id="@+id/tv_pending_orders"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1"
-                            android:textSize="24sp"
-                            android:textColor="#4A90E2"
+                            android:text="0"
+                            android:textSize="20sp"
+                            android:textColor="#2E7DD8"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Pending Orders"
-                            android:textSize="10sp"
+                            android:textSize="9sp"
                             android:textColor="#666666"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:layout_marginTop="4dp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="78dp"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:background="#FFFFFF"
+                        android:padding="12dp"
+                        android:layout_margin="6dp">
 
                         <TextView
                             android:id="@+id/tv_completed_orders"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="23"
-                            android:textSize="24sp"
-                            android:textColor="#4A90E2"
+                            android:text="0"
+                            android:textSize="20sp"
+                            android:textColor="#2E7DD8"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Completed Orders"
-                            android:textSize="10sp"
+                            android:textSize="9sp"
                             android:textColor="#666666"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:layout_marginTop="4dp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="78dp"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:background="#FFFFFF"
+                        android:padding="12dp"
+                        android:layout_margin="6dp">
 
                         <TextView
                             android:id="@+id/tv_cancelled_orders"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1"
-                            android:textSize="24sp"
-                            android:textColor="#4A90E2"
+                            android:text="0"
+                            android:textSize="20sp"
+                            android:textColor="#2E7DD8"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Cancelled Orders"
-                            android:textSize="10sp"
+                            android:textSize="9sp"
                             android:textColor="#666666"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:layout_marginTop="4dp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="78dp"
+                        android:layout_margin="6dp"
                         android:layout_weight="1"
+                        android:gravity="center"
+                        android:background="#FFFFFF"
                         android:orientation="vertical"
-                        android:gravity="center">
+                        android:padding="12dp">
 
                         <TextView
                             android:id="@+id/tv_total_orders"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="25"
-                            android:textSize="24sp"
-                            android:textColor="#4A90E2"
+                            android:text="0"
+                            android:textColor="#2E7DD8"
+                            android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:gravity="center"
                             android:text="Total Orders"
-                            android:textSize="10sp"
                             android:textColor="#666666"
-                            android:gravity="center" />
+                            android:textSize="9sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -199,32 +224,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Orders"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textColor="#333333"
             android:textStyle="bold"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="8dp" />
 
         <!-- Mini Gallon Order -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="3dp"
-            android:backgroundTint="#FFE4E1">
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            android:backgroundTint="#FFFFFF">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="15dp"
+                android:padding="16dp"
                 android:gravity="center_vertical">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
                     android:src="@drawable/img_mini_container"
-                    android:layout_marginRight="15dp" />
+                    android:layout_marginEnd="16dp" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -236,7 +262,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Mini Gallon"
-                        android:textSize="16sp"
+                        android:textSize="15sp"
                         android:textColor="#333333"
                         android:textStyle="bold" />
 
@@ -244,16 +270,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Status: Completed"
-                        android:textSize="12sp"
-                        android:textColor="#666666" />
+                        android:textSize="11sp"
+                        android:textColor="#666666"
+                        android:layout_marginTop="3dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="View Details"
-                        android:textSize="12sp"
-                        android:textColor="#4A90E2"
-                        android:textStyle="bold" />
+                        android:textSize="11sp"
+                        android:textColor="#2E7DD8"
+                        android:textStyle="bold"
+                        android:layout_marginTop="3dp" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -262,23 +290,23 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="3dp"
-            android:backgroundTint="#FFE4E1">
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            android:backgroundTint="#FFFFFF">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="15dp"
+                android:padding="16dp"
                 android:gravity="center_vertical">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
                     android:src="@drawable/img_round_container"
-                    android:layout_marginRight="15dp" />
+                    android:layout_marginEnd="16dp" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -290,7 +318,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Round Gallon"
-                        android:textSize="16sp"
+                        android:textSize="15sp"
                         android:textColor="#333333"
                         android:textStyle="bold" />
 
@@ -298,16 +326,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Status: Completed"
-                        android:textSize="12sp"
-                        android:textColor="#666666" />
+                        android:textSize="11sp"
+                        android:textColor="#666666"
+                        android:layout_marginTop="3dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="View Details"
-                        android:textSize="12sp"
-                        android:textColor="#4A90E2"
-                        android:textStyle="bold" />
+                        android:textSize="11sp"
+                        android:textColor="#2E7DD8"
+                        android:textStyle="bold"
+                        android:layout_marginTop="3dp" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -316,23 +346,23 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="3dp"
-            android:backgroundTint="#FFE4E1">
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            android:backgroundTint="#FFFFFF">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="15dp"
+                android:padding="16dp"
                 android:gravity="center_vertical">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
                     android:src="@drawable/img_slim_container"
-                    android:layout_marginRight="15dp" />
+                    android:layout_marginEnd="16dp" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -344,7 +374,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Slim Gallon"
-                        android:textSize="16sp"
+                        android:textSize="15sp"
                         android:textColor="#333333"
                         android:textStyle="bold" />
 
@@ -352,16 +382,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Status: Completed"
-                        android:textSize="12sp"
-                        android:textColor="#666666" />
+                        android:textSize="11sp"
+                        android:textColor="#666666"
+                        android:layout_marginTop="3dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="View Details"
-                        android:textSize="12sp"
-                        android:textColor="#4A90E2"
-                        android:textStyle="bold" />
+                        android:textSize="11sp"
+                        android:textColor="#2E7DD8"
+                        android:textStyle="bold"
+                        android:layout_marginTop="3dp" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>

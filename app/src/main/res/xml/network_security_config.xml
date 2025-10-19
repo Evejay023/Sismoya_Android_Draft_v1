@@ -9,7 +9,7 @@
 
     <!-- Trust your specific domain -->
     <domain-config cleartextTrafficPermitted="false">
-        <domain includeSubdomains="true">sismoya.com</domain>
+        <domain includeSubdomains="true">sismoya.bsit3b.site</domain>
         <trust-anchors>
             <certificates src="system" />
         </trust-anchors>

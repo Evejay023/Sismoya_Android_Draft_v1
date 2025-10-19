@@ -1,163 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg_gradient_background">
+    android:background="#E8F4F8">
 
     <!-- Header -->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:padding="15dp">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:background="#F5F5F5">
 
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_back_arrow"
-            android:layout_centerVertical="true"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:padding="2dp" />
+            android:contentDescription="Back"
+            android:layout_marginEnd="12dp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Gallon"
+            android:layout_weight="1"
+            android:text="Shopping Cart"
+            android:textColor="@color/primary_blue"
             android:textSize="20sp"
-            android:textColor="#4A90E2"
             android:textStyle="bold"
-            android:layout_centerInParent="true" />
+            android:fontFamily="sans-serif-medium" />
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:src="@drawable/ic_shopping_cart"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:padding="5dp" />
-    </RelativeLayout>
+            android:contentDescription="Cart Icon" />
 
-    <!-- Cart Items List -->
+    </LinearLayout>
+
+    <!-- Cart Items Container -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="20dp">
+        android:padding="16dp">
 
         <LinearLayout
-            android:id="@+id/ll_cart_items"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@drawable/white_card_background"
+            android:padding="20dp">
 
-            <!-- Cart Item Example -->
-            <androidx.cardview.widget.CardView
+            <LinearLayout
+                android:id="@+id/ll_cart_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="5dp"
-                android:backgroundTint="#FFE4E1">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:src="@drawable/img_round_container"
-                            android:layout_marginRight="15dp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Type: Round Gallon"
-                                android:textSize="14sp"
-                                android:textColor="#333333"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Liters: 20 liters"
-                                android:textSize="12sp"
-                                android:textColor="#666666"
-                                android:layout_marginTop="2dp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Price: 30.00"
-                                android:textSize="12sp"
-                                android:textColor="#666666"
-                                android:layout_marginTop="2dp" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:gravity="center_vertical"
-                                android:layout_marginTop="5dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Quantity:"
-                                    android:textSize="12sp"
-                                    android:textColor="#666666" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text=" 1"
-                                    android:textSize="12sp"
-                                    android:textColor="#333333"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="  Total Amount: 30.00"
-                                    android:textSize="12sp"
-                                    android:textColor="#4A90E2"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                android:orientation="vertical" />
 
         </LinearLayout>
+
     </ScrollView>
 
-    <!-- Checkout Button -->
+    <!-- Bottom Section -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:padding="20dp"
+        android:elevation="8dp">
 
+        <!-- Total Amount -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total Amount:"
+                android:textColor="@color/text_dark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium" />
+
+            <TextView
+                android:id="@+id/tv_total_amount_footer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₱330.00"
+                android:textColor="@color/text_dark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium" />
+
+        </LinearLayout>
+
+        <!-- Items Selected -->
+        <TextView
+            android:id="@+id/tv_items_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2 items selected"
+            android:textColor="@color/text_light"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Checkout Button -->
         <Button
             android:id="@+id/btn_checkout"
-            style="@style/PrimaryButton"
-            android:text="Proceed to Checkout" />
-
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/button_checkout"
+            android:backgroundTint="@null"
+            android:text="Checkout"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
+            android:drawableEnd="@drawable/ic_checkout_arrow"
+            android:drawablePadding="8dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp" />
 
     </LinearLayout>
 

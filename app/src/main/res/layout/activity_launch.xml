@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/iv_logo_top"
-        android:layout_marginTop="570dp"
+        android:layout_marginTop="560dp"
         android:layout_centerHorizontal="true"
         android:text=" © 2025 Sismoya"
         android:textColor="@android:color/black"

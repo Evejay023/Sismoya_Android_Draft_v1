@@ -21,7 +21,7 @@
 
         <!-- Splash Screen -->
         <activity
-            android:name=".ui.s.activities.SplashActivity"
+            android:name=".Customer.UserInterface.activities.SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme"
             android:screenOrientation="portrait">
@@ -32,19 +32,30 @@
         </activity>
 
         <!-- Authentication Flow -->
-        <activity android:name=".ui.s.activities.GetStartedActivity" android:exported="false" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.s.activities.LaunchActivity" android:exported="false" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.s.activities.LoginActivity" android:exported="false" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.s.activities.RegisterActivity" android:exported="false" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.s.activities.ForgotPasswordActivity" android:exported="false" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.s.activities.VerifyCodeActivity" android:exported="false" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.s.activities.ResetPasswordActivity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".Customer.UserInterface.activities.GetStartedActivity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".Customer.UserInterface.activities.LaunchActivity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".Customer.UserInterface.activities.LoginActivity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".Customer.UserInterface.activities.RegisterActivity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".Customer.UserInterface.activities.ForgotPasswordActivity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".Customer.UserInterface.activities.VerifyCodeActivity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".Customer.UserInterface.activities.ResetPasswordActivity" android:exported="false" android:screenOrientation="portrait"/>
 
 
         <!-- Main Dashboard -->
-        <activity android:name=".ui.s.activities.DashboardActivity"
+        <activity android:name=".Customer.UserInterface.activities.DashboardActivity"
             android:exported="true"
             android:screenOrientation="portrait"/>
+
+        <!-- Cart -->
+        <activity android:name=".Customer.UserInterface.activities.CartActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+
+        <!-- Order Flow -->
+        <activity android:name=".Customer.UserInterface.activities.AddressSelectionActivity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".Customer.UserInterface.activities.OrderSummaryActivity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".Customer.UserInterface.activities.PaymentMethodActivity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".Customer.UserInterface.activities.OrderConfirmationActivity" android:exported="false" android:screenOrientation="portrait"/>
 
 
     </application>

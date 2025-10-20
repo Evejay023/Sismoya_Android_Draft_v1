@@ -40,7 +40,7 @@ public class ContainersFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_containers, container, false);
+        View view = inflater.inflate(R.layout.customer_fragment_containers, container, false);
 
         initViews(view);
         cartManager = CartManager.getInstance();
@@ -145,7 +145,7 @@ public class ContainersFragment extends Fragment {
     private void showProductDialog(Product product) {
         Dialog dialog = new Dialog(requireContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_product_detail);
+        dialog.setContentView(R.layout.customer_dialog_product_detail);
         dialog.setCancelable(true);
 
         ImageView ivClose = dialog.findViewById(R.id.iv_close);

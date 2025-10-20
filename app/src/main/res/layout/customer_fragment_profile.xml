@@ -52,32 +52,83 @@
                 android:orientation="vertical"
                 android:paddingBottom="20dp">
 
-                <TextView
-                    android:id="@+id/tv_user_name"
-                    android:layout_width="wrap_content"
+                <!-- Name row with edit button -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Chrisha Dalmacio"
-                    android:textColor="#1A1A1A"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/tv_user_contact"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="+639123456789"
-                    android:textColor="#757575"
-                    android:textSize="14sp"
-                    android:layout_marginTop="6dp" />
+                    <TextView
+                        android:id="@+id/tv_user_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Chrisha Dalmacio"
+                        android:textColor="#1A1A1A"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_user_email"
-                    android:layout_width="wrap_content"
+                    <ImageButton
+                        android:id="@+id/ib_edit_name"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="Edit name"
+                        android:src="@android:drawable/ic_menu_edit" />
+                </LinearLayout>
+
+                <!-- Contact row with edit button -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="dalmaciochrisha@gmail.com"
-                    android:textColor="#757575"
-                    android:textSize="14sp"
-                    android:layout_marginTop="4dp" />
+                    android:orientation="horizontal"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_user_contact"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="+639123456789"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
+
+                    <ImageButton
+                        android:id="@+id/ib_edit_contact"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="Edit contact"
+                        android:src="@android:drawable/ic_menu_edit" />
+                </LinearLayout>
+
+                <!-- Email row with edit button -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_user_email"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="dalmaciochrisha@gmail.com"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
+
+                    <ImageButton
+                        android:id="@+id/ib_edit_email"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="Edit email"
+                        android:src="@android:drawable/ic_menu_edit" />
+                </LinearLayout>
 
             </LinearLayout>
 

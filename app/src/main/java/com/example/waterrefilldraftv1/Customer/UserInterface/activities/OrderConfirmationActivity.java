@@ -14,7 +14,7 @@ public class OrderConfirmationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_confirmation);
+        setContentView(R.layout.customer_activity_order_confirmation);
 
         initViews();
         setupClickListeners();
@@ -36,6 +36,7 @@ public class OrderConfirmationActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // Override back press to close the activity
+        super.onBackPressed();
         finish();
     }
 }

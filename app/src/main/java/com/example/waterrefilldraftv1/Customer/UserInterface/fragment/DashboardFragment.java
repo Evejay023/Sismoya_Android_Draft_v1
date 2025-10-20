@@ -12,15 +12,13 @@ import androidx.fragment.app.Fragment;
 import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.Customer.models.User;
 import com.example.waterrefilldraftv1.Customer.models.OrderStats;
-import com.example.waterrefilldraftv1.Customer.models.OrderOverview;
 import com.example.waterrefilldraftv1.Customer.network.ApiService;
 import com.example.waterrefilldraftv1.Customer.network.RetrofitClient;
 import com.google.gson.Gson;
-import java.util.List;
+
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,7 +42,7 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View view = inflater.inflate(R.layout.customer_fragment_dashboard, container, false);
 
         if (getArguments() != null) {
             String userJson = getArguments().getString(ARG_USER);

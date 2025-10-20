@@ -19,7 +19,7 @@ public class AddressSelectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_address_selection);
+        setContentView(R.layout.customer_activity_address_selection);
 
         initViews();
         setupClickListeners();

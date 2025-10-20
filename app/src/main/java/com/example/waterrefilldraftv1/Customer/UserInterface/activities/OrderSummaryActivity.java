@@ -38,7 +38,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_order_summary);
+        setContentView(R.layout.customer_dialog_order_summary);
 
         cartManager = CartManager.getInstance();
         networkManager = new NetworkManager(this);

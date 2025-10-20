@@ -48,7 +48,7 @@ public class OrderSummaryDialog extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_order_summary, container, false);
+        View view = inflater.inflate(R.layout.customer_dialog_order_summary, container, false);
 
         initViews(view);
         setupOrderData();

@@ -49,7 +49,7 @@ public class CartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
+        setContentView(R.layout.customer_activity_cart);
 
         cartManager = CartManager.getInstance();
         directCheckout = getIntent().getBooleanExtra("direct_checkout", false);
@@ -125,7 +125,7 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private View createCartItemView(CartItem cartItem, int serverCartItemId) {
-        View itemView = LayoutInflater.from(this).inflate(R.layout.dialog_item_container_order, null);
+        View itemView = LayoutInflater.from(this).inflate(R.layout.customer_dialog_item_container_order, null);
 
         CheckBox cbSelectItem = itemView.findViewById(R.id.cb_select_item);
         ImageView ivProductImage = itemView.findViewById(R.id.iv_product_image);

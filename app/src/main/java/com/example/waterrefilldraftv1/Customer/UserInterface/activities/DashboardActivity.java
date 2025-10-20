@@ -19,7 +19,7 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.customer_activity_dashboard);
 
         String userJson = getIntent().getStringExtra("user_data");
         if (userJson != null) {

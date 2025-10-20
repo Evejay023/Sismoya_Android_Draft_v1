@@ -35,6 +35,7 @@ public class ProfileFragment extends Fragment {
 
     private TextView tvUserName, tvUserContact, tvUserEmail;
     private LinearLayout llOrders, llAddress, llChangePassword, llLogout;
+    private View ibEditName, ibEditEmail, ibEditContact;
     private SharedPreferences sharedPreferences;
     private Gson gson = new Gson();
 
@@ -67,7 +68,7 @@ public class ProfileFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.customer_fragment_profile, container, false);
 
         tvUserName = view.findViewById(R.id.tv_user_name);
         tvUserContact = view.findViewById(R.id.tv_user_contact);
@@ -77,6 +78,10 @@ public class ProfileFragment extends Fragment {
         llAddress = view.findViewById(R.id.ll_address);
         llChangePassword = view.findViewById(R.id.ll_change_password);
         llLogout = view.findViewById(R.id.ll_logout);
+
+        ibEditName = view.findViewById(R.id.ib_edit_name);
+        ibEditEmail = view.findViewById(R.id.ib_edit_email);
+        ibEditContact = view.findViewById(R.id.ib_edit_contact);
 
         sharedPreferences = requireContext().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
 
@@ -247,13 +252,57 @@ public class ProfileFragment extends Fragment {
         llOrders.setOnClickListener(v ->
                 Toast.makeText(requireContext(), "Orders screen coming soon!", Toast.LENGTH_SHORT).show());
 
-        llAddress.setOnClickListener(v ->
-                Toast.makeText(requireContext(), "My Address screen coming soon!", Toast.LENGTH_SHORT).show());
+        llAddress.setOnClickListener(v -> openAddressSelection());
 
-        llChangePassword.setOnClickListener(v ->
-                Toast.makeText(requireContext(), "Change Password screen coming soon!", Toast.LENGTH_SHORT).show());
+        llChangePassword.setOnClickListener(v -> openChangePassword());
 
         llLogout.setOnClickListener(v -> logoutUser());
+
+        if (ibEditName != null) ibEditName.setOnClickListener(v -> openEditNameDialog());
+        if (ibEditEmail != null) ibEditEmail.setOnClickListener(v -> openEditEmailDialog());
+        if (ibEditContact != null) ibEditContact.setOnClickListener(v -> openEditContactDialog());
+    }
+
+    private void openAddressSelection() {
+        try {
+            Intent intent = new Intent(requireContext(), com.example.waterrefilldraftv1.Customer.UserInterface.activities.AddressSelectionActivity.class);
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(requireContext(), "Address screen unavailable", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void openChangePassword() {
+        try {
+            Intent intent = new Intent(requireContext(), com.example.waterrefilldraftv1.Customer.UserInterface.activities.ChangePasswordActivity.class);
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(requireContext(), "Change Password screen unavailable", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void openEditNameDialog() {
+        showSimpleDialog(R.layout.customer_dialog_update_name);
+    }
+
+    private void openEditEmailDialog() {
+        showSimpleDialog(R.layout.customer_dialog_update_email);
+    }
+
+    private void openEditContactDialog() {
+        showSimpleDialog(R.layout.customer_dialog_update_contact);
+    }
+
+    private void showSimpleDialog(int layoutRes) {
+        android.app.Dialog dialog = new android.app.Dialog(requireContext());
+        dialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+        dialog.setContentView(layoutRes);
+        dialog.setCancelable(true);
+        android.view.View btnClose = dialog.findViewById(R.id.btn_close);
+        if (btnClose != null) {
+            btnClose.setOnClickListener(v -> dialog.dismiss());
+        }
+        dialog.show();
     }
 
     private void logoutUser() {

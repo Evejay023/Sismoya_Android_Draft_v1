@@ -1,138 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/bg_gradient_background"
-    android:padding="20dp">
+    android:padding="16dp"
+    tools:context=".Customer.UserInterface.activities.AddressSelectionActivity">
 
-    <!-- Header -->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_back_arrow"
-            android:layout_centerVertical="true"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:padding="2dp" />
+            android:contentDescription="Back" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Address Selection"
-            android:textSize="18sp"
-            android:textColor="#4A90E2"
+            android:text="Select Address"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_centerInParent="true" />
-    </RelativeLayout>
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp" />
 
-    <!-- Home Address -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_home_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="3dp"
-        android:backgroundTint="#FFE4E1">
-
-        <LinearLayout
+        <!-- RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_addresses"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/background_white"
-            android:padding="20dp">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:overScrollMode="always"
+            android:scrollbars="vertical"
+            android:clipToPadding="false"
+            android:paddingBottom="80dp" />
+    </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Home"
-                android:textSize="16sp"
-                android:textColor="#333333"
-                android:textStyle="bold"
-                android:layout_marginBottom="5dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Address: 1st Saint St, Bagong Bario..."
-                android:textSize="12sp"
-                android:textColor="#666666" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <!-- Office Address -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_office_address"
-        android:layout_width="match_parent"
+    <!-- Floating Add Button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_address"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="3dp"
-        android:backgroundTint="#FFE4E1">
+        android:src="@drawable/ic_plus"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="Add Address" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/background_white"
-            android:padding="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Office"
-                android:textSize="16sp"
-                android:textColor="#333333"
-                android:textStyle="bold"
-                android:layout_marginBottom="5dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Address: University of Celocan City"
-                android:textSize="12sp"
-                android:textColor="#666666" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <!-- Add New Address -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_add_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="3dp"
-        android:backgroundTint="#FFE4E1">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="20dp"
-            android:background="@color/background_white"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_plus"
-                android:layout_marginRight="15dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add New Address"
-                android:textSize="16sp"
-                android:textColor="#4A90E2"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

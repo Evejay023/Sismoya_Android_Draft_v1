@@ -12,7 +12,7 @@ import com.example.waterrefilldraftv1.Customer.UserInterface.fragment.Containers
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
-public class DashboardActivity extends AppCompatActivity {
+public class CustomerDashboardActivity extends AppCompatActivity {
 
     private User currentUser;
 

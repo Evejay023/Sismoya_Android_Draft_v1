@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/fragment_to_deliver.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_white">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:background="@color/header_background">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To Deliver"
+            android:textSize="16sp"
+            android:textColor="@color/primary_blue"
+            android:fontFamily="@font/r_regular"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To Deliver"
+            android:textSize="24sp"
+            android:textColor="@color/primary_blue"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/tv_pending_deliveries"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pending Deliveries: 11"
+            android:textSize="14sp"
+            android:textColor="@color/primary_blue"
+            android:fontFamily="@font/r_regular"
+            android:layout_marginTop="12dp"/>
+    </LinearLayout>
+
+    <!-- Delivery Orders List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_delivery_orders"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="16dp"
+        android:clipToPadding="false"/>
+
+</LinearLayout>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.waterrefilldraftv1.Login_Customer_and_Riders.LoginActivity;
 import com.example.waterrefilldraftv1.R;
 
 /**
@@ -14,12 +15,12 @@ import com.example.waterrefilldraftv1.R;
  */
 public class LaunchActivity extends AppCompatActivity {
 
-    private Button btnLogin, btnRegister;
+    private Button btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launch);
+        setContentView(R.layout.global_activity_launch);
 
         // Hide action bar for clean look
         if (getSupportActionBar() != null) {
@@ -33,9 +34,11 @@ public class LaunchActivity extends AppCompatActivity {
     /**
      * Initialize UI components
      */
+
+
     private void initViews() {
         btnLogin = findViewById(R.id.btn_login);
-        btnRegister = findViewById(R.id.btn_register);
+
     }
 
     /**
@@ -48,10 +51,6 @@ public class LaunchActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Navigate to Register screen
-        btnRegister.setOnClickListener(v -> {
-            Intent intent = new Intent(LaunchActivity.this, RegisterActivity.class);
-            startActivity(intent);
-        });
+
     }
 }

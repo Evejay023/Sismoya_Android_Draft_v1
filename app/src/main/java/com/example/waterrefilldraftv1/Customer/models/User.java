@@ -48,6 +48,10 @@ public class User {
 
     // =================== CONSTRUCTORS ===================
 
+    // ✅ Default constructor
+    public User() {
+    }
+
     // ✅ Constructor for registration (used in RegisterActivity)
     public User(String firstName, String lastName, String email, String contactNo, String password) {
         this.firstName = firstName;
@@ -98,4 +102,39 @@ public class User {
     public String getResetCode() { return resetCode; }
     public String getResetCodeExp() { return resetCodeExp; }
     public int getResetVerified() { return resetVerified; }
+
+    // =================== SETTERS ===================
+    public void setUserId(int userId) { this.userId = userId; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+    public void setEmail(String email) { this.email = email; }
+    public void setContactNo(String contactNo) { this.contactNo = contactNo; }
+    public void setUsername(String username) { this.username = username; }
+    public void setRole(String role) { this.role = role; }
+    public void setPassword(String password) { this.password = password; }
+    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
+    public void setUpdatedAt(String updatedAt) { this.updatedAt = updatedAt; }
+    public void setStatus(String status) { this.status = status; }
+    public void setResetCode(String resetCode) { this.resetCode = resetCode; }
+    public void setResetCodeExp(String resetCodeExp) { this.resetCodeExp = resetCodeExp; }
+    public void setResetVerified(int resetVerified) { this.resetVerified = resetVerified; }
+
+    // =================== UTILS ===================
+    public String getFullName() {
+        String f = firstName != null ? firstName : "";
+        String l = lastName != null ? lastName : "";
+        return (f + " " + l).trim();
+    }
+
+    // ✅ Convenience method for compatibility with fragments
+    public String getName() {
+        // Safely return full name if available, else fallback to username
+        String fullName = getFullName();
+        if (fullName != null && !fullName.isEmpty()) {
+            return fullName;
+        }
+        return (username != null && !username.isEmpty()) ? username : "Customer";
+    }
+
+
 }

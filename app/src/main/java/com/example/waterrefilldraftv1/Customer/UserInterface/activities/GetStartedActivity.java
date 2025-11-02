@@ -19,7 +19,7 @@ public class GetStartedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_started);
+        setContentView(R.layout.global_activity_get_started);
 
         // Hide action bar for clean look
         if (getSupportActionBar() != null) {

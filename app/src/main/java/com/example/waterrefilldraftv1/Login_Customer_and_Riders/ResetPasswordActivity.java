@@ -1,4 +1,4 @@
-package com.example.waterrefilldraftv1.Customer.UserInterface.activities;
+package com.example.waterrefilldraftv1.Login_Customer_and_Riders;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -11,8 +11,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.waterrefilldraftv1.R;
-import com.example.waterrefilldraftv1.Customer.models.ApiResponse;
-import com.example.waterrefilldraftv1.Customer.network.NetworkManager;
+import com.example.waterrefilldraftv1.Global.network.ApiResponse;
+import com.example.waterrefilldraftv1.Global.network.NetworkManager;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 

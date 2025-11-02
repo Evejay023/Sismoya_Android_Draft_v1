@@ -2,7 +2,6 @@ package com.example.waterrefilldraftv1.Customer.UserInterface.activities;
 
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,14 +12,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.waterrefilldraftv1.R;
-import com.example.waterrefilldraftv1.Customer.models.ApiResponse;
-import com.example.waterrefilldraftv1.Customer.models.RegisterRequest;
-import com.example.waterrefilldraftv1.Customer.network.ApiService;
-import com.example.waterrefilldraftv1.Customer.network.NetworkManager;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.example.waterrefilldraftv1.Global.network.ApiResponse;
+import com.example.waterrefilldraftv1.Global.network.NetworkManager;
 
 public class RegisterActivity extends AppCompatActivity {
 

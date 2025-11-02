@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.waterrefilldraftv1.R;
-import com.example.waterrefilldraftv1.Customer.UserInterface.activities.DashboardActivity;
+import com.example.waterrefilldraftv1.Customer.UserInterface.activities.CustomerDashboardActivity;
 
 public class OrderPlacedDialog extends DialogFragment {
 
@@ -32,7 +32,7 @@ public class OrderPlacedDialog extends DialogFragment {
             dismiss();
 
             // Optional: return user to dashboard
-            Intent intent = new Intent(requireContext(), DashboardActivity.class);
+            Intent intent = new Intent(requireContext(), CustomerDashboardActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             requireActivity().finish();

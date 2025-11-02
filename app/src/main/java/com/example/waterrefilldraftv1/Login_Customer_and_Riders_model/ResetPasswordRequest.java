@@ -1,4 +1,4 @@
-package com.example.waterrefilldraftv1.Customer.models;
+package com.example.waterrefilldraftv1.Login_Customer_and_Riders_model;
 
 import com.google.gson.annotations.SerializedName;
 

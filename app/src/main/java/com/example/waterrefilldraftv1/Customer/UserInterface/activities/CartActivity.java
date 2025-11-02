@@ -11,12 +11,13 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.waterrefilldraftv1.Global.network.ApiResponse;
 import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.Customer.models.CartItem;
 import com.example.waterrefilldraftv1.Customer.models.WaterContainer;
 import com.example.waterrefilldraftv1.Customer.models.ServerCartItem;
-import com.example.waterrefilldraftv1.Customer.network.ApiService;
-import com.example.waterrefilldraftv1.Customer.network.RetrofitClient;
+import com.example.waterrefilldraftv1.Global.network.ApiService;
+import com.example.waterrefilldraftv1.Global.network.RetrofitClient;
 import com.example.waterrefilldraftv1.Customer.UserInterface.dialog.OrderSummaryDialog;
 import com.example.waterrefilldraftv1.Customer.utils.CartManager;
 
@@ -168,11 +169,11 @@ public class CartActivity extends AppCompatActivity {
             if (token == null) { Toast.makeText(this, "Login required", Toast.LENGTH_SHORT).show(); return; }
             Map<String, Integer> body = new HashMap<>();
             body.put("cart_item_id", serverCartItemId);
-            apiService.decreaseCartItem("Bearer " + token, body).enqueue(new Callback<com.example.waterrefilldraftv1.Customer.models.ApiResponse>() {
-                @Override public void onResponse(Call<com.example.waterrefilldraftv1.Customer.models.ApiResponse> call, Response<com.example.waterrefilldraftv1.Customer.models.ApiResponse> response) {
+            apiService.decreaseCartItem("Bearer " + token, body).enqueue(new Callback<ApiResponse>() {
+                @Override public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                     fetchCartFromServer();
                 }
-                @Override public void onFailure(Call<com.example.waterrefilldraftv1.Customer.models.ApiResponse> call, Throwable t) {
+                @Override public void onFailure(Call<ApiResponse> call, Throwable t) {
                     Toast.makeText(CartActivity.this, "Failed to update quantity", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -190,11 +191,11 @@ public class CartActivity extends AppCompatActivity {
             if (token == null) { Toast.makeText(this, "Login required", Toast.LENGTH_SHORT).show(); return; }
             Map<String, Integer> body = new HashMap<>();
             body.put("cart_item_id", serverCartItemId);
-            apiService.increaseCartItem("Bearer " + token, body).enqueue(new Callback<com.example.waterrefilldraftv1.Customer.models.ApiResponse>() {
-                @Override public void onResponse(Call<com.example.waterrefilldraftv1.Customer.models.ApiResponse> call, Response<com.example.waterrefilldraftv1.Customer.models.ApiResponse> response) {
+            apiService.increaseCartItem("Bearer " + token, body).enqueue(new Callback<ApiResponse>() {
+                @Override public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                     fetchCartFromServer();
                 }
-                @Override public void onFailure(Call<com.example.waterrefilldraftv1.Customer.models.ApiResponse> call, Throwable t) {
+                @Override public void onFailure(Call<ApiResponse> call, Throwable t) {
                     Toast.makeText(CartActivity.this, "Failed to update quantity", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -212,11 +213,11 @@ public class CartActivity extends AppCompatActivity {
             java.util.List<Integer> ids = new ArrayList<>();
             ids.add(serverCartItemId);
             body.put("cart_item_ids", ids);
-            apiService.removeFromCart("Bearer " + token, body).enqueue(new Callback<com.example.waterrefilldraftv1.Customer.models.ApiResponse>() {
-                @Override public void onResponse(Call<com.example.waterrefilldraftv1.Customer.models.ApiResponse> call, Response<com.example.waterrefilldraftv1.Customer.models.ApiResponse> response) {
+            apiService.removeFromCart("Bearer " + token, body).enqueue(new Callback<ApiResponse>() {
+                @Override public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                     fetchCartFromServer();
                 }
-                @Override public void onFailure(Call<com.example.waterrefilldraftv1.Customer.models.ApiResponse> call, Throwable t) {
+                @Override public void onFailure(Call<ApiResponse> call, Throwable t) {
                     Toast.makeText(CartActivity.this, "Failed to remove item", Toast.LENGTH_SHORT).show();
                 }
             });

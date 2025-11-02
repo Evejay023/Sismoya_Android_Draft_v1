@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/dialog_completed_order.xml -->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dialog_margin"
+    app:cardCornerRadius="@dimen/dialog_corner_radius"
+    app:cardElevation="@dimen/dialog_elevation">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="550dp"
+        android:fillViewport="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/dialog_padding">
+
+            <!-- Close Button -->
+            <ImageView
+                android:id="@+id/btn_close"
+                android:layout_width="@dimen/close_button_size"
+                android:layout_height="@dimen/close_button_size"
+                android:src="@drawable/ic_close"
+                android:layout_gravity="end"
+                android:contentDescription="Close"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <!-- Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completed Order Details"
+                android:textSize="@dimen/title_text_size"
+                android:textColor="@color/primary_blue"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/title_margin_top"
+                android:layout_marginBottom="@dimen/title_margin_bottom"/>
+
+            <!-- Water Icon -->
+            <ImageView
+                android:layout_width="@dimen/water_icon_size"
+                android:layout_height="@dimen/water_icon_size"
+                android:src="@drawable/img_slim_container"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/water_icon_margin_bottom"
+                android:contentDescription="Water Gallon"/>
+
+            <!-- Order Details -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Order ID -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/detail_item_margin_bottom">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Order ID:"
+                        android:textSize="@dimen/detail_text_size"
+                        android:textColor="@color/primary_blue"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_order_id"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="00001"
+                        android:textSize="@dimen/detail_text_size"
+                        android:textColor="@color/primary_blue"
+                        android:fontFamily="@font/r_regular"
+                        android:gravity="end"/>
+                </LinearLayout>
+
+                <!-- Customer Name -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/detail_item_margin_bottom">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Customer Name:"
+                        android:textSize="@dimen/detail_text_size"
+                        android:textColor="@color/primary_blue"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_customer_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Chrisha Dalmacio"
+                        android:textSize="@dimen/detail_text_size"
+                        android:textColor="@color/primary_blue"
+                        android:fontFamily="@font/r_regular"
+                        android:gravity="end"/>
+                </LinearLayout>
+
+                <!-- Contact Number -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/detail_item_margin_bottom">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Contact No.:"
+                        android:textSize="@dimen/detail_text_size"
+                        android:textColor="@color/primary_blue"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_contact_no"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="+9906253556"
+                        android:textSize="@dimen/detail_text_size"
+                        android:textColor="@color/primary_blue"
+                        android:fontFamily="@font/r_regular"
+                        android:gravity="end"/>
+                </LinearLayout>
+
+                <!-- Address -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/detail_item_margin_bottom">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Address:"
+                        android:textSize="@dimen/detail_text_size"
+                        android:textColor="@color/primary_blue"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="102 Natividad Street Brgy 81"
+                        android:textSize="@dimen/detail_text_size"
+                        android:textColor="@color/primary_blue"
+                        android:fontFamily="@font/r_regular"
+                        android:gravity="end"/>
+                </LinearLayout>
+
+                <!-- Total Amount -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/detail_item_margin_bottom">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Total Amount:"
+                        android:textSize="@dimen/detail_text_size"
+                        android:textColor="@color/primary_blue"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_total_amount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="₱30.00"
+                        android:textSize="@dimen/detail_text_size"
+                        android:textColor="@color/primary_blue"
+                        android:fontFamily="@font/r_regular"
+                        android:gravity="end"/>
+                </LinearLayout>
+
+                <!-- Payment Method -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/detail_item_margin_bottom">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Payment Method:"
+                        android:textSize="@dimen/detail_text_size"
+                        android:textColor="@color/primary_blue"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_payment_method"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Cash Paid"
+                        android:textSize="@dimen/detail_text_size"
+                        android:textColor="@color/primary_blue"
+                        android:fontFamily="@font/r_regular"
+                        android:gravity="end"/>
+                </LinearLayout>
+
+                <!-- Order Status -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/detail_item_margin_bottom">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Order Status:"
+                        android:textSize="@dimen/detail_text_size"
+                        android:textColor="@color/primary_blue"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_order_status"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Completed"
+                        android:textSize="@dimen/detail_text_size"
+                        android:textColor="@color/primary_blue"
+                        android:fontFamily="@font/r_regular"
+                        android:gravity="end"/>
+                </LinearLayout>
+
+                <!-- Delivered At -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/detail_section_margin_bottom">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Delivered At:"
+                        android:textSize="@dimen/detail_text_size"
+                        android:textColor="@color/primary_blue"
+                        android:fontFamily="@font/roboto_bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_delivered_at"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="09/15/25 11:00AM"
+                        android:textSize="@dimen/detail_text_size"
+                        android:textColor="@color/primary_blue"
+                        android:fontFamily="@font/r_regular"
+                        android:gravity="end"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- NO button for history -->
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.cardview.widget.CardView>

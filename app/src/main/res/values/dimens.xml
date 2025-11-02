@@ -53,5 +53,33 @@
     <dimen name="logo_margin_top">100dp</dimen>
 
 
+    <!-- Rider Dialog Placement -->
+    <dimen name="dialog_margin">12dp</dimen>
+    <dimen name="dialog_padding">12dp</dimen>
+    <dimen name="dialog_corner_radius">16dp</dimen>
+    <dimen name="dialog_elevation">8dp</dimen>
+
+    <!-- Close Button -->
+    <dimen name="close_button_size">24dp</dimen>
+
+    <!-- Title -->
+    <dimen name="title_text_size">16sp</dimen>
+    <dimen name="title_margin_top">4dp</dimen>
+    <dimen name="title_margin_bottom">8dp</dimen>
+
+    <!-- Water Icon -->
+    <dimen name="water_icon_size">56dp</dimen>
+    <dimen name="water_icon_margin_bottom">8dp</dimen>
+
+    <!-- Detail Items -->
+    <dimen name="detail_text_size">12sp</dimen>
+    <dimen name="detail_item_margin_bottom">4dp</dimen>
+    <dimen name="detail_section_margin_bottom">8dp</dimen>
+
+    <!-- Button -->
+    <dimen name="button_text_size">13sp</dimen>
+    <dimen name="button_padding_vertical">10dp</dimen>
+    <dimen name="button_margin_top">4dp</dimen>
+
 
 </resources>

@@ -55,7 +55,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_medium">
 
             <EditText
@@ -67,6 +67,7 @@
                 android:inputType="textPassword"
                 android:paddingHorizontal="@dimen/padding_medium"
                 android:paddingEnd="48dp"
+
                 android:textColor="@color/text_dark"
                 android:textColorHint="@color/hint_color"
                 android:fontFamily="sans-serif" />
@@ -77,7 +78,7 @@
                 android:layout_height="24dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="12dp"
+                android:layout_marginEnd="10dp"
                 android:src="@drawable/ic_eye_off"
                 android:contentDescription="Toggle password visibility"
                 android:background="?attr/selectableItemBackground"
@@ -86,18 +87,20 @@
         </RelativeLayout>
 
         <!-- Forgot Password -->
+
         <TextView
             android:id="@+id/tv_forgot_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/margin_xl"
-            android:text="@string/forgot_password"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:fontFamily="@font/r_medium"
-            android:background="?attr/selectableItemBackground"
-            android:padding="@dimen/padding_tiny" />
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="end"
+            android:text="Forgot Password?"
+            android:textColor="@color/text_dark"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/r_regular"
+            android:clickable="true"
+            android:focusable="true" />
 
         <!-- Login Button -->
         <Button
@@ -114,30 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/dont_have_account"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:fontFamily="@font/r_regular" />
-
-            <TextView
-                android:id="@+id/tv_register"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="@string/register"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/r_medium"
-                android:background="?attr/selectableItemBackground"
-                android:padding="@dimen/padding_tiny" />
-
-        </LinearLayout>
+            android:orientation="horizontal"/>
 
     </LinearLayout>
 

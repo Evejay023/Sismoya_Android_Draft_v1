@@ -75,11 +75,13 @@
                     android:textSize="14sp"
                     android:textColor="#333333" />
 
+                <!-- 👇 UNIQUE ID -->
                 <ImageView
+                    android:id="@+id/iv_edit_name"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:src="@drawable/edit_button"
-                    android:contentDescription="Edit" />
+                    android:contentDescription="Edit name" />
             </LinearLayout>
         </LinearLayout>
 
@@ -122,11 +124,13 @@
                     android:ellipsize="end"
                     android:maxLines="1" />
 
+                <!-- 👇 UNIQUE ID -->
                 <ImageView
+                    android:id="@+id/iv_edit_email"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:src="@drawable/edit_button"
-                    android:contentDescription="Edit" />
+                    android:contentDescription="Edit email" />
             </LinearLayout>
         </LinearLayout>
 
@@ -166,11 +170,13 @@
                     android:textSize="14sp"
                     android:textColor="#333333" />
 
+                <!-- 👇 UNIQUE ID -->
                 <ImageView
+                    android:id="@+id/iv_edit_contact"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:src="@drawable/edit_button"
-                    android:contentDescription="Edit" />
+                    android:contentDescription="Edit contact" />
             </LinearLayout>
         </LinearLayout>
 

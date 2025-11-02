@@ -11,8 +11,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.Customer.models.Address;
-import com.example.waterrefilldraftv1.Customer.models.ApiResponse;
-import com.example.waterrefilldraftv1.Customer.network.NetworkManager;
+import com.example.waterrefilldraftv1.Global.network.ApiResponse;
+import com.example.waterrefilldraftv1.Global.network.NetworkManager;
 
 public class AddAddressActivity extends AppCompatActivity {
 
@@ -42,7 +42,6 @@ public class AddAddressActivity extends AppCompatActivity {
 
     private void setupClickListeners() {
         ivBack.setOnClickListener(v -> onBackPressed());
-
         btnSave.setOnClickListener(v -> saveAddress());
     }
 
@@ -74,10 +73,14 @@ public class AddAddressActivity extends AppCompatActivity {
             public void onSuccess(ApiResponse response) {
                 btnSave.setEnabled(true);
                 if (response.isSuccess()) {
-                    String newAddress = label + ": " + address;
+                    int addressId = -1; // Optional, backend may not send ID yet
+
+                    // Return new address data to previous activity
                     Intent resultIntent = new Intent();
-                    resultIntent.putExtra("new_address", newAddress);
+                    resultIntent.putExtra("new_address", label + ": " + address);
+                    if (addressId > 0) resultIntent.putExtra("address_id", addressId);
                     setResult(RESULT_OK, resultIntent);
+
                     Toast.makeText(AddAddressActivity.this, "Address saved successfully!", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/fragment_to_pickup.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_white">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:background="@color/background_white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To PickUp"
+            android:textSize="16sp"
+            android:textColor="@color/primary_blue"
+            android:fontFamily="@font/r_regular"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To Pick-Up"
+            android:textSize="24sp"
+            android:textColor="@color/primary_blue"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/tv_pending_pickups"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pending Pick-Up: 15"
+            android:textSize="14sp"
+            android:textColor="@color/primary_blue"
+            android:fontFamily="@font/r_regular"
+            android:layout_marginTop="12dp"/>
+    </LinearLayout>
+
+    <!-- Orders List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_pickup_orders"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="16dp"
+        android:clipToPadding="false"/>
+
+</LinearLayout>

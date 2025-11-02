@@ -20,7 +20,7 @@ import com.example.waterrefilldraftv1.Customer.UserInterface.activities.CartActi
 import com.example.waterrefilldraftv1.Customer.models.CartItem;
 import com.example.waterrefilldraftv1.Customer.models.Product;
 import com.example.waterrefilldraftv1.Customer.models.ProductDto;
-import com.example.waterrefilldraftv1.Customer.network.NetworkManager;
+import com.example.waterrefilldraftv1.Global.network.NetworkManager;
 import com.example.waterrefilldraftv1.Customer.utils.CartManager;
 import com.example.waterrefilldraftv1.Customer.UserInterface.dialog.OrderNowDialog;
 import java.util.ArrayList;

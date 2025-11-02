@@ -1,4 +1,4 @@
-package com.example.waterrefilldraftv1.Customer.UserInterface.activities;
+package com.example.waterrefilldraftv1.Login_Customer_and_Riders;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.waterrefilldraftv1.Customer.UserInterface.activities.VerifyCodeActivity;
 import com.example.waterrefilldraftv1.R;
-import com.example.waterrefilldraftv1.Customer.models.ApiResponse;
-import com.example.waterrefilldraftv1.Customer.network.NetworkManager;
+import com.example.waterrefilldraftv1.Global.network.ApiResponse;
+import com.example.waterrefilldraftv1.Global.network.NetworkManager;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
@@ -22,7 +23,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forgot_password);
+        setContentView(R.layout.global_activity_forgot_password);
 
         // ✅ Initialize views
         emailInput = findViewById(R.id.et_email);

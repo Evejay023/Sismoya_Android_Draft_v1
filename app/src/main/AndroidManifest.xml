@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -34,29 +35,28 @@
         <!-- Authentication Flow -->
         <activity android:name=".Customer.UserInterface.activities.GetStartedActivity" android:exported="false" android:screenOrientation="portrait"/>
         <activity android:name=".Customer.UserInterface.activities.LaunchActivity" android:exported="false" android:screenOrientation="portrait"/>
-        <activity android:name=".Customer.UserInterface.activities.LoginActivity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".Login_Customer_and_Riders.LoginActivity" android:exported="false" android:screenOrientation="portrait"/>
         <activity android:name=".Customer.UserInterface.activities.RegisterActivity" android:exported="false" android:screenOrientation="portrait"/>
-        <activity android:name=".Customer.UserInterface.activities.ForgotPasswordActivity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".Login_Customer_and_Riders.ForgotPasswordActivity" android:exported="false" android:screenOrientation="portrait"/>
         <activity android:name=".Customer.UserInterface.activities.VerifyCodeActivity" android:exported="false" android:screenOrientation="portrait"/>
-        <activity android:name=".Customer.UserInterface.activities.ResetPasswordActivity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".Login_Customer_and_Riders.ResetPasswordActivity" android:exported="false" android:screenOrientation="portrait"/>
 
+        <!-- ✅ Rider Activities -->
+        <activity android:name=".Riders.UserInterrface.Activities.RiderDashboardActivity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".Riders.UserInterrface.Activities.Rider_Change_Password_Activity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".Riders.UserInterrface.Activities.Rider_PersonalInformationActivity" android:exported="false" android:screenOrientation="portrait"/>
 
-        <!-- Main Dashboard -->
-        <activity android:name=".Customer.UserInterface.activities.DashboardActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"/>
+        <!-- Customer Activities -->
+        <activity android:name=".Customer.UserInterface.activities.CartActivity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".Customer.UserInterface.activities.PersonalInformationActivity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".Customer.UserInterface.activities.ChangePasswordActivity" android:exported="false" android:theme="@style/Theme.WaterRefillDraftV1" />
 
-        <!-- Cart -->
-        <activity android:name=".Customer.UserInterface.activities.CartActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-
-        <!-- Order Flow -->
+        <!-- Address and Orders -->
+        <activity android:name=".Customer.UserInterface.activities.AddAddressActivity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".Customer.UserInterface.activities.AddressSelectionActivity" android:exported="false" android:screenOrientation="portrait"/>
         <activity android:name=".Customer.UserInterface.activities.OrderSummaryActivity" android:exported="false" android:screenOrientation="portrait"/>
         <activity android:name=".Customer.UserInterface.activities.PaymentMethodActivity" android:exported="false" android:screenOrientation="portrait"/>
         <activity android:name=".Customer.UserInterface.activities.OrderConfirmationActivity" android:exported="false" android:screenOrientation="portrait"/>
-
 
     </application>
 </manifest>

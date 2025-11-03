@@ -1,55 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    app:cardCornerRadius="12dp"
+    android:layout_marginBottom="10dp"
+    app:cardCornerRadius="10dp"
     app:cardElevation="2dp"
-    android:background="@color/background_white">
+    android:layout_marginHorizontal="12dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
+        android:padding="12dp"
         android:gravity="center_vertical">
 
-        <!-- Water Icon -->
         <ImageView
-            android:id="@+id/iv_water_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:id="@+id/iv_gallon_image"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:src="@drawable/img_slim_container"
-            android:contentDescription="Water Gallon"/>
+            android:contentDescription="gallon" />
 
-        <!-- Order Details -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_marginStart="16dp">
+            android:layout_marginStart="12dp">
 
             <TextView
                 android:id="@+id/tv_customer_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chrisha Dalmacio"
+                android:text="Customer"
                 android:textSize="15sp"
-                android:textColor="@color/primary_blue"
-                android:fontFamily="@font/roboto_bold"/>
+                android:textColor="@color/primary_blue" />
+
+            <TextView
+                android:id="@+id/tv_contact_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="09XXXXXXXXX"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp" />
 
             <TextView
                 android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="102 Natividad Street"
+                android:text="Address"
                 android:textSize="13sp"
-                android:textColor="@color/primary_blue"
-                android:fontFamily="@font/r_regular"
-                android:layout_marginTop="2dp"/>
+                android:layout_marginTop="2dp" />
+
+            <TextView
+                android:id="@+id/tv_pickup_datetime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2025-11-13 10:00"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp" />
+
+            <TextView
+                android:id="@+id/tv_payment_method"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cash"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp" />
+
+            <TextView
+                android:id="@+id/tv_payment_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unpaid"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp" />
+
+            <TextView
+                android:id="@+id/tv_total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₱ 150.00"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/primary_blue" />
 
             <TextView
                 android:id="@+id/tv_status"
@@ -57,37 +92,46 @@
                 android:layout_height="wrap_content"
                 android:text="to_pickup"
                 android:textSize="13sp"
-                android:textColor="@color/primary_blue"
-                android:fontFamily="@font/r_regular"
-                android:layout_marginTop="2dp"/>
+                android:layout_marginTop="2dp" />
 
             <TextView
                 android:id="@+id/tv_view_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="View Details"
-                android:textSize="11sp"
-                android:textColor="@color/primary_blue"
-                android:fontFamily="@font/r_regular"
+                android:textSize="12sp"
                 android:layout_marginTop="6dp"
-                android:clickable="true"
-                android:focusable="true"/>
+                android:textColor="@color/primary_blue" />
         </LinearLayout>
 
-        <!-- Action Button -->
-        <Button
-            android:id="@+id/btn_mark_picked_up"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mark as Picked-Up"
-            android:textSize="10sp"
-            android:textColor="@color/background_white"
-            android:textAllCaps="false"
-            android:background="@drawable/button_primary"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="10dp"
-            android:fontFamily="@font/roboto_bold"/>
+            android:orientation="vertical"
+            android:gravity="center">
 
+            <TextView
+                android:id="@+id/tv_gallon_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Slim Gallon"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Qty: 1"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp" />
+
+            <Button
+                android:id="@+id/btn_mark_picked_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mark"
+                android:textAllCaps="false"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

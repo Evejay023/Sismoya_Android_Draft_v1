@@ -17,6 +17,7 @@ import com.example.waterrefilldraftv1.Customer.models.CartItem;
 import com.example.waterrefilldraftv1.Customer.models.ServerCartItem;
 import com.example.waterrefilldraftv1.Riders.models.CompletedOrderModel;
 import com.example.waterrefilldraftv1.Riders.models.PickupOrder;
+import com.example.waterrefilldraftv1.Riders.models.RiderOrdersResponse;
 
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -38,19 +40,15 @@ public interface ApiService {
     // ✅ ACCOUNT / PROFILE MANAGEMENT
     // ======================================================
 
-    /** Get current user profile */
     @GET("profile")
     Call<ApiResponse> getProfile(@Header("Authorization") String token);
 
-    /** Update full profile */
     @PUT("update-profile")
     Call<ApiResponse> updateProfile(@Header("Authorization") String token, @Body User user);
 
-    /** Update partial profile */
     @PUT("update-profile")
     Call<ApiResponse> updateProfilePartial(@Header("Authorization") String token, @Body Map<String, String> body);
 
-    /** Change password */
     @PUT("change-password")
     Call<ApiResponse> changePassword(@Header("Authorization") String token, @Body Map<String, String> body);
 
@@ -158,40 +156,43 @@ public interface ApiService {
     // ✅ RIDER ORDERS (Pick-up & Deliver)
     // ======================================================
 
-    /** Fetch ALL rider orders (both to_pickup & to_deliver) */
+    // ======================================================
+// ✅ RIDER ORDERS (Pick-up & Deliver)
+// ======================================================
+
+    /** Fetch ALL rider orders (to_pickup + to_deliver) */
     @GET("rider/orders")
-    Call<List<PickupOrder>> getRiderOrders(@Header("Authorization") String token);
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
+    Call<RiderOrdersResponse> getRiderOrders(@Header("Authorization") String token);
 
-    /** Fetch only Pick-up orders (filter happens in app) */
 
-    /*
-    @GET("rider/orders")
-    Call<List<PickupOrder>> getRiderPickups(@Header("Authorization") String token);
-
-    /** Fetch only Delivery orders (filter happens in app)
-    @GET("rider/orders")
-    Call<List<RiderDelivery>> getRiderDeliveries(@Header("Authorization") String token);
-
-    */
-    /** Update order status (same endpoint for both pickup & delivery) */
-    // ✅ Fetch all orders (to_pickup + to_deliver)
-    // ✅ Update order status
-    @POST("rider/orders/{id}/update-status")
+    /** Update order status */
+    @PUT("rider/orders/{id}/update-status")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> updateRiderOrderStatus(
             @Header("Authorization") String token,
             @Path("id") int orderId,
             @Body Map<String, String> body
     );
 
+    /** Fetch ONLY to_pick orders */
+    @GET("rider/orders/to_pick")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
+    Call<ApiResponse> getToPickOrders(@Header("Authorization") String token);
 
+
+    /** Delivery history list */
     @GET("rider/delivery-history")
-    Call<List<PickupOrder>> getDeliveryHistory(
-            @Header("Authorization") String token
-    );
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
+    Call<ApiResponse> getDeliveryHistory(@Header("Authorization") String token);
 
-
+    /** (Optional) Completed model version */
     @GET("rider/delivery-history")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<List<CompletedOrderModel>> getDeliveredOrders();
+
+
+
 
 
 }

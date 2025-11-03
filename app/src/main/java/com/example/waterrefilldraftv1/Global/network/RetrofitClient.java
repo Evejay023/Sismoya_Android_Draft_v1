@@ -73,12 +73,10 @@ public class RetrofitClient {
                 .addInterceptor(chain -> {
                     Request original = chain.request();
 
-                    // Add common headers
                     Request.Builder requestBuilder = original.newBuilder()
                             .addHeader("Accept", "application/json")
                             .addHeader("Content-Type", "application/json");
 
-                    // Retrieve token safely
                     Context context = TokenManager.getAppContext();
                     String token = (context != null) ? TokenManager.getToken(context) : null;
 
@@ -102,12 +100,16 @@ public class RetrofitClient {
                 })
                 .addInterceptor(logging);
 
+        // ✅ Disable caching globally
+        builder.cache(null);
+
         if (TRUST_ALL_SSL) {
             setupUnsafeSSL(builder);
         }
 
         return builder.build();
     }
+
 
     /**
      * ⚠️ Development-only SSL configuration (trusts all certs).

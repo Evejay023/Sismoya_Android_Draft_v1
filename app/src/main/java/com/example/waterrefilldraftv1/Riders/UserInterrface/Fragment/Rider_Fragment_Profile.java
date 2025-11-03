@@ -28,6 +28,7 @@ import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.Riders.UserInterrface.Activities.Rider_PersonalInformationActivity;
 import com.example.waterrefilldraftv1.Riders.UserInterrface.Activities.Rider_Change_Password_Activity;
 import com.example.waterrefilldraftv1.Riders.models.Rider;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
 import retrofit2.Call;
@@ -112,14 +113,33 @@ public class Rider_Fragment_Profile extends Fragment {
     }
 
     private void setupClickListeners() {
+
         llInformation.setOnClickListener(v ->
-                startActivity(new Intent(requireContext(), Rider_PersonalInformationActivity.class)));
-        llDeliveries.setOnClickListener(v ->
-                Toast.makeText(requireContext(), "Opening deliveries soon...", Toast.LENGTH_SHORT).show());
+                startActivity(new Intent(requireContext(), Rider_PersonalInformationActivity.class))
+        );
+
+        llDeliveries.setOnClickListener(v -> {
+
+            // ✅ Highlight the bottom nav tab
+            BottomNavigationView bottomNav = requireActivity().findViewById(R.id.bottom_navigation);
+            bottomNav.setSelectedItemId(R.id.nav_delivery_history);
+
+            // ✅ Navigate fragment
+            Fragment history = Rider_Fragment_Delivery_History.newInstance(null);
+
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, history)
+                    .commit();
+        });
+
+
         llChangePassword.setOnClickListener(v ->
                 startActivity(new Intent(requireContext(), Rider_Change_Password_Activity.class)));
+
         llLogout.setOnClickListener(v -> logoutRider());
     }
+
 
     private void logoutRider() {
         sharedPreferences.edit().clear().apply();

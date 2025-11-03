@@ -4,19 +4,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.Riders.models.PickupOrder;
 import com.example.waterrefilldraftv1.Riders.Utils.StatusFormatter;
 
-
 import java.util.List;
 
 public class PickupAdapter extends RecyclerView.Adapter<PickupAdapter.ViewHolder> {
+
+    public interface OnPickupActionListener {
+        void onViewDetails(PickupOrder order);
+        void onMarkPickedUp(PickupOrder order);
+    }
 
     private final List<PickupOrder> pickupList;
     private final OnPickupActionListener listener;
@@ -29,52 +35,68 @@ public class PickupAdapter extends RecyclerView.Adapter<PickupAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.rider_item_pickup_order, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        PickupOrder order = pickupList.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder h, int pos) {
+        PickupOrder o = pickupList.get(pos);
 
-        // Set text safely with fallback to avoid "null" or "N/A"
-        holder.tvCustomerName.setText(order.getCustomerName() != null ? order.getCustomerName() : "N/A");
-        holder.tvAddress.setText(order.getAddress() != null ? order.getAddress() : "N/A");
-        holder.tvStatus.setText(
-                order.getStatus() != null
-                        ? StatusFormatter.format(order.getStatus())
-                        : "N/A"
-        );
+        h.tvCustomerName.setText(o.getCustomerName() != null ? o.getCustomerName() : "N/A");
+        h.tvAddress.setText(o.getAddress() != null ? o.getAddress() : "N/A");
+        h.tvStatus.setText(StatusFormatter.format(o.getStatus()));
+        h.tvGallonName.setText(o.getPrimaryGallonName());
+        h.tvQuantity.setText("Qty: " + o.getPrimaryQuantity());
 
-        // Click listeners
-        holder.tvViewDetails.setOnClickListener(v -> listener.onViewDetails(order));
-        holder.btnMarkPickup.setOnClickListener(v -> listener.onMarkPickedUp(order));
+        // Build image URL: backend returns relative path like "images/round.png" or "/images/..."
+        String img = o.getPrimaryImageUrl();
+        String fullImg = null;
+        if (img != null && !img.isEmpty()) {
+            if (img.startsWith("http")) fullImg = img;
+            else {
+                // make absolute relative to base (RetrofitClient.BASE_URL without "api/")
+                // The BASE_URL in your RetrofitClient is: https://sismoya.bsit3b.site/api/
+                // images are served from https://sismoya.bsit3b.site/images/...
+                fullImg = "https://sismoya.bsit3b.site/" + img.replaceFirst("^/+", "");
+            }
+        }
+
+        if (fullImg != null) {
+            Glide.with(h.itemView.getContext())
+                    .load(fullImg)
+                    .placeholder(R.drawable.img_slim_container)
+                    .into(h.ivGallon);
+        } else {
+            h.ivGallon.setImageResource(R.drawable.img_slim_container);
+        }
+
+        h.tvViewDetails.setOnClickListener(v -> listener.onViewDetails(o));
+        h.btnMarkPickedUp.setOnClickListener(v -> listener.onMarkPickedUp(o));
+        h.itemView.setOnClickListener(v -> listener.onViewDetails(o));
     }
-
 
     @Override
     public int getItemCount() {
-        return pickupList.size();
+        return pickupList == null ? 0 : pickupList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvCustomerName, tvAddress, tvPickupTime, tvStatus, tvViewDetails;
-        Button btnMarkPickup;
+        ImageView ivGallon;
+        TextView tvCustomerName, tvAddress, tvStatus, tvViewDetails, tvGallonName, tvQuantity;
+        Button btnMarkPickedUp;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tvCustomerName = itemView.findViewById(R.id.tv_customer_name);
-            tvAddress = itemView.findViewById(R.id.tv_address);
-            tvPickupTime = itemView.findViewById(R.id.tv_pickup_time); // optional
-            tvStatus = itemView.findViewById(R.id.tv_status); // optional if in layout
-            tvViewDetails = itemView.findViewById(R.id.tv_view_details);
-            btnMarkPickup = itemView.findViewById(R.id.btn_mark_picked_up);
+        public ViewHolder(@NonNull View v) {
+            super(v);
+            ivGallon        = v.findViewById(R.id.iv_gallon_image);
+            tvCustomerName  = v.findViewById(R.id.tv_customer_name);
+            tvAddress       = v.findViewById(R.id.tv_address);
+            tvStatus        = v.findViewById(R.id.tv_status);
+            tvViewDetails   = v.findViewById(R.id.tv_view_details);
+            tvGallonName    = v.findViewById(R.id.tv_gallon_name);
+            tvQuantity      = v.findViewById(R.id.tv_quantity);
+            btnMarkPickedUp = v.findViewById(R.id.btn_mark_picked_up);
         }
-    }
-
-    public interface OnPickupActionListener {
-        void onMarkPickedUp(PickupOrder order);
-        void onViewDetails(PickupOrder order);
     }
 }

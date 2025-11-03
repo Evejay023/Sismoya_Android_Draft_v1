@@ -5,11 +5,15 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.waterrefilldraftv1.Global.network.ApiResponse;
 import com.example.waterrefilldraftv1.Global.network.ApiService;
 import com.example.waterrefilldraftv1.Global.network.RetrofitClient;
@@ -27,6 +32,7 @@ import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.Riders.Adapter.PickupAdapter;
 import com.example.waterrefilldraftv1.Riders.models.PickupOrder;
 import com.example.waterrefilldraftv1.Riders.models.Rider;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,17 +45,25 @@ import retrofit2.Response;
 
 public class Rider_Fragment_To_PickUp extends Fragment {
 
-    private static final String ARG_RIDER = "rider_data";
+    private static final String ARG_RIDER = "arg_rider";
+
+    private Rider currentRider;
     private RecyclerView rvPickups;
     private PickupAdapter adapter;
-    private List<PickupOrder> pickupList = new ArrayList<>();
+    private final List<PickupOrder> pickupList = new ArrayList<>();
     private ApiService apiService;
-    private Rider currentRider;
+
+    // UI
+    private ProgressBar pbLoading;
+    private View layoutEmpty;
+    private TextView tvPending;
+
+    public Rider_Fragment_To_PickUp() {}
 
     public static Rider_Fragment_To_PickUp newInstance(Rider rider) {
         Rider_Fragment_To_PickUp f = new Rider_Fragment_To_PickUp();
         Bundle b = new Bundle();
-        b.putSerializable(ARG_RIDER, rider);
+        b.putString(ARG_RIDER, new Gson().toJson(rider));
         f.setArguments(b);
         return f;
     }
@@ -57,10 +71,14 @@ public class Rider_Fragment_To_PickUp extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            currentRider = (Rider) getArguments().getSerializable(ARG_RIDER);
-        }
         apiService = RetrofitClient.getApiService();
+
+        if (getArguments() != null) {
+            currentRider = new Gson().fromJson(
+                    getArguments().getString(ARG_RIDER),
+                    Rider.class
+            );
+        }
     }
 
     @Nullable
@@ -70,8 +88,12 @@ public class Rider_Fragment_To_PickUp extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.rider_fragment_to_pickup, container, false);
+
         rvPickups = view.findViewById(R.id.rv_pickup_orders);
         rvPickups.setLayoutManager(new LinearLayoutManager(requireContext()));
+        tvPending = view.findViewById(R.id.tv_pending_pickups);
+        pbLoading = view.findViewById(R.id.pb_loading);
+        layoutEmpty = view.findViewById(R.id.layout_empty);
 
         adapter = new PickupAdapter(pickupList, new PickupAdapter.OnPickupActionListener() {
             @Override
@@ -88,43 +110,73 @@ public class Rider_Fragment_To_PickUp extends Fragment {
         rvPickups.setAdapter(adapter);
 
         fetchPickups();
-
         return view;
     }
 
     private void fetchPickups() {
         String token = TokenManager.getToken(requireContext());
-        if (token == null) return;
+        if (token == null) {
+            Toast.makeText(requireContext(), "Session expired. Please login.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        apiService.getRiderOrders("Bearer " + token).enqueue(new Callback<List<PickupOrder>>() {
+        showLoading(true);
+
+        apiService.getToPickOrders("Bearer " + token).enqueue(new Callback<ApiResponse>() {
             @Override
-            public void onResponse(Call<List<PickupOrder>> call, Response<List<PickupOrder>> response) {
-                if (response.isSuccessful() && response.body() != null) {
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                showLoading(false);
 
-                    pickupList.clear();
+                if (!isAdded()) return;
 
-                    for (PickupOrder o : response.body()) {
-                        String s = o.getStatus().toLowerCase();
-
-                        if (s.equals("to_pickup")) {
-                            pickupList.add(o);
-                        }
-                    }
-
-                    adapter.notifyDataSetChanged();
-
-                } else {
+                if (!response.isSuccessful() || response.body() == null) {
+                    showEmpty(true);
                     Toast.makeText(requireContext(), "Failed to load pick ups", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+
+                if (!response.body().isSuccess()) {
+                    showEmpty(true);
+                    Toast.makeText(requireContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                List<PickupOrder> all = response.body().getDataAsList(PickupOrder.class);
+
+                pickupList.clear();
+                if (all != null) {
+                    pickupList.addAll(all);
+                }
+
+                adapter.notifyDataSetChanged();
+                updatePendingCount();
+                showEmpty(pickupList.isEmpty());
             }
 
             @Override
-            public void onFailure(Call<List<PickupOrder>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                showLoading(false);
+                showEmpty(true);
+                if (!isAdded()) return;
                 Toast.makeText(requireContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("FETCH_PICKUPS", "Error", t);
             }
         });
     }
 
+
+    private void updatePendingCount() {
+        tvPending.setText("Pending Pick-Up: " + pickupList.size());
+    }
+
+    private void showLoading(boolean show) {
+        pbLoading.setVisibility(show ? View.VISIBLE : View.GONE);
+        rvPickups.setVisibility(show ? View.GONE : View.VISIBLE);
+    }
+
+    private void showEmpty(boolean show) {
+        layoutEmpty.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
 
     private void markAsPickedUp(PickupOrder order) {
         String token = TokenManager.getToken(requireContext());
@@ -137,48 +189,57 @@ public class Rider_Fragment_To_PickUp extends Fragment {
                 .enqueue(new Callback<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(requireContext(), "Marked as picked up → to deliver", Toast.LENGTH_SHORT).show();
-                            fetchPickups(); // refresh pickup list
-                        } else {
-                            Toast.makeText(requireContext(), "Failed to update status", Toast.LENGTH_SHORT).show();
+                        if (!isAdded()) return;
+
+                        if (!response.isSuccessful() || response.body() == null) {
+                            Toast.makeText(requireContext(), "Update failed", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        if (response.body().isSuccess()) {
+                            pickupList.remove(order);
+                            adapter.notifyDataSetChanged();
+                            updatePendingCount();
+                            showEmpty(pickupList.isEmpty());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ApiResponse> call, Throwable t) {
-                        Toast.makeText(requireContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        if (!isAdded()) return;
+                        Toast.makeText(requireContext(), "Failed to update", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-
     private void showPickupDetailsDialog(Context ctx, PickupOrder order) {
         Dialog d = new Dialog(ctx);
-        d.setContentView(R.layout.rider_dialog_delivery_details); // use the shared dialog layout
-        if (d.getWindow() != null) d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        d.setContentView(R.layout.rider_dialog_pickup_details);
+        d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        d.getWindow().setLayout((int)(getResources().getDisplayMetrics().widthPixels * 0.9),
+                LayoutParams.WRAP_CONTENT);
 
-        TextView tvOrderId = d.findViewById(R.id.tv_order_id);
-        TextView tvCustomerName = d.findViewById(R.id.tv_customer_name);
-        TextView tvContactNo = d.findViewById(R.id.tv_contact_no);
-        TextView tvAddress = d.findViewById(R.id.tv_address);
-        TextView tvTotalAmount = d.findViewById(R.id.tv_total_amount);
-        TextView tvPaymentMethod = d.findViewById(R.id.tv_payment_method);
-        TextView tvOrderStatus = d.findViewById(R.id.tv_order_status);
-        Button btnMark = d.findViewById(R.id.btn_mark_delivered); // reused button, change label
+        ImageView iv = d.findViewById(R.id.iv_gallon_image);
+        TextView tvCustomer = d.findViewById(R.id.tv_customer_name);
+        TextView tvQty = d.findViewById(R.id.tv_gallon_quantity);
+        TextView tvMulti = d.findViewById(R.id.tv_more_items);
+        Button btn = d.findViewById(R.id.btn_mark_picked_up);
         ImageView close = d.findViewById(R.id.btn_close);
 
-        tvOrderId.setText(String.valueOf(order.getOrderId()));
-        tvCustomerName.setText(order.getCustomerName());
-        tvContactNo.setText(order.getContactNumber());
-        tvAddress.setText(order.getAddress());
-        tvTotalAmount.setText(String.format("%.2f", order.getTotalAmount()));
-        tvPaymentMethod.setText(order.getPaymentMethod());
-        tvOrderStatus.setText(order.getStatus());
+        tvCustomer.setText(order.getCustomerName());
+        tvQty.setText("x" + order.getPrimaryQuantity());
 
-        // For pickup dialog the button must mark as picked up:
-        btnMark.setText("Mark as Picked Up");
-        btnMark.setOnClickListener(v -> {
+        if (order.hasMultipleGallons()) {
+            tvMulti.setVisibility(View.VISIBLE);
+        }
+
+        Glide.with(ctx)
+                .load(order.getPrimaryImageUrl())
+                .placeholder(R.drawable.img_slim_container)
+                .into(iv);
+
+        btn.setOnClickListener(v -> {
             markAsPickedUp(order);
             d.dismiss();
         });

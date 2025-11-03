@@ -11,6 +11,13 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
+import java.util.List;
+
+
 public class ApiResponse {
 
     @SerializedName("error")
@@ -100,6 +107,17 @@ public class ApiResponse {
         if (error != null) return !error;
         return false;
     }
+
+    public <T> List<T> getDataAsList(Class<T> clazz) {
+        try {
+            Gson gson = new Gson();
+            Type type = TypeToken.getParameterized(List.class, clazz).getType();
+            return gson.fromJson((JsonElement) data, type);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 
     public boolean isError() {
         return !isSuccess();

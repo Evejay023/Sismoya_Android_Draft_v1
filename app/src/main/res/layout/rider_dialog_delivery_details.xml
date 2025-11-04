@@ -19,7 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/dialog_padding">
+            android:layout_gravity="left"
+            android:padding="15dp">
 
             <!-- Close Button -->
             <ImageView
@@ -38,57 +39,79 @@
                 android:layout_height="wrap_content"
                 android:text="Delivery Details"
                 android:textSize="@dimen/title_text_size"
-                android:textColor="@color/primary_blue"
+                android:textColor="@color/text_dark"
                 android:fontFamily="@font/roboto_bold"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/title_margin_top"
                 android:layout_marginBottom="@dimen/title_margin_bottom"/>
 
-            <!-- Product Image -->
+            <!-- Water Icon -->
             <ImageView
                 android:id="@+id/iv_gallon_image"
                 android:layout_width="@dimen/water_icon_size"
                 android:layout_height="@dimen/water_icon_size"
                 android:src="@drawable/img_slim_container"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="6dp"
+                android:layout_marginBottom="@dimen/water_icon_margin_bottom"
                 android:contentDescription="Water Gallon"/>
 
             <!-- Gallon Name -->
-            <TextView
-                android:id="@+id/tv_gallon_name"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Slim Gallon"
-                android:textSize="@dimen/detail_text_size"
-                android:textColor="@color/primary_blue"
-                android:fontFamily="@font/roboto_bold"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="4dp"/>
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/detail_item_margin_bottom"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/tv_gallon_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Slim Gallon"
+                    android:textSize="@dimen/detail_text_size"
+                    android:textColor="@color/text_dark"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"/>
+            </LinearLayout>
 
             <!-- Quantity -->
-            <TextView
-                android:id="@+id/tv_gallon_quantity"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="x3"
-                android:textSize="@dimen/detail_text_size"
-                android:textColor="@color/primary_blue"
-                android:fontFamily="@font/roboto_bold"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/water_icon_margin_bottom"/>
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/detail_section_margin_bottom"
+                android:gravity="center_horizontal">
 
-            <TextView
-                android:id="@+id/tv_more_items"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tv_gallon_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x3"
+                    android:textSize="@dimen/detail_text_size"
+                    android:textColor="@color/text_dark"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <!-- More Items Text -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="+2 more items"
-                android:textSize="14sp"
-                android:textColor="@color/primary_blue"
-                android:fontFamily="@font/r_regular"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="6dp"
-                android:visibility="gone"/>
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/detail_section_margin_bottom"
+                android:gravity="center_horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_more_items"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+2 more items"
+                    android:textSize="14sp"
+                    android:textColor="@color/primary_blue"
+                    android:fontFamily="@font/r_regular"
+                    android:gravity="center"/>
+            </LinearLayout>
 
             <!-- Order Details -->
             <LinearLayout
@@ -109,7 +132,7 @@
                         android:layout_weight="1"
                         android:text="Order ID:"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/roboto_bold"/>
 
                     <TextView
@@ -119,7 +142,7 @@
                         android:layout_weight="1"
                         android:text="00001"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/r_regular"
                         android:gravity="end"/>
                 </LinearLayout>
@@ -137,7 +160,7 @@
                         android:layout_weight="1"
                         android:text="Customer Name:"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/roboto_bold"/>
 
                     <TextView
@@ -147,7 +170,7 @@
                         android:layout_weight="1"
                         android:text="Chrisha Dalmacio"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/r_regular"
                         android:gravity="end"/>
                 </LinearLayout>
@@ -165,7 +188,7 @@
                         android:layout_weight="1"
                         android:text="Contact No.:"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/roboto_bold"/>
 
                     <TextView
@@ -175,7 +198,7 @@
                         android:layout_weight="1"
                         android:text="+9906253556"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/r_regular"
                         android:gravity="end"/>
                 </LinearLayout>
@@ -193,7 +216,7 @@
                         android:layout_weight="1"
                         android:text="Address:"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/roboto_bold"/>
 
                     <TextView
@@ -203,7 +226,7 @@
                         android:layout_weight="1.5"
                         android:text="102 Natividad Street Brgy 81"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/r_regular"
                         android:gravity="end"/>
                 </LinearLayout>
@@ -221,7 +244,7 @@
                         android:layout_weight="1"
                         android:text="Total Amount:"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/roboto_bold"/>
 
                     <TextView
@@ -231,7 +254,7 @@
                         android:layout_weight="1"
                         android:text="₱30.00"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/r_regular"
                         android:gravity="end"/>
                 </LinearLayout>
@@ -249,7 +272,7 @@
                         android:layout_weight="1"
                         android:text="Payment Method:"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/roboto_bold"/>
 
                     <TextView
@@ -259,7 +282,7 @@
                         android:layout_weight="1"
                         android:text="Cash Unpaid"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/r_regular"
                         android:gravity="end"/>
                 </LinearLayout>
@@ -277,7 +300,7 @@
                         android:layout_weight="1"
                         android:text="Order Status:"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/roboto_bold"/>
 
                     <TextView
@@ -287,7 +310,7 @@
                         android:layout_weight="1"
                         android:text="To Deliver"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/r_regular"
                         android:gravity="end"/>
                 </LinearLayout>

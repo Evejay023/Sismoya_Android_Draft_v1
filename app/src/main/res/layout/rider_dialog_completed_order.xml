@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:text="Completed Order Details"
                 android:textSize="@dimen/title_text_size"
-                android:textColor="@color/primary_blue"
+                android:textColor="@color/text_dark"
                 android:fontFamily="@font/roboto_bold"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/title_margin_top"
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:text="Slim Gallon"
                     android:textSize="@dimen/detail_text_size"
-                    android:textColor="@color/primary_blue"
+                    android:textColor="@color/text_dark"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center"/>
             </LinearLayout>
@@ -89,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:text="Quantity: 1"
                     android:textSize="@dimen/detail_text_size"
-                    android:textColor="@color/primary_blue"
+                    android:textColor="@color/text_dark"
                     android:fontFamily="@font/r_regular"
                     android:gravity="center"/>
             </LinearLayout>
@@ -113,7 +113,7 @@
                         android:layout_weight="1"
                         android:text="Order ID:"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/roboto_bold"/>
 
                     <TextView
@@ -123,7 +123,7 @@
                         android:layout_weight="1"
                         android:text="00001"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/r_regular"
                         android:gravity="end"/>
                 </LinearLayout>
@@ -141,7 +141,7 @@
                         android:layout_weight="1"
                         android:text="Customer Name:"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/roboto_bold"/>
 
                     <TextView
@@ -151,7 +151,7 @@
                         android:layout_weight="1"
                         android:text="Chrisha Dalmacio"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/r_regular"
                         android:gravity="end"/>
                 </LinearLayout>
@@ -169,7 +169,7 @@
                         android:layout_weight="1"
                         android:text="Contact No.:"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/roboto_bold"/>
 
                     <TextView
@@ -179,7 +179,7 @@
                         android:layout_weight="1"
                         android:text="+9906253556"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/r_regular"
                         android:gravity="end"/>
                 </LinearLayout>
@@ -197,7 +197,7 @@
                         android:layout_weight="1"
                         android:text="Address:"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/roboto_bold"/>
 
                     <TextView
@@ -207,7 +207,7 @@
                         android:layout_weight="1.5"
                         android:text="102 Natividad Street Brgy 81"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/r_regular"
                         android:gravity="end"/>
                 </LinearLayout>
@@ -225,7 +225,7 @@
                         android:layout_weight="1"
                         android:text="Total Amount:"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/roboto_bold"/>
 
                     <TextView
@@ -235,7 +235,7 @@
                         android:layout_weight="1"
                         android:text="₱30.00"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/r_regular"
                         android:gravity="end"/>
                 </LinearLayout>
@@ -253,7 +253,7 @@
                         android:layout_weight="1"
                         android:text="Payment Method:"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/roboto_bold"/>
 
                     <TextView
@@ -263,7 +263,7 @@
                         android:layout_weight="1"
                         android:text="Cash Paid"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/r_regular"
                         android:gravity="end"/>
                 </LinearLayout>
@@ -281,7 +281,7 @@
                         android:layout_weight="1"
                         android:text="Order Status:"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/roboto_bold"/>
 
                     <TextView
@@ -291,7 +291,7 @@
                         android:layout_weight="1"
                         android:text="Completed"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/r_regular"
                         android:gravity="end"/>
                 </LinearLayout>
@@ -309,7 +309,7 @@
                         android:layout_weight="1"
                         android:text="Delivered At:"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/roboto_bold"/>
 
                     <TextView
@@ -319,7 +319,7 @@
                         android:layout_weight="1"
                         android:text="09/15/25 11:00AM"
                         android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/primary_blue"
+                        android:textColor="@color/text_dark"
                         android:fontFamily="@font/r_regular"
                         android:gravity="end"/>
                 </LinearLayout>

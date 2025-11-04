@@ -225,9 +225,6 @@ public class Rider_Fragment_To_Deliver extends Fragment {
         if (layoutEmpty != null) {
             layoutEmpty.setVisibility(show ? View.VISIBLE : View.GONE);
         }
-        if (rvDeliveries != null) {
-            rvDeliveries.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
     }
 
     private void markAsDelivered(RiderDelivery order) {

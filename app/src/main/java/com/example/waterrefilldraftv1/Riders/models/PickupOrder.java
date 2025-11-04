@@ -11,11 +11,10 @@ import java.util.Locale;
 
 public class PickupOrder implements Serializable {
 
-    // NOTE: if you change base domain, update BASE_IMAGE_HOST
     private static final String BASE_IMAGE_HOST = "https://sismoya.bsit3b.site/";
 
     @SerializedName("order_id")
-    private int orderId;
+    private String orderId; // CHANGED: String instead of int
 
     @SerializedName("pickup_datetime")
     private String pickupDatetime;
@@ -50,7 +49,7 @@ public class PickupOrder implements Serializable {
     @SerializedName("items")
     private List<Item> items;
 
-    // OPTIONALS SEEN IN YOUR PAYLOAD
+    // Optional fields
     @SerializedName("payment_proof")
     private String paymentProof;
 
@@ -64,7 +63,7 @@ public class PickupOrder implements Serializable {
     private Integer addressId;
 
     // ------------------- Basic getters -------------------
-    public int getOrderId() { return orderId; }
+    public String getOrderId() { return orderId; } // CHANGED: String return type
     public String getPickupDatetime() { return pickupDatetime; }
     public String getPaymentMethod() { return paymentMethod; }
     public String getPaymentStatus() { return paymentStatus; }
@@ -101,23 +100,18 @@ public class PickupOrder implements Serializable {
         return "Gallon";
     }
 
-    public String getPrimaryImagePath() {
+    public String getPrimaryImageUrl() {
         if (items != null && !items.isEmpty()) {
-            return items.get(0).imageUrl;
+            String imagePath = items.get(0).imageUrl;
+            if (imagePath == null || imagePath.trim().isEmpty()) return null;
+
+            String path = imagePath.trim();
+            if (path.startsWith("http://") || path.startsWith("https://")) {
+                return path;
+            }
+            return BASE_IMAGE_HOST + path.replaceFirst("^/+", "");
         }
         return null;
-    }
-
-    public String getPrimaryImageUrl() {
-        String p = getPrimaryImagePath();
-        if (p == null || p.trim().isEmpty()) return null;
-        p = p.trim();
-
-        if (p.startsWith("http://") || p.startsWith("https://")) {
-            return p;
-        }
-
-        return BASE_IMAGE_HOST + p.replaceFirst("^/+", "");
     }
 
     public int getPrimaryQuantity() {
@@ -128,7 +122,6 @@ public class PickupOrder implements Serializable {
     }
 
     // ------------------- Extra helpers -------------------
-    /** Useful for a UI badge: "x items" */
     public int getItemCount() {
         return items != null ? items.size() : 0;
     }
@@ -138,7 +131,6 @@ public class PickupOrder implements Serializable {
     }
 
     // ------------------- Datetime formatting -------------------
-    /** Returns formatted pickup datetime -> "Nov 03, 3:45 PM" */
     public String getFormattedPickupDatetime() {
         if (pickupDatetime == null) return "";
 
@@ -189,7 +181,6 @@ public class PickupOrder implements Serializable {
         return getTotalPriceDouble();
     }
 
-
     // ------------------- Inner Item class -------------------
     public static class Item implements Serializable {
         @SerializedName("gallon_id")
@@ -214,9 +205,5 @@ public class PickupOrder implements Serializable {
         public String getDisplayQuantity() {
             return "Qty: " + quantity;
         }
-
-
     }
-
-
 }

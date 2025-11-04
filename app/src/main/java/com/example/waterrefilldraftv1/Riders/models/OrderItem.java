@@ -7,7 +7,7 @@ public class OrderItem {
     private int orderItemId;
 
     @SerializedName("order_id")
-    private int orderId;
+    private String orderId; // CHANGED: String instead of int
 
     @SerializedName("gallon_id")
     private int gallonId;
@@ -29,7 +29,7 @@ public class OrderItem {
 
     // Getters
     public int getOrderItemId() { return orderItemId; }
-    public int getOrderId() { return orderId; }
+    public String getOrderId() { return orderId; } // CHANGED: String return type
     public int getGallonId() { return gallonId; }
     public int getQuantity() { return quantity; }
     public String getPrice() { return price; }

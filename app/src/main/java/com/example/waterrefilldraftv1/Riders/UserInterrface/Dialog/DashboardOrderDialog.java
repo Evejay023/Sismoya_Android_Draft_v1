@@ -196,9 +196,10 @@ public class DashboardOrderDialog extends Dialog {
 
         String authHeader = "Bearer " + token;
 
+        // ✅ FIXED: Remove Integer.parseInt() - pass orderId directly as String
         Call<ApiResponse> call = apiService.updateRiderOrderStatus(
                 authHeader,
-                Integer.parseInt(orderId),
+                orderId, // ✅ CHANGED: Pass String directly, no parsing needed
                 body
         );
 

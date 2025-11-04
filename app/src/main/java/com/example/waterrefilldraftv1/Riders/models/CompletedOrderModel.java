@@ -7,7 +7,7 @@ import java.util.List;
 public class CompletedOrderModel implements Serializable {
 
     @SerializedName("order_id")
-    private int orderId;
+    private String orderId; // CHANGED: String instead of int
 
     @SerializedName("delivered_at")
     private String deliveredAt;
@@ -43,7 +43,7 @@ public class CompletedOrderModel implements Serializable {
     private List<OrderItem> items;
 
     // Getters
-    public int getOrderId() { return orderId; }
+    public String getOrderId() { return orderId; } // CHANGED: String return type
     public String getDeliveredAt() { return deliveredAt; }
     public String getCustomerName() { return customerName; }
     public String getFirstName() { return firstName; }

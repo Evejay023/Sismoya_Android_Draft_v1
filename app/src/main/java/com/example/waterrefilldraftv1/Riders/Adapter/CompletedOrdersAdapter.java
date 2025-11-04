@@ -175,12 +175,16 @@ public class CompletedOrdersAdapter extends RecyclerView.Adapter<CompletedOrders
             // Set order details with null checks
             if (tvOrderId != null) tvOrderId.setText(String.valueOf(order.getOrderId()));
             if (tvCustomerName != null) tvCustomerName.setText(order.getCustomerName());
-            if (tvContactNo != null) tvContactNo.setText(order.getContactNo() != null ? order.getContactNo() : "N/A");
+            if (tvContactNo != null)
+                tvContactNo.setText(order.getContactNo() != null ? order.getContactNo() : "N/A");
             if (tvAddress != null) tvAddress.setText(order.getAddress());
             if (tvTotalAmount != null) tvTotalAmount.setText(order.getFormattedTotal());
-            if (tvPaymentMethod != null) tvPaymentMethod.setText(order.getPaymentMethod() != null ? order.getPaymentMethod() : "N/A");
-            if (tvOrderStatus != null) tvOrderStatus.setText(StatusFormatter.format(order.getStatus()));
-            if (tvDeliveredAt != null) tvDeliveredAt.setText(formatDeliveryTime(order.getDeliveredAt()));
+            if (tvPaymentMethod != null)
+                tvPaymentMethod.setText(order.getPaymentMethod() != null ? order.getPaymentMethod() : "N/A");
+            if (tvOrderStatus != null)
+                tvOrderStatus.setText(StatusFormatter.format(order.getStatus()));
+            if (tvDeliveredAt != null)
+                tvDeliveredAt.setText(formatDeliveryTime(order.getDeliveredAt()));
             if (tvGallonName != null) tvGallonName.setText(order.getPrimaryGallonName());
             if (tvQuantity != null) tvQuantity.setText("Quantity: " + order.getPrimaryQuantity());
 

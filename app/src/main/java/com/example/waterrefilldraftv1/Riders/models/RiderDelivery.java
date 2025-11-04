@@ -3,7 +3,7 @@ package com.example.waterrefilldraftv1.Riders.models;
 import com.google.gson.annotations.SerializedName;
 
 public class RiderDelivery {
-    @SerializedName("order_id") private int orderId;
+    @SerializedName("order_id") private String orderId; // CHANGED: String instead of int
     @SerializedName("customer_name") private String customerName;
     @SerializedName("address") private String address;
     @SerializedName("contact_number") private String contactNumber;
@@ -17,7 +17,7 @@ public class RiderDelivery {
     @SerializedName("image_url") private String imageUrl;
     @SerializedName("item_count") private int itemCount;
 
-    public RiderDelivery(int orderId, String customerName, String address,
+    public RiderDelivery(String orderId, String customerName, String address, // CHANGED: String orderId
                          String contactNumber, String status,
                          String paymentMethod, double totalAmount,
                          String gallonName, int gallonQuantity,
@@ -35,7 +35,7 @@ public class RiderDelivery {
         this.itemCount = itemCount;
     }
 
-    public int getOrderId() { return orderId; }
+    public String getOrderId() { return orderId; } // CHANGED: String return type
     public String getCustomerName() { return customerName; }
     public String getAddress() { return address; }
     public String getContactNumber() { return contactNumber; }

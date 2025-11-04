@@ -78,13 +78,26 @@ public class Rider_Fragment_Delivery_History extends Fragment {
     }
 
     private void loadCompletedOrders() {
-        apiService.getDeliveredOrders().enqueue(new Callback<List<CompletedOrderModel>>() {
+        // Show loading state if you have a ProgressBar
+        // progressBar.setVisibility(View.VISIBLE);
+
+        apiService.getDeliveryHistory().enqueue(new Callback<List<CompletedOrderModel>>() {
             @Override
             public void onResponse(Call<List<CompletedOrderModel>> call, Response<List<CompletedOrderModel>> response) {
+                // Hide loading state
+                // progressBar.setVisibility(View.GONE);
+
                 if (response.isSuccessful() && response.body() != null) {
-                    // ✅ Use the adapter's update method which includes sorting
-                    adapter.updateOrders(response.body());
-                    Log.d("DELIVERY_HISTORY", "Loaded " + response.body().size() + " completed orders");
+                    List<CompletedOrderModel> orders = response.body();
+                    adapter.updateOrders(orders);
+                    Log.d("DELIVERY_HISTORY", "Loaded " + orders.size() + " completed orders");
+
+                    // Show empty state if no orders
+                    if (orders.isEmpty()) {
+                        // Show empty view
+                        // tvEmptyState.setVisibility(View.VISIBLE);
+                        Toast.makeText(getContext(), "No delivery history found", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(getContext(), "Failed to fetch history", Toast.LENGTH_SHORT).show();
                     Log.e("DELIVERY_HISTORY", "Response not successful: " + response.code());
@@ -93,6 +106,9 @@ public class Rider_Fragment_Delivery_History extends Fragment {
 
             @Override
             public void onFailure(Call<List<CompletedOrderModel>> call, Throwable t) {
+                // Hide loading state
+                // progressBar.setVisibility(View.GONE);
+
                 Toast.makeText(getContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("DELIVERY_HISTORY", "Error loading orders", t);
             }

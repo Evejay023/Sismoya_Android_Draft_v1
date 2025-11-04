@@ -11,7 +11,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxHeight="520dp"
+        android:maxHeight="550dp"
         android:fillViewport="false">
 
         <LinearLayout
@@ -29,7 +29,7 @@
                 android:layout_gravity="end"
                 android:contentDescription="Close"
                 android:clickable="true"
-                android:focusable="true" />
+                android:focusable="true"/>
 
             <!-- Title -->
             <TextView
@@ -41,7 +41,7 @@
                 android:fontFamily="@font/roboto_bold"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/title_margin_top"
-                android:layout_marginBottom="@dimen/title_margin_bottom" />
+                android:layout_marginBottom="@dimen/title_margin_bottom"/>
 
             <!-- Product Image -->
             <ImageView
@@ -51,7 +51,7 @@
                 android:src="@drawable/img_slim_container"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="6dp"
-                android:contentDescription="Water Gallon" />
+                android:contentDescription="Water Gallon"/>
 
             <!-- Gallon Name -->
             <TextView
@@ -76,6 +76,7 @@
                 android:fontFamily="@font/roboto_bold"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/water_icon_margin_bottom"/>
+
             <TextView
                 android:id="@+id/tv_more_items"
                 android:layout_width="wrap_content"
@@ -88,8 +89,7 @@
                 android:layout_marginBottom="6dp"
                 android:visibility="gone"/>
 
-
-            <!-- ORDER DETAILS -->
+            <!-- Order Details -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -101,6 +101,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginBottom="@dimen/detail_item_margin_bottom">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -108,7 +109,8 @@
                         android:text="Order ID:"
                         android:textSize="@dimen/detail_text_size"
                         android:textColor="@color/primary_blue"
-                        android:fontFamily="@font/roboto_bold" />
+                        android:fontFamily="@font/roboto_bold"/>
+
                     <TextView
                         android:id="@+id/tv_order_id"
                         android:layout_width="0dp"
@@ -118,7 +120,7 @@
                         android:textSize="@dimen/detail_text_size"
                         android:textColor="@color/primary_blue"
                         android:fontFamily="@font/r_regular"
-                        android:gravity="end" />
+                        android:gravity="end"/>
                 </LinearLayout>
 
                 <!-- Customer Name -->
@@ -127,6 +129,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginBottom="@dimen/detail_item_margin_bottom">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -134,7 +137,8 @@
                         android:text="Customer Name:"
                         android:textSize="@dimen/detail_text_size"
                         android:textColor="@color/primary_blue"
-                        android:fontFamily="@font/roboto_bold" />
+                        android:fontFamily="@font/roboto_bold"/>
+
                     <TextView
                         android:id="@+id/tv_customer_name"
                         android:layout_width="0dp"
@@ -144,7 +148,7 @@
                         android:textSize="@dimen/detail_text_size"
                         android:textColor="@color/primary_blue"
                         android:fontFamily="@font/r_regular"
-                        android:gravity="end" />
+                        android:gravity="end"/>
                 </LinearLayout>
 
                 <!-- Contact Number -->
@@ -153,6 +157,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginBottom="@dimen/detail_item_margin_bottom">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -160,7 +165,8 @@
                         android:text="Contact No.:"
                         android:textSize="@dimen/detail_text_size"
                         android:textColor="@color/primary_blue"
-                        android:fontFamily="@font/roboto_bold" />
+                        android:fontFamily="@font/roboto_bold"/>
+
                     <TextView
                         android:id="@+id/tv_contact_no"
                         android:layout_width="0dp"
@@ -170,7 +176,7 @@
                         android:textSize="@dimen/detail_text_size"
                         android:textColor="@color/primary_blue"
                         android:fontFamily="@font/r_regular"
-                        android:gravity="end" />
+                        android:gravity="end"/>
                 </LinearLayout>
 
                 <!-- Address -->
@@ -179,6 +185,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginBottom="@dimen/detail_item_margin_bottom">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -186,7 +193,8 @@
                         android:text="Address:"
                         android:textSize="@dimen/detail_text_size"
                         android:textColor="@color/primary_blue"
-                        android:fontFamily="@font/roboto_bold" />
+                        android:fontFamily="@font/roboto_bold"/>
+
                     <TextView
                         android:id="@+id/tv_address"
                         android:layout_width="0dp"
@@ -196,15 +204,16 @@
                         android:textSize="@dimen/detail_text_size"
                         android:textColor="@color/primary_blue"
                         android:fontFamily="@font/r_regular"
-                        android:gravity="end" />
+                        android:gravity="end"/>
                 </LinearLayout>
 
-                <!-- Pickup Time -->
+                <!-- Pickup Time (Specific to Pick-Up dialog) -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginBottom="@dimen/detail_item_margin_bottom">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -212,7 +221,8 @@
                         android:text="Pickup Time:"
                         android:textSize="@dimen/detail_text_size"
                         android:textColor="@color/primary_blue"
-                        android:fontFamily="@font/roboto_bold" />
+                        android:fontFamily="@font/roboto_bold"/>
+
                     <TextView
                         android:id="@+id/tv_pickup_time"
                         android:layout_width="0dp"
@@ -222,7 +232,7 @@
                         android:textSize="@dimen/detail_text_size"
                         android:textColor="@color/primary_blue"
                         android:fontFamily="@font/r_regular"
-                        android:gravity="end" />
+                        android:gravity="end"/>
                 </LinearLayout>
 
                 <!-- Payment Method -->
@@ -231,14 +241,16 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginBottom="@dimen/detail_item_margin_bottom">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Payment:"
+                        android:text="Payment Method:"
                         android:textSize="@dimen/detail_text_size"
                         android:textColor="@color/primary_blue"
-                        android:fontFamily="@font/roboto_bold" />
+                        android:fontFamily="@font/roboto_bold"/>
+
                     <TextView
                         android:id="@+id/tv_payment_method"
                         android:layout_width="0dp"
@@ -248,7 +260,7 @@
                         android:textSize="@dimen/detail_text_size"
                         android:textColor="@color/primary_blue"
                         android:fontFamily="@font/r_regular"
-                        android:gravity="end" />
+                        android:gravity="end"/>
                 </LinearLayout>
 
                 <!-- Total Amount -->
@@ -257,14 +269,16 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginBottom="@dimen/detail_item_margin_bottom">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Total:"
+                        android:text="Total Amount:"
                         android:textSize="@dimen/detail_text_size"
                         android:textColor="@color/primary_blue"
-                        android:fontFamily="@font/roboto_bold" />
+                        android:fontFamily="@font/roboto_bold"/>
+
                     <TextView
                         android:id="@+id/tv_total_amount"
                         android:layout_width="0dp"
@@ -274,7 +288,7 @@
                         android:textSize="@dimen/detail_text_size"
                         android:textColor="@color/primary_blue"
                         android:fontFamily="@font/r_regular"
-                        android:gravity="end" />
+                        android:gravity="end"/>
                 </LinearLayout>
 
                 <!-- Order Status -->
@@ -283,6 +297,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginBottom="@dimen/detail_section_margin_bottom">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -290,7 +305,8 @@
                         android:text="Order Status:"
                         android:textSize="@dimen/detail_text_size"
                         android:textColor="@color/primary_blue"
-                        android:fontFamily="@font/roboto_bold" />
+                        android:fontFamily="@font/roboto_bold"/>
+
                     <TextView
                         android:id="@+id/tv_order_status"
                         android:layout_width="0dp"
@@ -300,8 +316,9 @@
                         android:textSize="@dimen/detail_text_size"
                         android:textColor="@color/primary_blue"
                         android:fontFamily="@font/r_regular"
-                        android:gravity="end" />
+                        android:gravity="end"/>
                 </LinearLayout>
+
             </LinearLayout>
 
             <!-- Mark as Picked-Up Button -->
@@ -316,9 +333,10 @@
                 android:background="@drawable/button_primary"
                 android:paddingVertical="@dimen/button_padding_vertical"
                 android:fontFamily="@font/roboto_bold"
-                android:layout_marginTop="@dimen/button_margin_top" />
+                android:layout_marginTop="@dimen/button_margin_top"/>
 
         </LinearLayout>
+
     </ScrollView>
 
 </androidx.cardview.widget.CardView>

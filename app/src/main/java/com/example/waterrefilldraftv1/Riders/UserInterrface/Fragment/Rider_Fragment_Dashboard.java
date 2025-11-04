@@ -230,6 +230,8 @@ public class Rider_Fragment_Dashboard extends Fragment {
     }
 
     // Update status -----
+    // Update status methods in Rider_Fragment_Dashboard.java
+
     private void markAsPickedUp(PickupOrder order) {
         String token = TokenManager.getToken(requireContext());
         if (token == null) return;
@@ -237,6 +239,7 @@ public class Rider_Fragment_Dashboard extends Fragment {
         Map<String, String> body = new HashMap<>();
         body.put("newStatus", "picked_up");
 
+        // ✅ FIXED: order.getOrderId() now returns String, no conversion needed
         apiService.updateRiderOrderStatus("Bearer " + token, order.getOrderId(), body)
                 .enqueue(new Callback<ApiResponse>() {
                     @Override
@@ -266,6 +269,7 @@ public class Rider_Fragment_Dashboard extends Fragment {
         Map<String, String> body = new HashMap<>();
         body.put("newStatus", "delivered");
 
+        // ✅ FIXED: order.getOrderId() now returns String
         apiService.updateRiderOrderStatus("Bearer " + token, order.getOrderId(), body)
                 .enqueue(new Callback<ApiResponse>() {
                     @Override

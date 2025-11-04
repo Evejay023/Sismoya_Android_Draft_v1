@@ -437,7 +437,8 @@
                     });
         }
 
-        public void updateRiderOrderStatus(int orderId, String newStatus, ApiCallback<ApiResponse> callback) {
+        // ✅ NEW CODE (fixed):
+        public void updateRiderOrderStatus(String orderId, String newStatus, ApiCallback<ApiResponse> callback) {
             String token = TokenManager.getToken(context);
             if (token == null) {
                 callback.onError("Token missing. Please log in again.");
@@ -445,8 +446,9 @@
             }
 
             Map<String, String> body = new HashMap<>();
-            body.put("newStatus", newStatus); // ✅ correct key
+            body.put("newStatus", newStatus);
 
+            // ✅ FIXED: orderId is already String, no conversion needed
             apiService.updateRiderOrderStatus("Bearer " + token, orderId, body)
                     .enqueue(new Callback<ApiResponse>() {
                         @Override

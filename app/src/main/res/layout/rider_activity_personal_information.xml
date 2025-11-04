@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Personal Information"
-                android:textSize="29sp"
+                android:textSize="25sp"
                 android:textColor="@color/primary_blue"
                 android:fontFamily="@font/roboto_bold"
                 android:layout_marginStart="16dp"/>
@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="21dp"
             android:padding="24dp">
 
             <!-- Name Field -->

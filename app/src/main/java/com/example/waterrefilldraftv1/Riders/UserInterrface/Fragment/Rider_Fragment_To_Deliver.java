@@ -167,6 +167,7 @@ public class Rider_Fragment_To_Deliver extends Fragment {
         Map<String, String> body = new HashMap<>();
         body.put("newStatus", "delivered");
 
+        // ✅ FIXED: order.getOrderId() returns String
         apiService.updateRiderOrderStatus("Bearer " + token, order.getOrderId(), body)
                 .enqueue(new Callback<ApiResponse>() {
                     @Override

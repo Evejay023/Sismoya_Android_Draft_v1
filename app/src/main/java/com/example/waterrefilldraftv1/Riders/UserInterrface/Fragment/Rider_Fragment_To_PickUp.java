@@ -202,6 +202,7 @@ public class Rider_Fragment_To_PickUp extends Fragment {
 
         Toast.makeText(requireContext(), "Updating...", Toast.LENGTH_SHORT).show();
 
+        // ✅ FIXED: order.getOrderId() returns String
         apiService.updateRiderOrderStatus("Bearer " + token, order.getOrderId(), body)
                 .enqueue(new Callback<ApiResponse>() {
                     @Override

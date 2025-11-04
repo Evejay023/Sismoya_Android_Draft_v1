@@ -16,7 +16,6 @@ import com.example.waterrefilldraftv1.Customer.models.ProductDto;
 import com.example.waterrefilldraftv1.Customer.models.CartItem;
 import com.example.waterrefilldraftv1.Customer.models.ServerCartItem;
 import com.example.waterrefilldraftv1.Riders.models.CompletedOrderModel;
-import com.example.waterrefilldraftv1.Riders.models.PickupOrder;
 import com.example.waterrefilldraftv1.Riders.models.RiderOrdersResponse;
 
 import java.util.List;
@@ -41,15 +40,19 @@ public interface ApiService {
     // ======================================================
 
     @GET("profile")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> getProfile(@Header("Authorization") String token);
 
     @PUT("update-profile")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> updateProfile(@Header("Authorization") String token, @Body User user);
 
     @PUT("update-profile")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> updateProfilePartial(@Header("Authorization") String token, @Body Map<String, String> body);
 
     @PUT("change-password")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> changePassword(@Header("Authorization") String token, @Body Map<String, String> body);
 
 
@@ -58,21 +61,27 @@ public interface ApiService {
     // ======================================================
 
     @POST("login")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<LoginResponse> login(@Body LoginRequest request);
 
     @POST("register")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> register(@Body User user);
 
     @POST("register")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> registerUser(@Body RegisterRequest request);
 
     @POST("forgot-password")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> forgotPassword(@Body ForgotPasswordRequest request);
 
     @POST("verify-reset-code")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> verifyCode(@Body VerifyCodeRequest request);
 
     @POST("reset-password")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> resetPassword(@Body ResetPasswordRequest request);
 
 
@@ -81,9 +90,11 @@ public interface ApiService {
     // ======================================================
 
     @GET("gallons")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<List<ProductDto>> getGallons();
 
     @GET("gallons/{id}")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ProductDto> getGallon(@Path("id") int id);
 
 
@@ -92,18 +103,23 @@ public interface ApiService {
     // ======================================================
 
     @GET("addresses")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<AddressResponse> getAddresses(@Header("Authorization") String token);
 
     @POST("addresses")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> createAddress(@Header("Authorization") String token, @Body Address body);
 
     @PUT("addresses/{id}")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> updateAddress(@Header("Authorization") String token, @Path("id") int id, @Body Address body);
 
     @DELETE("addresses/{id}")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> deleteAddress(@Header("Authorization") String token, @Path("id") int id);
 
     @POST("addresses/{id}/default")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> setDefaultAddress(@Header("Authorization") String token, @Path("id") int id);
 
 
@@ -112,12 +128,15 @@ public interface ApiService {
     // ======================================================
 
     @POST("orders")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> placeOrder(@Header("Authorization") String token, @Body OrderRequest request);
 
     @GET("orders/stats")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<OrderStats> getOrderStats(@Header("Authorization") String token, @Query("order_id") String orderId);
 
     @GET("orders/latest")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<List<OrderOverview>> getLatestOrders(@Header("Authorization") String token, @Query("order_id") String orderId);
 
 
@@ -126,18 +145,23 @@ public interface ApiService {
     // ======================================================
 
     @GET("cartItems")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<List<ServerCartItem>> getCartItems(@Header("Authorization") String token);
 
     @POST("cartItems")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> addToCart(@Header("Authorization") String token, @Body Map<String, Object> body);
 
     @DELETE("cartItems")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> removeFromCart(@Header("Authorization") String token, @Body Map<String, List<Integer>> body);
 
     @PUT("cartItems/decrease")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> decreaseCartItem(@Header("Authorization") String token, @Body Map<String, Integer> body);
 
     @PUT("cartItems/increase")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> increaseCartItem(@Header("Authorization") String token, @Body Map<String, Integer> body);
 
 
@@ -146,9 +170,11 @@ public interface ApiService {
     // ======================================================
 
     @GET
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<List<ProductDto>> getCustomerContainerJson(@Url String fullUrl);
 
     @GET
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<List<CartItem>> getCustomerCartJson(@Url String fullUrl);
 
 
@@ -156,42 +182,51 @@ public interface ApiService {
     // ✅ RIDER ORDERS (Pick-up & Deliver)
     // ======================================================
 
-    // ======================================================
-// ✅ RIDER ORDERS (Pick-up & Deliver)
-// ======================================================
-
     /** Fetch ALL rider orders (to_pickup + to_deliver) */
     @GET("rider/orders")
     @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<RiderOrdersResponse> getRiderOrders(@Header("Authorization") String token);
 
-
     /** Update order status */
     @PUT("rider/orders/{id}/update-status")
     @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> updateRiderOrderStatus(
-            @Header("Authorization") String token,
-            @Path("id") int orderId,
+            @Header("Authorization") String authHeader,
+            @Path("id") String orderId,
             @Body Map<String, String> body
     );
 
-    /** Fetch ONLY to_pick orders */
+    /** Fetch ONLY to_pick orders - FIXED: This endpoint might not exist in your backend */
     @GET("rider/orders/to_pick")
     @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> getToPickOrders(@Header("Authorization") String token);
 
-
-    /** Delivery history list */
+    /** Delivery history list - FIXED: Return proper response type */
     @GET("rider/delivery-history")
     @Headers("Cache-Control: no-cache, no-store, must-revalidate")
-    Call<ApiResponse> getDeliveryHistory(@Header("Authorization") String token);
+    Call<List<CompletedOrderModel>> getDeliveryHistory();
 
-    /** (Optional) Completed model version */
+    /** Alternative delivery history with wrapper */
     @GET("rider/delivery-history")
     @Headers("Cache-Control: no-cache, no-store, must-revalidate")
-    Call<List<CompletedOrderModel>> getDeliveredOrders();
+    Call<ApiResponse> getDeliveryHistoryWithWrapper(@Header("Authorization") String token);
 
+    // ======================================================
+    // ✅ ADDITIONAL ENDPOINTS FROM YOUR BACKEND
+    // ======================================================
 
+    /** Get order by ID */
+    @GET("orders/{id}")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
+    Call<ApiResponse> getOrderById(@Header("Authorization") String token, @Path("id") String orderId);
 
+    /** Cancel order */
+    @PUT("orders/{id}/cancel")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
+    Call<ApiResponse> cancelOrder(@Header("Authorization") String token, @Path("id") String orderId);
 
+    /** Get orders by status */
+    @GET("orders")
+    @Headers("Cache-Control: no-cache, no-store, must-revalidate")
+    Call<ApiResponse> getOrdersByStatus(@Header("Authorization") String token, @Query("status") String status);
 }

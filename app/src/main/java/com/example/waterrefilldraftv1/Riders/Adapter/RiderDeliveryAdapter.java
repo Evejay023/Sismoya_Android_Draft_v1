@@ -1,15 +1,18 @@
 package com.example.waterrefilldraftv1.Riders.Adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.waterrefilldraftv1.R;
+import com.example.waterrefilldraftv1.Riders.Utils.ImageFormatter;
 import com.example.waterrefilldraftv1.Riders.Utils.StatusFormatter;
 import com.example.waterrefilldraftv1.Riders.models.RiderDelivery;
 
@@ -37,43 +40,59 @@ public class RiderDeliveryAdapter extends RecyclerView.Adapter<RiderDeliveryAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RiderDelivery order = deliveryList.get(position);
 
+        // Set basic info only
         holder.tvCustomerName.setText(order.getCustomerName());
         holder.tvAddress.setText(order.getAddress());
-        holder.tvStatus.setText(StatusFormatter.format(order.getStatus()));
+        holder.tvGallonName.setText(order.getGallonName());
+        // ❌ REMOVED: Quantity from item layout
 
-        // Add gallon info to the list item if you have those views
-        // You might need to add these TextViews to your rider_item_delivery_order.xml
-        if (holder.tvGallonName != null) {
-            holder.tvGallonName.setText(order.getGallonName());
-        }
-        if (holder.tvQuantity != null) {
-            holder.tvQuantity.setText("Qty: " + order.getGallonQuantity());
-        }
+        // Load image
+        ImageFormatter.safeLoadGallonImage(
+                holder.ivWaterIcon,
+                order.getFullImageUrl(),
+                order.getGallonName()
+        );
 
-        holder.tvViewDetails.setOnClickListener(v -> listener.onViewDetails(order));
-        holder.btnMarkDelivered.setOnClickListener(v -> listener.onMarkDelivered(order));
+        // Set click listeners
+        holder.tvViewDetails.setOnClickListener(v -> {
+            Log.d("DELIVERY_ADAPTER", "View details clicked for order: " + order.getOrderId());
+            listener.onViewDetails(order);
+        });
+
+        holder.btnMarkDelivered.setOnClickListener(v -> {
+            Log.d("DELIVERY_ADAPTER", "Mark delivered clicked for order: " + order.getOrderId());
+            listener.onMarkDelivered(order);
+        });
+
+        // Optional: Add click listener to entire item
+        holder.itemView.setOnClickListener(v -> {
+            Log.d("DELIVERY_ADAPTER", "Item clicked for order: " + order.getOrderId());
+            listener.onViewDetails(order);
+        });
     }
 
     @Override
     public int getItemCount() {
-        return deliveryList.size();
+        return deliveryList == null ? 0 : deliveryList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvCustomerName, tvAddress, tvStatus, tvViewDetails, tvGallonName, tvQuantity;
-        Button btnMarkDelivered;
+        // Updated to match simplified layout
+        public ImageView ivWaterIcon;
+        public TextView tvCustomerName, tvAddress, tvViewDetails, tvGallonName;
+        public Button btnMarkDelivered;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            ivWaterIcon = itemView.findViewById(R.id.iv_water_icon);
             tvCustomerName = itemView.findViewById(R.id.tv_customer_name);
             tvAddress = itemView.findViewById(R.id.tv_address);
-            tvStatus = itemView.findViewById(R.id.tv_status);
             tvViewDetails = itemView.findViewById(R.id.tv_view_details);
+            tvGallonName = itemView.findViewById(R.id.tv_gallon_name);
             btnMarkDelivered = itemView.findViewById(R.id.btn_mark_delivered);
 
-            // Add the new TextViews
-            tvGallonName = itemView.findViewById(R.id.tv_gallon_name);
-            tvQuantity = itemView.findViewById(R.id.tv_quantity);
+            // ❌ REMOVED: tvQuantity initialization
         }
     }
 

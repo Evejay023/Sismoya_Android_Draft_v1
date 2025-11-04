@@ -23,7 +23,7 @@
             android:src="@drawable/img_slim_container"
             android:contentDescription="Gallon Image"/>
 
-        <!-- Order Details -->
+        <!-- Order Details - Simplified -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -39,7 +39,20 @@
                 android:text="Customer Name"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/text_dark"/>
+                android:textColor="@color/text_dark"
+                android:fontFamily="@font/roboto_bold"/>
+
+            <!-- Address -->
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Customer Address"
+                android:textSize="13sp"
+                android:textColor="@color/text_dark"
+                android:layout_marginTop="4dp"
+                android:maxLines="2"
+                android:ellipsize="end"/>
 
             <!-- Delivery Time -->
             <TextView
@@ -51,51 +64,31 @@
                 android:textColor="@color/text_dark"
                 android:layout_marginTop="4dp"/>
 
-            <!-- Address -->
-            <TextView
-                android:id="@+id/tv_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Customer Address"
-                android:textSize="12sp"
-                android:textColor="@color/text_dark"
-                android:layout_marginTop="2dp"/>
-
-            <!-- Gallon Name -->
             <TextView
                 android:id="@+id/tv_gallon_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
                 android:text="Slim Gallon"
-                android:textSize="12sp"
+                android:textSize="13sp"
                 android:textColor="@color/text_dark"
-                android:layout_marginTop="4dp"/>
-
-            <!-- Quantity -->
-            <TextView
-                android:id="@+id/tv_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Qty: 1"
-                android:textSize="12sp"
-                android:textColor="@color/text_dark"
-                android:layout_marginTop="2dp"/>
-
+                android:gravity="center"/>
             <!-- View Details -->
             <TextView
                 android:id="@+id/tv_view_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="View Details"
-                android:textSize="11sp"
-                android:textColor="@color/text_dark"
-                android:layout_marginTop="8dp"
+                android:textSize="12sp"
+                android:textColor="@color/primary_blue"
+                android:layout_marginTop="6dp"
                 android:layout_gravity="right"
                 android:clickable="true"
                 android:focusable="true"/>
 
         </LinearLayout>
 
-    </LinearLayout>
 
+
+    </LinearLayout>
 </androidx.cardview.widget.CardView>

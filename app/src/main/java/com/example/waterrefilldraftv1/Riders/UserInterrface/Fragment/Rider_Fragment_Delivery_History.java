@@ -13,14 +13,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.waterrefilldraftv1.Global.network.ApiResponse;
 import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.Global.network.RetrofitClient;
 import com.example.waterrefilldraftv1.Riders.Adapter.CompletedOrdersAdapter;
 import com.example.waterrefilldraftv1.Riders.models.CompletedOrderModel;
 import com.example.waterrefilldraftv1.Global.network.ApiService;
 import com.example.waterrefilldraftv1.Riders.models.Rider;
-import com.example.waterrefilldraftv1.Riders.Utils.ImageFormatter;
-import com.example.waterrefilldraftv1.Riders.Utils.StatusFormatter;
+import com.example.waterrefilldraftv1.Global.network.TokenManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,39 +78,79 @@ public class Rider_Fragment_Delivery_History extends Fragment {
     }
 
     private void loadCompletedOrders() {
-        // Show loading state if you have a ProgressBar
-        // progressBar.setVisibility(View.VISIBLE);
+        String token = TokenManager.getToken(requireContext());
+        if (token == null) {
+            Toast.makeText(getContext(), "Please login again", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        apiService.getDeliveryHistory().enqueue(new Callback<List<CompletedOrderModel>>() {
+        // ✅ FIX: Use the direct array call instead of wrapper
+        apiService.getDeliveryHistory("Bearer " + token).enqueue(new Callback<List<CompletedOrderModel>>() {
             @Override
             public void onResponse(Call<List<CompletedOrderModel>> call, Response<List<CompletedOrderModel>> response) {
-                // Hide loading state
-                // progressBar.setVisibility(View.GONE);
+                if (!isAdded()) return;
 
                 if (response.isSuccessful() && response.body() != null) {
                     List<CompletedOrderModel> orders = response.body();
-                    adapter.updateOrders(orders);
-                    Log.d("DELIVERY_HISTORY", "Loaded " + orders.size() + " completed orders");
 
-                    // Show empty state if no orders
-                    if (orders.isEmpty()) {
-                        // Show empty view
-                        // tvEmptyState.setVisibility(View.VISIBLE);
+                    if (orders != null && !orders.isEmpty()) {
+                        adapter.updateOrders(orders);
+                        Log.d("DELIVERY_HISTORY", "Loaded " + orders.size() + " completed orders");
+                    } else {
                         Toast.makeText(getContext(), "No delivery history found", Toast.LENGTH_SHORT).show();
+                        adapter.updateOrders(new ArrayList<>());
                     }
                 } else {
-                    Toast.makeText(getContext(), "Failed to fetch history", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Failed to fetch history: " + response.code(), Toast.LENGTH_SHORT).show();
                     Log.e("DELIVERY_HISTORY", "Response not successful: " + response.code());
+
+                    // ✅ FALLBACK: Try the wrapper method if direct array fails
+                    tryWrapperMethod(token);
                 }
             }
 
             @Override
             public void onFailure(Call<List<CompletedOrderModel>> call, Throwable t) {
-                // Hide loading state
-                // progressBar.setVisibility(View.GONE);
-
+                if (!isAdded()) return;
                 Toast.makeText(getContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("DELIVERY_HISTORY", "Error loading orders", t);
+
+                // ✅ FALLBACK: Try the wrapper method if direct call fails
+                tryWrapperMethod(token);
+            }
+        });
+    }
+
+    private void tryWrapperMethod(String token) {
+        // Fallback to wrapper method
+        apiService.getDeliveryHistoryWithWrapper("Bearer " + token).enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (!isAdded()) return;
+
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse apiResponse = response.body();
+
+                    if (apiResponse.isSuccess()) {
+                        List<CompletedOrderModel> orders = apiResponse.getDataAsList(CompletedOrderModel.class);
+
+                        if (orders != null && !orders.isEmpty()) {
+                            adapter.updateOrders(orders);
+                            Log.d("DELIVERY_HISTORY", "Loaded " + orders.size() + " completed orders (wrapper method)");
+                        } else {
+                            Toast.makeText(getContext(), "No delivery history found", Toast.LENGTH_SHORT).show();
+                            adapter.updateOrders(new ArrayList<>());
+                        }
+                    } else {
+                        Toast.makeText(getContext(), "Failed to fetch history: " + apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                if (!isAdded()) return;
+                Log.e("DELIVERY_HISTORY", "Wrapper method also failed", t);
             }
         });
     }

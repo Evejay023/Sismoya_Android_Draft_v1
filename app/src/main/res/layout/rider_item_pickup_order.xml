@@ -29,21 +29,15 @@
             android:orientation="vertical"
             android:layout_marginStart="12dp">
 
+            <!-- Only show customer name and address -->
             <TextView
                 android:id="@+id/tv_customer_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Customer"
                 android:textSize="15sp"
-                android:textColor="@color/text_dark" />
-
-            <TextView
-                android:id="@+id/tv_contact_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="09XXXXXXXXX"
-                android:textSize="12sp"
-                android:layout_marginTop="2dp" />
+                android:textColor="@color/text_dark"
+                android:fontFamily="@font/roboto_bold" />
 
             <TextView
                 android:id="@+id/tv_address"
@@ -51,57 +45,22 @@
                 android:layout_height="wrap_content"
                 android:text="Address"
                 android:textSize="13sp"
-                android:layout_marginTop="2dp" />
+                android:textColor="@color/text_dark"
+                android:layout_marginTop="4dp"
+                android:maxLines="2"
+                android:ellipsize="end" />
 
-            <TextView
-                android:id="@+id/tv_pickup_datetime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2025-11-13 10:00"
-                android:textSize="12sp"
-                android:layout_marginTop="2dp" />
-
-            <TextView
-                android:id="@+id/tv_payment_method"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cash"
-                android:textSize="12sp"
-                android:layout_marginTop="2dp" />
-
-            <TextView
-                android:id="@+id/tv_payment_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Unpaid"
-                android:textSize="12sp"
-                android:layout_marginTop="2dp" />
-
-            <TextView
-                android:id="@+id/tv_total_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="₱ 150.00"
-                android:textSize="12sp"
-                android:layout_marginTop="2dp"
-                android:textColor="@color/text_dark" />
-
-            <TextView
-                android:id="@+id/tv_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="to_pickup"
-                android:textSize="13sp"
-                android:layout_marginTop="2dp" />
-
+            <!-- View Details link -->
             <TextView
                 android:id="@+id/tv_view_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="View Details"
                 android:textSize="12sp"
-                android:layout_marginTop="6dp"
-                android:textColor="@color/text_dark" />
+                android:textColor="@color/primary_blue"
+                android:layout_marginTop="6px"
+                android:clickable="true"
+                android:focusable="true" />
         </LinearLayout>
 
         <LinearLayout
@@ -110,28 +69,29 @@
             android:orientation="vertical"
             android:gravity="center">
 
+            <!-- Simple gallon name only -->
             <TextView
                 android:id="@+id/tv_gallon_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Slim Gallon"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textColor="@color/text_dark"
+                android:gravity="center" />
 
-            <TextView
-                android:id="@+id/tv_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Qty: 1"
-                android:textSize="12sp"
-                android:layout_marginTop="4dp" />
-
+            <!-- Mark button -->
             <Button
                 android:id="@+id/btn_mark_picked_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mark"
                 android:textAllCaps="false"
-                android:layout_marginTop="8dp" />
+                android:textSize="12sp"
+                android:background="@drawable/button_primary"
+                android:textColor="@color/background_white"
+                android:layout_marginTop="8dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="6dp" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

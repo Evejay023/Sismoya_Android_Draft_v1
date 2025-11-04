@@ -50,11 +50,9 @@ public class PickupAdapter extends RecyclerView.Adapter<PickupAdapter.ViewHolder
 
         h.tvCustomerName.setText(o.getCustomerName() != null ? o.getCustomerName() : "N/A");
         h.tvAddress.setText(o.getAddress() != null ? o.getAddress() : "N/A");
-        h.tvStatus.setText(StatusFormatter.format(o.getStatus()));
         h.tvGallonName.setText(o.getPrimaryGallonName());
-        h.tvQuantity.setText("Qty: " + o.getPrimaryQuantity());
+        // ❌ REMOVED: h.tvQuantity.setText("Qty: " + o.getPrimaryQuantity());
 
-        // ✅ SIMPLE: Use ImageFormatter for safe image loading
         ImageFormatter.safeLoadGallonImage(
                 h.ivGallon,
                 o.getPrimaryImageUrl(),
@@ -68,7 +66,6 @@ public class PickupAdapter extends RecyclerView.Adapter<PickupAdapter.ViewHolder
         });
         h.itemView.setOnClickListener(v -> listener.onViewDetails(o));
     }
-
     @Override
     public int getItemCount() {
         return pickupList == null ? 0 : pickupList.size();
@@ -76,7 +73,7 @@ public class PickupAdapter extends RecyclerView.Adapter<PickupAdapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView ivGallon;
-        TextView tvCustomerName, tvAddress, tvStatus, tvViewDetails, tvGallonName, tvQuantity;
+        TextView tvCustomerName, tvAddress, tvViewDetails, tvGallonName;
         Button btnMarkPickedUp;
 
         public ViewHolder(@NonNull View v) {
@@ -84,10 +81,9 @@ public class PickupAdapter extends RecyclerView.Adapter<PickupAdapter.ViewHolder
             ivGallon        = v.findViewById(R.id.iv_gallon_image);
             tvCustomerName  = v.findViewById(R.id.tv_customer_name);
             tvAddress       = v.findViewById(R.id.tv_address);
-            tvStatus        = v.findViewById(R.id.tv_status);
             tvViewDetails   = v.findViewById(R.id.tv_view_details);
             tvGallonName    = v.findViewById(R.id.tv_gallon_name);
-            tvQuantity      = v.findViewById(R.id.tv_quantity);
+            // ❌ REMOVED: tvQuantity      = v.findViewById(R.id.tv_quantity);
             btnMarkPickedUp = v.findViewById(R.id.btn_mark_picked_up);
         }
     }

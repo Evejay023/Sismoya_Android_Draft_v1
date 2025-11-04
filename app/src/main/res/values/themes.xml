@@ -11,7 +11,6 @@
         <item name="android:statusBarColor">#35A3FD</item>
         <item name="android:buttonStyle">@style/PrimaryButton</item>
         <item name="android:windowLightStatusBar">false</item>
-
     </style>
 
     <!-- Main app theme -->
@@ -36,26 +35,23 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-
-
     <!-- Button Styles -->
     <style name="PrimaryButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:background">@drawable/button_primary</item>
-        <item name="android:textColor">@android:color/white</item>          ← White text on dark
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:elevation">4dp</item>
     </style>
 
-
     <style name="SecondaryButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:background">@drawable/button_secondary</item>
-        <item name="android:textColor">@color/primary_blue</item>           ← Blue text on white
+        <item name="android:textColor">@color/primary_blue</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -73,5 +69,8 @@
         <item name="android:elevation">4dp</item>
     </style>
 
-
+    <!-- Simple Bottom Navigation Style -->
+    <style name="BottomNavigationViewStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconSize">24dp</item>
+    </style>
 </resources>

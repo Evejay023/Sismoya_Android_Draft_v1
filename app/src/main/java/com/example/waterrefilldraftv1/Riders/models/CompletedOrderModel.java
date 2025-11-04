@@ -44,7 +44,9 @@ public class CompletedOrderModel implements Serializable {
 
     // Getters
     public String getOrderId() { return orderId; } // CHANGED: String return type
-    public String getDeliveredAt() { return deliveredAt; }
+    public String getDeliveredAt() {
+        return deliveredAt != null ? deliveredAt : "";
+    }
     public String getCustomerName() { return customerName; }
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName; }

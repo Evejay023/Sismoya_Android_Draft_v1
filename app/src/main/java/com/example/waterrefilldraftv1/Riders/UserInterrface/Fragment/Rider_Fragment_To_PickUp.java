@@ -234,6 +234,8 @@ public class Rider_Fragment_To_PickUp extends Fragment {
         d.getWindow().setLayout((int)(getResources().getDisplayMetrics().widthPixels * 0.9),
                 LayoutParams.WRAP_CONTENT);
 
+        // ✅ ADD ORDER ID TEXTVIEW
+        TextView tvOrderId = d.findViewById(R.id.tv_order_id);
         ImageView iv = d.findViewById(R.id.iv_gallon_image);
         TextView tvCustomer = d.findViewById(R.id.tv_customer_name);
         TextView tvQty = d.findViewById(R.id.tv_gallon_quantity);
@@ -241,11 +243,16 @@ public class Rider_Fragment_To_PickUp extends Fragment {
         Button btn = d.findViewById(R.id.btn_mark_picked_up);
         ImageView close = d.findViewById(R.id.btn_close);
 
+        // ✅ SET ORDER ID
+        tvOrderId.setText(order.getOrderId()); // This will show the real order ID like "ABCD1234"
         tvCustomer.setText(order.getCustomerName());
         tvQty.setText("x" + order.getPrimaryQuantity());
 
         if (order.hasMultipleGallons()) {
+            tvMulti.setText("+" + (order.getItemCount() - 1) + " more items");
             tvMulti.setVisibility(View.VISIBLE);
+        } else {
+            tvMulti.setVisibility(View.GONE);
         }
 
         Glide.with(ctx)

@@ -204,12 +204,14 @@ public interface ApiService {
     /** Delivery history list - FIXED: Return proper response type */
     @GET("rider/delivery-history")
     @Headers("Cache-Control: no-cache, no-store, must-revalidate")
-    Call<List<CompletedOrderModel>> getDeliveryHistory();
+    Call<List<CompletedOrderModel>> getDeliveryHistory(@Header("Authorization") String token);
 
-    /** Alternative delivery history with wrapper */
+    /** Delivery history with wrapper (existing method) */
     @GET("rider/delivery-history")
     @Headers("Cache-Control: no-cache, no-store, must-revalidate")
     Call<ApiResponse> getDeliveryHistoryWithWrapper(@Header("Authorization") String token);
+
+
 
     // ======================================================
     // ✅ ADDITIONAL ENDPOINTS FROM YOUR BACKEND

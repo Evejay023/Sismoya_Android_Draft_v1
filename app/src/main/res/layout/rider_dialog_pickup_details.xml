@@ -42,7 +42,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/title_margin_top"
                 android:layout_marginBottom="@dimen/title_margin_bottom"/>
-
             <!-- Product Image -->
             <ImageView
                 android:id="@+id/iv_gallon_image"

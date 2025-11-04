@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.example.waterrefilldraftv1.Global.network.TokenManager;
 import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.Riders.Adapter.PickupAdapter;
 import com.example.waterrefilldraftv1.Riders.Adapter.RiderDeliveryAdapter;
+import com.example.waterrefilldraftv1.Riders.Utils.ImageFormatter;
 import com.example.waterrefilldraftv1.Riders.Utils.StatusFormatter;
 import com.example.waterrefilldraftv1.Riders.models.PickupOrder;
 import com.example.waterrefilldraftv1.Riders.models.Rider;
@@ -121,10 +123,31 @@ public class Rider_Fragment_Dashboard extends Fragment {
 
                         if (!response.isSuccessful() || response.body() == null) {
                             Toast.makeText(requireContext(), "Dashboard fetch failed", Toast.LENGTH_SHORT).show();
+                            updateEmptyState();
                             return;
                         }
 
-                        List<PickupOrder> all = response.body().getData();
+                        RiderOrdersResponse apiResponse = response.body();
+
+                        if (!apiResponse.isSuccess()) {
+                            Log.d("DASHBOARD", "No orders found: Success flag is false");
+                            allPickup.clear();
+                            allDelivery.clear();
+                            bindAdapters();
+                            updateEmptyState();
+                            return;
+                        }
+
+                        List<PickupOrder> all = apiResponse.getData();
+
+                        if (all == null || all.isEmpty()) {
+                            Log.d("DASHBOARD", "No orders data received or empty list");
+                            allPickup.clear();
+                            allDelivery.clear();
+                            bindAdapters();
+                            updateEmptyState();
+                            return;
+                        }
 
                         allPickup.clear();
                         allDelivery.clear();
@@ -132,22 +155,25 @@ public class Rider_Fragment_Dashboard extends Fragment {
                         int invalidCount = 0;
 
                         for (PickupOrder o : all) {
+                            if (o.getStatus() == null) {
+                                invalidCount++;
+                                continue;
+                            }
+
                             String s = o.getStatus().toLowerCase();
 
-                            // ✅ FILTER OUT INVALID ORDERS
                             boolean isValidOrder = o.getCustomerName() != null &&
                                     o.getItems() != null &&
                                     !o.getItems().isEmpty();
 
                             if (!isValidOrder) {
                                 invalidCount++;
-                                continue; // Skip invalid orders
+                                continue;
                             }
 
                             if (s.equals("to_pickup")) {
                                 allPickup.add(o);
                             } else if (s.equals("to_deliver")) {
-                                // ✅ FIX: Use the new constructor with all parameters
                                 allDelivery.add(new RiderDelivery(
                                         o.getOrderId(),
                                         o.getCustomerName(),
@@ -155,11 +181,8 @@ public class Rider_Fragment_Dashboard extends Fragment {
                                         o.getContactNumber(),
                                         o.getStatus(),
                                         o.getPaymentMethod(),
-                                        o.getTotalAmount(),
-                                        o.getPrimaryGallonName(),    // gallonName
-                                        o.getPrimaryQuantity(),      // gallonQuantity
-                                        o.getPrimaryImageUrl(),      // imageUrl
-                                        o.getItemCount()             // itemCount
+                                        o.getTotalPriceDouble(),
+                                        o.getItems()
                                 ));
                             }
                         }
@@ -177,17 +200,18 @@ public class Rider_Fragment_Dashboard extends Fragment {
                     @Override
                     public void onFailure(Call<RiderOrdersResponse> call, Throwable t) {
                         Toast.makeText(requireContext(), "Network dashboard error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        allPickup.clear();
+                        allDelivery.clear();
+                        bindAdapters();
+                        updateEmptyState();
                     }
                 });
     }
 
-
     private void bindAdapters() {
-        // ✅ FIX: Create new ArrayLists instead of using subList()
         List<PickupOrder> limitPickup = new ArrayList<>();
         List<RiderDelivery> limitDelivery = new ArrayList<>();
 
-        // Add up to 3 items from each list
         for (int i = 0; i < Math.min(3, allPickup.size()); i++) {
             limitPickup.add(allPickup.get(i));
         }
@@ -195,7 +219,6 @@ public class Rider_Fragment_Dashboard extends Fragment {
             limitDelivery.add(allDelivery.get(i));
         }
 
-        // ✅ Use the proper layouts for dashboard
         pickupAdapter = new PickupAdapter(limitPickup, new PickupAdapter.OnPickupActionListener() {
             @Override
             public void onMarkPickedUp(PickupOrder order) {
@@ -229,28 +252,39 @@ public class Rider_Fragment_Dashboard extends Fragment {
         tvEmptyDelivery.setVisibility(allDelivery.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
-    // Update status -----
-    // Update status methods in Rider_Fragment_Dashboard.java
-
+    // ✅ IMPROVED: Mark as Picked Up (same as pickup fragment)
     private void markAsPickedUp(PickupOrder order) {
         String token = TokenManager.getToken(requireContext());
-        if (token == null) return;
+        if (token == null) {
+            Toast.makeText(requireContext(), "Please login again", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         Map<String, String> body = new HashMap<>();
         body.put("newStatus", "picked_up");
 
-        // ✅ FIXED: order.getOrderId() now returns String, no conversion needed
+        Toast.makeText(requireContext(), "Updating...", Toast.LENGTH_SHORT).show();
+
         apiService.updateRiderOrderStatus("Bearer " + token, order.getOrderId(), body)
                 .enqueue(new Callback<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         if (!isAdded()) return;
 
-                        if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                            Toast.makeText(requireContext(), "Marked as Picked Up ✅", Toast.LENGTH_SHORT).show();
-                            fetchOrders(); // Refresh the dashboard
+                        if (response.isSuccessful()) {
+                            // ✅ SUCCESS - Always refresh when we get 200 response
+                            Toast.makeText(requireContext(), "✅ Marked as Picked Up", Toast.LENGTH_SHORT).show();
+                            fetchOrders(); // This will reload fresh data from server
                         } else {
-                            Toast.makeText(requireContext(), "Failed to update status", Toast.LENGTH_SHORT).show();
+                            // Handle different error cases
+                            if (response.code() == 401) {
+                                Toast.makeText(requireContext(), "Session expired. Please login again.", Toast.LENGTH_SHORT).show();
+                            } else if (response.code() == 404) {
+                                Toast.makeText(requireContext(), "Order not found", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(requireContext(), "Update failed", Toast.LENGTH_SHORT).show();
+                            }
+                            Log.e("MARK_PICKED_UP", "Failed with code: " + response.code());
                         }
                     }
 
@@ -258,29 +292,41 @@ public class Rider_Fragment_Dashboard extends Fragment {
                     public void onFailure(Call<ApiResponse> call, Throwable t) {
                         if (!isAdded()) return;
                         Toast.makeText(requireContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e("MARK_PICKED_UP", "Network failure", t);
                     }
                 });
     }
 
+    // ✅ IMPROVED: Mark as Delivered
     private void markAsDelivered(RiderDelivery order) {
         String token = TokenManager.getToken(requireContext());
-        if (token == null) return;
+        if (token == null) {
+            Toast.makeText(requireContext(), "Please login again", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         Map<String, String> body = new HashMap<>();
         body.put("newStatus", "delivered");
 
-        // ✅ FIXED: order.getOrderId() now returns String
+        Toast.makeText(requireContext(), "Updating...", Toast.LENGTH_SHORT).show();
+
         apiService.updateRiderOrderStatus("Bearer " + token, order.getOrderId(), body)
                 .enqueue(new Callback<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         if (!isAdded()) return;
 
-                        if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                            Toast.makeText(requireContext(), "Marked as Delivered ✅", Toast.LENGTH_SHORT).show();
+                        if (response.isSuccessful()) {
+                            Toast.makeText(requireContext(), "✅ Marked as Delivered", Toast.LENGTH_SHORT).show();
                             fetchOrders(); // Refresh the dashboard
                         } else {
-                            Toast.makeText(requireContext(), "Failed to update status", Toast.LENGTH_SHORT).show();
+                            if (response.code() == 401) {
+                                Toast.makeText(requireContext(), "Session expired. Please login again.", Toast.LENGTH_SHORT).show();
+                            } else if (response.code() == 404) {
+                                Toast.makeText(requireContext(), "Order not found", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(requireContext(), "Update failed", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
 
@@ -295,31 +341,67 @@ public class Rider_Fragment_Dashboard extends Fragment {
     // Dialogs -----
     private void showPickupDetailsDialog(Context ctx, PickupOrder order) {
         Dialog d = new Dialog(ctx);
-        d.setContentView(R.layout.rider_dialog_delivery_details);
-        if (d.getWindow() != null) d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        d.setContentView(R.layout.rider_dialog_pickup_details);
+        if (d.getWindow() != null) {
+            d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            d.getWindow().setLayout(
+                    (int)(getResources().getDisplayMetrics().widthPixels * 0.9),
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        }
 
+        // Find all views from PICKUP dialog layout
+        ImageView ivGallon = d.findViewById(R.id.iv_gallon_image);
+        TextView tvGallonName = d.findViewById(R.id.tv_gallon_name);
+        TextView tvGallonQuantity = d.findViewById(R.id.tv_gallon_quantity);
+        TextView tvMoreItems = d.findViewById(R.id.tv_more_items);
         TextView tvOrderId = d.findViewById(R.id.tv_order_id);
         TextView tvCustomerName = d.findViewById(R.id.tv_customer_name);
         TextView tvContactNo = d.findViewById(R.id.tv_contact_no);
         TextView tvAddress = d.findViewById(R.id.tv_address);
+        TextView tvPickupTime = d.findViewById(R.id.tv_pickup_time);
         TextView tvTotalAmount = d.findViewById(R.id.tv_total_amount);
         TextView tvPaymentMethod = d.findViewById(R.id.tv_payment_method);
         TextView tvOrderStatus = d.findViewById(R.id.tv_order_status);
-        Button btnMark = d.findViewById(R.id.btn_mark_delivered);
+        Button btnMarkPickedUp = d.findViewById(R.id.btn_mark_picked_up);
         ImageView close = d.findViewById(R.id.btn_close);
 
-        tvOrderId.setText(String.valueOf(order.getOrderId()));
+        // Set order details using PickupOrder
+        tvOrderId.setText(order.getOrderId());
         tvCustomerName.setText(order.getCustomerName());
         tvContactNo.setText(order.getContactNumber());
         tvAddress.setText(order.getAddress());
-        tvTotalAmount.setText(String.format("%.2f", order.getTotalAmount()));
+        tvTotalAmount.setText(order.getFormattedTotal());
         tvPaymentMethod.setText(order.getPaymentMethod());
-
-        // ✅ Apply StatusFormatter to the dialog status
         tvOrderStatus.setText(StatusFormatter.format(order.getStatus()));
 
-        btnMark.setText("Mark as Picked Up");
-        btnMark.setOnClickListener(v -> {
+        // Set gallon details
+        tvGallonName.setText(order.getPrimaryGallonName());
+        tvGallonQuantity.setText("x" + order.getPrimaryQuantity());
+
+        // Show "more items" if applicable
+        if (order.hasMultipleGallons()) {
+            tvMoreItems.setText("+" + (order.getItemCount() - 1) + " more items");
+            tvMoreItems.setVisibility(View.VISIBLE);
+        } else {
+            tvMoreItems.setVisibility(View.GONE);
+        }
+
+        // Set pickup time
+        if (tvPickupTime != null) {
+            tvPickupTime.setText(order.getFormattedPickupDatetime());
+        }
+
+        // Load image
+        ImageFormatter.safeLoadGallonImage(
+                ivGallon,
+                order.getPrimaryImageUrl(),
+                order.getPrimaryGallonName()
+        );
+
+        btnMarkPickedUp.setText("Mark as Picked Up");
+        btnMarkPickedUp.setOnClickListener(v -> {
             markAsPickedUp(order);
             d.dismiss();
         });
@@ -330,9 +412,21 @@ public class Rider_Fragment_Dashboard extends Fragment {
 
     private void showDeliveryDetailsDialog(Context ctx, RiderDelivery order) {
         Dialog d = new Dialog(ctx);
+        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
         d.setContentView(R.layout.rider_dialog_delivery_details);
-        if (d.getWindow() != null) d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        if (d.getWindow() != null) {
+            d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            d.getWindow().setLayout(
+                    (int)(getResources().getDisplayMetrics().widthPixels * 0.9),
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        }
 
+        // Find all views from delivery dialog
+        ImageView ivGallon = d.findViewById(R.id.iv_gallon_image);
+        TextView tvGallonName = d.findViewById(R.id.tv_gallon_name);
+        TextView tvGallonQuantity = d.findViewById(R.id.tv_gallon_quantity);
+        TextView tvMoreItems = d.findViewById(R.id.tv_more_items);
         TextView tvOrderId = d.findViewById(R.id.tv_order_id);
         TextView tvCustomerName = d.findViewById(R.id.tv_customer_name);
         TextView tvContactNo = d.findViewById(R.id.tv_contact_no);
@@ -343,15 +437,32 @@ public class Rider_Fragment_Dashboard extends Fragment {
         Button btnMarkDelivered = d.findViewById(R.id.btn_mark_delivered);
         ImageView close = d.findViewById(R.id.btn_close);
 
-        tvOrderId.setText(String.valueOf(order.getOrderId()));
+        // Set order details
+        tvOrderId.setText(order.getOrderId());
         tvCustomerName.setText(order.getCustomerName());
         tvContactNo.setText(order.getContactNumber());
         tvAddress.setText(order.getAddress());
-        tvTotalAmount.setText(String.format("%.2f", order.getTotalAmount()));
+        tvTotalAmount.setText(String.format("₱%.2f", order.getTotalAmount()));
         tvPaymentMethod.setText(order.getPaymentMethod());
-
-        // ✅ Apply StatusFormatter to the dialog status
         tvOrderStatus.setText(StatusFormatter.format(order.getStatus()));
+
+        tvGallonName.setText(order.getGallonName());
+        tvGallonQuantity.setText("x" + order.getGallonQuantity());
+
+        // Show "more items" if there are multiple items
+        if (order.hasMultipleItems()) {
+            tvMoreItems.setText("+" + (order.getItemCount() - 1) + " more items");
+            tvMoreItems.setVisibility(View.VISIBLE);
+        } else {
+            tvMoreItems.setVisibility(View.GONE);
+        }
+
+        // Load image using ImageFormatter
+        ImageFormatter.safeLoadGallonImage(
+                ivGallon,
+                order.getImageUrl(),
+                order.getGallonName()
+        );
 
         btnMarkDelivered.setOnClickListener(v -> {
             markAsDelivered(order);

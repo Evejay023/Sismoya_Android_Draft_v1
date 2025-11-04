@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.waterrefilldraftv1.Global.network.TokenManager;
 
 import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.Riders.Utils.ImageFormatter;
@@ -63,14 +64,10 @@ public class CompletedOrdersAdapter extends RecyclerView.Adapter<CompletedOrders
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (orders == null || orders.isEmpty()) {
-            return;
-        }
+        if (orders == null || orders.isEmpty()) return;
 
         CompletedOrderModel order = orders.get(position);
-        if (order == null) {
-            return;
-        }
+        if (order == null) return;
 
         try {
             // Set basic order info with null checks
@@ -90,9 +87,10 @@ public class CompletedOrdersAdapter extends RecyclerView.Adapter<CompletedOrders
                 holder.tvGallonName.setText(order.getPrimaryGallonName());
             }
 
-            if (holder.tvQuantity != null) {
-                holder.tvQuantity.setText("Qty: " + order.getPrimaryQuantity());
-            }
+            // ❌ REMOVE THIS: Quantity display
+            // if (holder.tvQuantity != null) {
+            //     holder.tvQuantity.setText("Qty: " + order.getPrimaryQuantity());
+            // }
 
             // ✅ Use ImageFormatter for safe image loading
             if (holder.ivGallon != null) {
@@ -215,7 +213,7 @@ public class CompletedOrdersAdapter extends RecyclerView.Adapter<CompletedOrders
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView ivGallon;
-        TextView tvCustomerName, tvDeliveryTime, tvAddress, tvViewDetails, tvGallonName, tvQuantity;
+        TextView tvCustomerName, tvDeliveryTime, tvAddress, tvViewDetails, tvGallonName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -227,7 +225,7 @@ public class CompletedOrdersAdapter extends RecyclerView.Adapter<CompletedOrders
             tvAddress = itemView.findViewById(R.id.tv_address);
             tvViewDetails = itemView.findViewById(R.id.tv_view_details);
             tvGallonName = itemView.findViewById(R.id.tv_gallon_name);
-            tvQuantity = itemView.findViewById(R.id.tv_quantity);
+
 
             // Log if any view is null for debugging
             if (ivGallon == null) Log.w("ViewHolder", "ivGallon is null");
@@ -236,7 +234,6 @@ public class CompletedOrdersAdapter extends RecyclerView.Adapter<CompletedOrders
             if (tvAddress == null) Log.w("ViewHolder", "tvAddress is null");
             if (tvViewDetails == null) Log.w("ViewHolder", "tvViewDetails is null");
             if (tvGallonName == null) Log.w("ViewHolder", "tvGallonName is null");
-            if (tvQuantity == null) Log.w("ViewHolder", "tvQuantity is null");
         }
     }
 }

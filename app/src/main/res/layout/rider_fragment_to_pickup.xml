@@ -1,84 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/bg_gradient_background">
 
-    <!-- Content Container -->
+    <!-- Header -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <!-- Header -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="To PickUp"
-                android:textSize="16sp"
-                android:textColor="@color/primary_blue"
-                android:fontFamily="@font/r_regular"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="To Pick-Up"
-                android:textSize="24sp"
-                android:textColor="@color/primary_blue"
-                android:fontFamily="@font/roboto_bold"
-                android:layout_marginTop="4dp"/>
-
-            <TextView
-                android:id="@+id/tv_pending_pickups"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pending Pick-Up: 0"
-                android:textSize="14sp"
-                android:textColor="@color/primary_blue"
-                android:fontFamily="@font/r_regular"
-                android:layout_marginTop="12dp"/>
-        </LinearLayout>
-
-        <!-- Orders List -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_pickup_orders"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:paddingHorizontal="16dp"
-            android:clipToPadding="false"/>
-    </LinearLayout>
-
-    <!-- LOADING -->
-    <ProgressBar
-        android:id="@+id/pb_loading"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        android:visibility="gone"/>
-
-    <!-- EMPTY STATE -->
-    <LinearLayout
-        android:id="@+id/layout_empty"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:padding="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No pickup orders found"
+            android:text="To Pick Up"
             android:textSize="16sp"
             android:textColor="@color/primary_blue"
             android:fontFamily="@font/r_regular"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To Pick Up"
+            android:textSize="24sp"
+            android:textColor="@color/primary_blue"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/tv_pending_pickups"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pending Pick-Up: 0"
+            android:textSize="14sp"
+            android:textColor="@color/primary_blue"
+            android:fontFamily="@font/r_regular"
+            android:layout_marginTop="12dp"/>
     </LinearLayout>
 
-</FrameLayout>
+    <!-- Loading Progress Bar -->
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:visibility="gone" />
+
+    <!-- Cute Empty State Layout -->
+    <LinearLayout
+        android:id="@+id/layout_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🚚"
+            android:textSize="48sp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Pickup Orders"
+            android:textSize="18sp"
+            android:textColor="@color/primary_blue"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You don't have any pickup orders at the moment"
+            android:textSize="14sp"
+            android:textColor="@color/text_dark"
+            android:fontFamily="@font/r_regular"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <!-- Pickup Orders List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_pickup_orders"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="16dp"
+        android:clipToPadding="false"/>
+
+</LinearLayout>

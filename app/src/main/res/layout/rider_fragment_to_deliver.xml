@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- res/layout/fragment_to_deliver.xml -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -36,11 +35,57 @@
             android:id="@+id/tv_pending_deliveries"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pending Deliveries: 11"
+            android:text="Pending Deliveries: 0"
             android:textSize="14sp"
             android:textColor="@color/primary_blue"
             android:fontFamily="@font/r_regular"
             android:layout_marginTop="12dp"/>
+    </LinearLayout>
+
+    <!-- Loading Progress Bar -->
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:visibility="gone" />
+
+    <!-- Simple Empty State Layout -->
+    <LinearLayout
+        android:id="@+id/layout_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📭"
+            android:textSize="48sp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Delivery Orders"
+            android:textSize="18sp"
+            android:textColor="@color/primary_blue"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You don't have any delivery orders at the moment"
+            android:textSize="14sp"
+            android:textColor="@color/text_dark"
+            android:fontFamily="@font/r_regular"
+            android:gravity="center"/>
     </LinearLayout>
 
     <!-- Delivery Orders List -->

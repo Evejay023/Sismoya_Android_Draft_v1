@@ -29,4 +29,6 @@
     <color name="checkout_orange">#FF8C42</color>
     <color name="checkout_orange_pressed">#E67A32</color>
 
+    <color name="white">#FFFFFF</color>
+
 </resources>

@@ -21,6 +21,7 @@ public class RiderDashboardActivity extends AppCompatActivity {
     private Rider currentRider;
     private final Gson gson = new Gson();
     private SharedPreferences sharedPreferences;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class RiderDashboardActivity extends AppCompatActivity {
             currentRider = loadRiderFromPrefs();
         }
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
@@ -74,6 +75,7 @@ public class RiderDashboardActivity extends AppCompatActivity {
         // ✅ Default open
         if (savedInstanceState == null) {
             openFragment(Rider_Fragment_Dashboard.newInstance(currentRider));
+            bottomNavigationView.setSelectedItemId(R.id.nav_dashboard);
         }
     }
 

@@ -132,4 +132,7 @@ public class ApiResponse {
     public void setError(Boolean error) { this.error = error; }
     public void setSuccess(Boolean success) { this.success = success; }
     public void setMessage(String message) { this.message = message; }
+
+
+
 }

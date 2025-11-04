@@ -1,21 +1,39 @@
 package com.example.waterrefilldraftv1.Riders.models;
 
-import java.io.Serializable;
+import com.google.gson.annotations.SerializedName;
 
-public class OrderItem implements Serializable {
-    private int order_item_id;
-    private int gallon_id;
+public class OrderItem {
+    @SerializedName("order_item_id")
+    private int orderItemId;
+
+    @SerializedName("order_id")
+    private int orderId;
+
+    @SerializedName("gallon_id")
+    private int gallonId;
+
+    @SerializedName("quantity")
     private int quantity;
-    private String price;
-    private String total_price;
-    private String gallon_name;
-    private String image_url;
 
-    public int getOrder_item_id() { return order_item_id; }
-    public int getGallon_id() { return gallon_id; }
+    @SerializedName("price")
+    private String price;
+
+    @SerializedName("total_price")
+    private String totalPrice;
+
+    @SerializedName("gallon_name")
+    private String gallonName;
+
+    @SerializedName("image_url")
+    private String imageUrl;
+
+    // Getters
+    public int getOrderItemId() { return orderItemId; }
+    public int getOrderId() { return orderId; }
+    public int getGallonId() { return gallonId; }
     public int getQuantity() { return quantity; }
     public String getPrice() { return price; }
-    public String getTotal_price() { return total_price; }
-    public String getGallon_name() { return gallon_name; }
-    public String getImage_url() { return image_url; }
+    public String getTotalPrice() { return totalPrice; }
+    public String getGallonName() { return gallonName; }
+    public String getImageUrl() { return imageUrl; }
 }

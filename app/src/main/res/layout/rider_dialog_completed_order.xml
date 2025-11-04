@@ -46,12 +46,51 @@
 
             <!-- Water Icon -->
             <ImageView
+                android:id="@+id/iv_gallon_image"
                 android:layout_width="@dimen/water_icon_size"
                 android:layout_height="@dimen/water_icon_size"
                 android:src="@drawable/img_slim_container"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/water_icon_margin_bottom"
                 android:contentDescription="Water Gallon"/>
+
+            <!-- Gallon Name -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/detail_item_margin_bottom"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/tv_gallon_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Slim Gallon"
+                    android:textSize="@dimen/detail_text_size"
+                    android:textColor="@color/primary_blue"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <!-- Quantity -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/detail_section_margin_bottom"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/tv_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quantity: 1"
+                    android:textSize="@dimen/detail_text_size"
+                    android:textColor="@color/primary_blue"
+                    android:fontFamily="@font/r_regular"
+                    android:gravity="center"/>
+            </LinearLayout>
 
             <!-- Order Details -->
             <LinearLayout
@@ -284,8 +323,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-            <!-- NO button for history -->
 
         </LinearLayout>
 

@@ -32,6 +32,7 @@ import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.Riders.Adapter.PickupAdapter;
 import com.example.waterrefilldraftv1.Riders.models.PickupOrder;
 import com.example.waterrefilldraftv1.Riders.models.Rider;
+import com.example.waterrefilldraftv1.Riders.models.RiderOrdersResponse;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -122,9 +123,9 @@ public class Rider_Fragment_To_PickUp extends Fragment {
 
         showLoading(true);
 
-        apiService.getToPickOrders("Bearer " + token).enqueue(new Callback<ApiResponse>() {
+        apiService.getRiderOrders("Bearer " + token).enqueue(new Callback<RiderOrdersResponse>() {
             @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+            public void onResponse(Call<RiderOrdersResponse> call, Response<RiderOrdersResponse> response) {
                 showLoading(false);
 
                 if (!isAdded()) return;
@@ -137,24 +138,35 @@ public class Rider_Fragment_To_PickUp extends Fragment {
 
                 if (!response.body().isSuccess()) {
                     showEmpty(true);
-                    Toast.makeText(requireContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "No pickup orders found", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                List<PickupOrder> all = response.body().getDataAsList(PickupOrder.class);
-
+                List<PickupOrder> allOrders = response.body().getData();
                 pickupList.clear();
-                if (all != null) {
-                    pickupList.addAll(all);
+
+                if (allOrders != null) {
+                    for (PickupOrder order : allOrders) {
+                        // ✅ FILTER: Only add valid orders with customer data
+                        if ("to_pickup".equalsIgnoreCase(order.getStatus()) &&
+                                order.getCustomerName() != null &&
+                                order.getItems() != null &&
+                                !order.getItems().isEmpty()) {
+
+                            pickupList.add(order);
+                        }
+                    }
                 }
 
                 adapter.notifyDataSetChanged();
                 updatePendingCount();
                 showEmpty(pickupList.isEmpty());
+
+                Log.d("PICKUP_FRAGMENT", "Loaded " + pickupList.size() + " valid pickup orders");
             }
 
             @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
+            public void onFailure(Call<RiderOrdersResponse> call, Throwable t) {
                 showLoading(false);
                 showEmpty(true);
                 if (!isAdded()) return;
@@ -180,10 +192,15 @@ public class Rider_Fragment_To_PickUp extends Fragment {
 
     private void markAsPickedUp(PickupOrder order) {
         String token = TokenManager.getToken(requireContext());
-        if (token == null) return;
+        if (token == null) {
+            Toast.makeText(requireContext(), "Please login again", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         Map<String, String> body = new HashMap<>();
         body.put("newStatus", "picked_up");
+
+        Toast.makeText(requireContext(), "Updating...", Toast.LENGTH_SHORT).show();
 
         apiService.updateRiderOrderStatus("Bearer " + token, order.getOrderId(), body)
                 .enqueue(new Callback<ApiResponse>() {
@@ -191,23 +208,19 @@ public class Rider_Fragment_To_PickUp extends Fragment {
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         if (!isAdded()) return;
 
-                        if (!response.isSuccessful() || response.body() == null) {
+                        if (response.isSuccessful()) {
+                            // ✅ SUCCESS - Always refresh the list when we get 200 response
+                            Toast.makeText(requireContext(), "✅ Marked as Picked Up", Toast.LENGTH_SHORT).show();
+                            fetchPickups(); // This will reload fresh data from server
+                        } else {
                             Toast.makeText(requireContext(), "Update failed", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        if (response.body().isSuccess()) {
-                            pickupList.remove(order);
-                            adapter.notifyDataSetChanged();
-                            updatePendingCount();
-                            showEmpty(pickupList.isEmpty());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ApiResponse> call, Throwable t) {
                         if (!isAdded()) return;
-                        Toast.makeText(requireContext(), "Failed to update", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Network error", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

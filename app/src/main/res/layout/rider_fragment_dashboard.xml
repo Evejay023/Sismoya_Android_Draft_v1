@@ -27,7 +27,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="24dp"
                 android:background="@android:color/transparent">
 
                 <LinearLayout
@@ -42,7 +41,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Sismoya Water"
-                        android:textSize="18sp"
+                        android:textSize="23sp"
                         android:textColor="@color/primary_blue"
                         android:textAlignment="center"
                         android:fontFamily="@font/roboto_bold" />

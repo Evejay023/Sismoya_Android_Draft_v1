@@ -41,6 +41,15 @@ public class RiderDeliveryAdapter extends RecyclerView.Adapter<RiderDeliveryAdap
         holder.tvAddress.setText(order.getAddress());
         holder.tvStatus.setText(StatusFormatter.format(order.getStatus()));
 
+        // Add gallon info to the list item if you have those views
+        // You might need to add these TextViews to your rider_item_delivery_order.xml
+        if (holder.tvGallonName != null) {
+            holder.tvGallonName.setText(order.getGallonName());
+        }
+        if (holder.tvQuantity != null) {
+            holder.tvQuantity.setText("Qty: " + order.getGallonQuantity());
+        }
+
         holder.tvViewDetails.setOnClickListener(v -> listener.onViewDetails(order));
         holder.btnMarkDelivered.setOnClickListener(v -> listener.onMarkDelivered(order));
     }
@@ -51,7 +60,7 @@ public class RiderDeliveryAdapter extends RecyclerView.Adapter<RiderDeliveryAdap
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvCustomerName, tvAddress, tvStatus, tvViewDetails;
+        TextView tvCustomerName, tvAddress, tvStatus, tvViewDetails, tvGallonName, tvQuantity;
         Button btnMarkDelivered;
 
         public ViewHolder(@NonNull View itemView) {
@@ -61,6 +70,10 @@ public class RiderDeliveryAdapter extends RecyclerView.Adapter<RiderDeliveryAdap
             tvStatus = itemView.findViewById(R.id.tv_status);
             tvViewDetails = itemView.findViewById(R.id.tv_view_details);
             btnMarkDelivered = itemView.findViewById(R.id.btn_mark_delivered);
+
+            // Add the new TextViews
+            tvGallonName = itemView.findViewById(R.id.tv_gallon_name);
+            tvQuantity = itemView.findViewById(R.id.tv_quantity);
         }
     }
 

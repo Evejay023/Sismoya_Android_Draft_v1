@@ -1,6 +1,7 @@
 package com.example.waterrefilldraftv1.Riders.UserInterrface.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import com.example.waterrefilldraftv1.Riders.Adapter.CompletedOrdersAdapter;
 import com.example.waterrefilldraftv1.Riders.models.CompletedOrderModel;
 import com.example.waterrefilldraftv1.Global.network.ApiService;
 import com.example.waterrefilldraftv1.Riders.models.Rider;
+import com.example.waterrefilldraftv1.Riders.Utils.ImageFormatter;
+import com.example.waterrefilldraftv1.Riders.Utils.StatusFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,19 +82,19 @@ public class Rider_Fragment_Delivery_History extends Fragment {
             @Override
             public void onResponse(Call<List<CompletedOrderModel>> call, Response<List<CompletedOrderModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-
-                    orderList.clear();
-                    orderList.addAll(response.body());
-                    adapter.notifyDataSetChanged();
-
+                    // ✅ Use the adapter's update method which includes sorting
+                    adapter.updateOrders(response.body());
+                    Log.d("DELIVERY_HISTORY", "Loaded " + response.body().size() + " completed orders");
                 } else {
                     Toast.makeText(getContext(), "Failed to fetch history", Toast.LENGTH_SHORT).show();
+                    Log.e("DELIVERY_HISTORY", "Response not successful: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<CompletedOrderModel>> call, Throwable t) {
                 Toast.makeText(getContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("DELIVERY_HISTORY", "Error loading orders", t);
             }
         });
     }

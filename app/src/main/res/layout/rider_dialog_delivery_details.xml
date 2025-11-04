@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- res/layout/dialog_delivery_details.xml -->
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -44,14 +43,51 @@
                 android:layout_marginTop="@dimen/title_margin_top"
                 android:layout_marginBottom="@dimen/title_margin_bottom"/>
 
-            <!-- Water Icon -->
+            <!-- Product Image -->
             <ImageView
+                android:id="@+id/iv_gallon_image"
                 android:layout_width="@dimen/water_icon_size"
                 android:layout_height="@dimen/water_icon_size"
                 android:src="@drawable/img_slim_container"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/water_icon_margin_bottom"
+                android:layout_marginBottom="6dp"
                 android:contentDescription="Water Gallon"/>
+
+            <!-- Gallon Name -->
+            <TextView
+                android:id="@+id/tv_gallon_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Slim Gallon"
+                android:textSize="@dimen/detail_text_size"
+                android:textColor="@color/primary_blue"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Quantity -->
+            <TextView
+                android:id="@+id/tv_gallon_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="x3"
+                android:textSize="@dimen/detail_text_size"
+                android:textColor="@color/primary_blue"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/water_icon_margin_bottom"/>
+
+            <TextView
+                android:id="@+id/tv_more_items"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+2 more items"
+                android:textSize="14sp"
+                android:textColor="@color/primary_blue"
+                android:fontFamily="@font/r_regular"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="6dp"
+                android:visibility="gone"/>
 
             <!-- Order Details -->
             <LinearLayout
@@ -266,7 +302,7 @@
                 android:textSize="@dimen/button_text_size"
                 android:textColor="@color/background_white"
                 android:textAllCaps="false"
-                android:background="@drawable/white_card_background"
+                android:background="@drawable/button_primary"
                 android:paddingVertical="@dimen/button_padding_vertical"
                 android:fontFamily="@font/roboto_bold"
                 android:layout_marginTop="@dimen/button_margin_top"/>

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.waterrefilldraftv1.R;
+import com.example.waterrefilldraftv1.Riders.Utils.ImageFormatter;
 import com.example.waterrefilldraftv1.Riders.models.PickupOrder;
 
 import java.util.ArrayList;
@@ -77,41 +78,12 @@ public class RiderDashboardAdapter extends RecyclerView.Adapter<RiderDashboardAd
         holder.tvAddress.setText(order.getAddress() != null ? order.getAddress() : "N/A");
         holder.tvStatus.setText(order.getStatus() != null ? order.getStatus() : "");
 
-        // ✅ Dynamic image from backend
-        String img = order.getPrimaryImageUrl();
-        String fullImg = null;
-
-        if (img != null && !img.isEmpty()) {
-            if (img.startsWith("http")) fullImg = img;
-            else fullImg = "https://sismoya.bsit3b.site/" + img.replaceFirst("^/+", "");
-        }
-
-        if (fullImg != null) {
-            Glide.with(holder.itemView.getContext())
-                    .load(fullImg)
-                    .placeholder(R.drawable.img_slim_container)
-                    .error(R.drawable.img_sismoya_logo)
-                    .into(holder.ivIcon);
-        } else {
-            holder.ivIcon.setImageResource(R.drawable.img_slim_container);
-        }
-
-        holder.tvViewDetails.setOnClickListener(v -> {
-            if (viewListener != null) viewListener.onView(order);
-        });
-
-        holder.btnMark.setOnClickListener(v -> {
-            if (markListener != null) markListener.onMark(order);
-        });
-
-        // status-based button text
-        if ("to_pickup".equals(order.getStatus())) {
-            holder.btnMark.setText("Mark as Picked-Up");
-        } else if ("to_deliver".equals(order.getStatus())) {
-            holder.btnMark.setText("Mark as Delivered");
-        } else {
-            holder.btnMark.setText("Mark");
-        }
+        // ✅ Use ImageFormatter instead of complex Glide code
+        ImageFormatter.safeLoadGallonImage(
+                holder.ivIcon,
+                order.getPrimaryImageUrl(),
+                order.getPrimaryGallonName()
+        );
     }
 
     @Override
@@ -133,7 +105,7 @@ public class RiderDashboardAdapter extends RecyclerView.Adapter<RiderDashboardAd
             tvViewDetails = itemView.findViewById(R.id.tv_view_details);
             tvStatus = itemView.findViewById(R.id.tv_status);
             btnMark = itemView.findViewById(R.id.btn_mark_picked_up);
-            if (btnMark == null) btnMark = itemView.findViewById(R.id.btn_mark); // fallback
+            if (btnMark == null) btnMark = itemView.findViewById(R.id.btn_action); // fallback
         }
     }
 }

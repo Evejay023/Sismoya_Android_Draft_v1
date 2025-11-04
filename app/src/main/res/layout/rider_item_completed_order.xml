@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- res/layout/item_completed_order.xml -->
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
+    android:layout_margin="8dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="2dp"
-    android:background="@color/background_white">
+    app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,13 +15,13 @@
         android:padding="16dp"
         android:gravity="center_vertical">
 
-        <!-- Water Icon -->
+        <!-- Gallon Image -->
         <ImageView
-            android:id="@+id/iv_water_icon"
+            android:id="@+id/iv_gallon_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/img_slim_container"
-            android:contentDescription="Water Gallon"/>
+            android:contentDescription="Gallon Image"/>
 
         <!-- Order Details -->
         <LinearLayout
@@ -33,46 +31,69 @@
             android:orientation="vertical"
             android:layout_marginStart="16dp">
 
+            <!-- Customer Name -->
             <TextView
                 android:id="@+id/tv_customer_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chrisha Dalmacio"
-                android:textSize="15sp"
-                android:textColor="@color/background_white"
-                android:fontFamily="@font/roboto_bold"/>
+                android:text="Customer Name"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_dark"/>
 
+            <!-- Delivery Time -->
             <TextView
                 android:id="@+id/tv_delivery_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="11:00 AM"
-                android:textSize="13sp"
-                android:textColor="@color/primary_blue"
-                android:fontFamily="@font/r_regular"
-                android:layout_marginTop="2dp"/>
+                android:text="Delivered: 11/04/25 12:45 AM"
+                android:textSize="12sp"
+                android:textColor="@color/text_dark"
+                android:layout_marginTop="4dp"/>
 
+            <!-- Address -->
             <TextView
                 android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="102 Natividad Street"
-                android:textSize="13sp"
-                android:textColor="@color/primary_blue"
-                android:fontFamily="@font/r_regular"
+                android:text="Customer Address"
+                android:textSize="12sp"
+                android:textColor="@color/text_dark"
                 android:layout_marginTop="2dp"/>
 
+            <!-- Gallon Name -->
+            <TextView
+                android:id="@+id/tv_gallon_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Slim Gallon"
+                android:textSize="12sp"
+                android:textColor="@color/text_dark"
+                android:layout_marginTop="4dp"/>
+
+            <!-- Quantity -->
+            <TextView
+                android:id="@+id/tv_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Qty: 1"
+                android:textSize="12sp"
+                android:textColor="@color/text_dark"
+                android:layout_marginTop="2dp"/>
+
+            <!-- View Details -->
             <TextView
                 android:id="@+id/tv_view_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="View Details"
                 android:textSize="11sp"
-                android:textColor="@color/primary_blue"
-                android:fontFamily="@font/r_regular"
-                android:layout_marginTop="6dp"
+                android:textColor="@color/text_dark"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="right"
                 android:clickable="true"
                 android:focusable="true"/>
+
         </LinearLayout>
 
     </LinearLayout>

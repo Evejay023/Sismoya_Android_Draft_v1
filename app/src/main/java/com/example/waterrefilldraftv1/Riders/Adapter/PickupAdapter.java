@@ -1,5 +1,6 @@
 package com.example.waterrefilldraftv1.Riders.Adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.waterrefilldraftv1.R;
+import com.example.waterrefilldraftv1.Riders.Utils.ImageFormatter;
 import com.example.waterrefilldraftv1.Riders.models.PickupOrder;
 import com.example.waterrefilldraftv1.Riders.Utils.StatusFormatter;
 
@@ -50,30 +54,18 @@ public class PickupAdapter extends RecyclerView.Adapter<PickupAdapter.ViewHolder
         h.tvGallonName.setText(o.getPrimaryGallonName());
         h.tvQuantity.setText("Qty: " + o.getPrimaryQuantity());
 
-        // Build image URL: backend returns relative path like "images/round.png" or "/images/..."
-        String img = o.getPrimaryImageUrl();
-        String fullImg = null;
-        if (img != null && !img.isEmpty()) {
-            if (img.startsWith("http")) fullImg = img;
-            else {
-                // make absolute relative to base (RetrofitClient.BASE_URL without "api/")
-                // The BASE_URL in your RetrofitClient is: https://sismoya.bsit3b.site/api/
-                // images are served from https://sismoya.bsit3b.site/images/...
-                fullImg = "https://sismoya.bsit3b.site/" + img.replaceFirst("^/+", "");
-            }
-        }
-
-        if (fullImg != null) {
-            Glide.with(h.itemView.getContext())
-                    .load(fullImg)
-                    .placeholder(R.drawable.img_slim_container)
-                    .into(h.ivGallon);
-        } else {
-            h.ivGallon.setImageResource(R.drawable.img_slim_container);
-        }
+        // ✅ SIMPLE: Use ImageFormatter for safe image loading
+        ImageFormatter.safeLoadGallonImage(
+                h.ivGallon,
+                o.getPrimaryImageUrl(),
+                o.getPrimaryGallonName()
+        );
 
         h.tvViewDetails.setOnClickListener(v -> listener.onViewDetails(o));
-        h.btnMarkPickedUp.setOnClickListener(v -> listener.onMarkPickedUp(o));
+        h.btnMarkPickedUp.setOnClickListener(v -> {
+            Log.d("PICKUP_ADAPTER", "🟢 MARK BUTTON CLICKED - Order: " + o.getOrderId() + ", Customer: " + o.getCustomerName());
+            listener.onMarkPickedUp(o);
+        });
         h.itemView.setOnClickListener(v -> listener.onViewDetails(o));
     }
 

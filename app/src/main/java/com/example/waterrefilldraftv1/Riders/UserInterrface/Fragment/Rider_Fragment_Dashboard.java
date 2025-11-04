@@ -28,6 +28,7 @@ import com.example.waterrefilldraftv1.Global.network.TokenManager;
 import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.Riders.Adapter.PickupAdapter;
 import com.example.waterrefilldraftv1.Riders.Adapter.RiderDeliveryAdapter;
+import com.example.waterrefilldraftv1.Riders.Utils.StatusFormatter;
 import com.example.waterrefilldraftv1.Riders.models.PickupOrder;
 import com.example.waterrefilldraftv1.Riders.models.Rider;
 import com.example.waterrefilldraftv1.Riders.models.RiderDelivery;
@@ -128,12 +129,25 @@ public class Rider_Fragment_Dashboard extends Fragment {
                         allPickup.clear();
                         allDelivery.clear();
 
+                        int invalidCount = 0;
+
                         for (PickupOrder o : all) {
                             String s = o.getStatus().toLowerCase();
+
+                            // ✅ FILTER OUT INVALID ORDERS
+                            boolean isValidOrder = o.getCustomerName() != null &&
+                                    o.getItems() != null &&
+                                    !o.getItems().isEmpty();
+
+                            if (!isValidOrder) {
+                                invalidCount++;
+                                continue; // Skip invalid orders
+                            }
 
                             if (s.equals("to_pickup")) {
                                 allPickup.add(o);
                             } else if (s.equals("to_deliver")) {
+                                // ✅ FIX: Use the new constructor with all parameters
                                 allDelivery.add(new RiderDelivery(
                                         o.getOrderId(),
                                         o.getCustomerName(),
@@ -141,13 +155,23 @@ public class Rider_Fragment_Dashboard extends Fragment {
                                         o.getContactNumber(),
                                         o.getStatus(),
                                         o.getPaymentMethod(),
-                                        o.getTotalAmount()
+                                        o.getTotalAmount(),
+                                        o.getPrimaryGallonName(),    // gallonName
+                                        o.getPrimaryQuantity(),      // gallonQuantity
+                                        o.getPrimaryImageUrl(),      // imageUrl
+                                        o.getItemCount()             // itemCount
                                 ));
                             }
                         }
 
+                        if (invalidCount > 0) {
+                            Log.w("DASHBOARD_FILTER", "Filtered out " + invalidCount + " invalid orders");
+                        }
+
                         bindAdapters();
                         updateEmptyState();
+
+                        Log.d("DASHBOARD", "Pickup orders: " + allPickup.size() + ", Delivery orders: " + allDelivery.size());
                     }
 
                     @Override
@@ -158,12 +182,20 @@ public class Rider_Fragment_Dashboard extends Fragment {
     }
 
 
-
     private void bindAdapters() {
+        // ✅ FIX: Create new ArrayLists instead of using subList()
+        List<PickupOrder> limitPickup = new ArrayList<>();
+        List<RiderDelivery> limitDelivery = new ArrayList<>();
 
-        List<PickupOrder> limitPickup = allPickup.subList(0, Math.min(3, allPickup.size()));
-        List<RiderDelivery> limitDelivery = allDelivery.subList(0, Math.min(3, allDelivery.size()));
+        // Add up to 3 items from each list
+        for (int i = 0; i < Math.min(3, allPickup.size()); i++) {
+            limitPickup.add(allPickup.get(i));
+        }
+        for (int i = 0; i < Math.min(3, allDelivery.size()); i++) {
+            limitDelivery.add(allDelivery.get(i));
+        }
 
+        // ✅ Use the proper layouts for dashboard
         pickupAdapter = new PickupAdapter(limitPickup, new PickupAdapter.OnPickupActionListener() {
             @Override
             public void onMarkPickedUp(PickupOrder order) {
@@ -209,11 +241,21 @@ public class Rider_Fragment_Dashboard extends Fragment {
                 .enqueue(new Callback<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                        fetchOrders();
+                        if (!isAdded()) return;
+
+                        if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                            Toast.makeText(requireContext(), "Marked as Picked Up ✅", Toast.LENGTH_SHORT).show();
+                            fetchOrders(); // Refresh the dashboard
+                        } else {
+                            Toast.makeText(requireContext(), "Failed to update status", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
-                    public void onFailure(Call<ApiResponse> call, Throwable t) { }
+                    public void onFailure(Call<ApiResponse> call, Throwable t) {
+                        if (!isAdded()) return;
+                        Toast.makeText(requireContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 });
     }
 
@@ -228,11 +270,21 @@ public class Rider_Fragment_Dashboard extends Fragment {
                 .enqueue(new Callback<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                        fetchOrders();
+                        if (!isAdded()) return;
+
+                        if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                            Toast.makeText(requireContext(), "Marked as Delivered ✅", Toast.LENGTH_SHORT).show();
+                            fetchOrders(); // Refresh the dashboard
+                        } else {
+                            Toast.makeText(requireContext(), "Failed to update status", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
-                    public void onFailure(Call<ApiResponse> call, Throwable t) { }
+                    public void onFailure(Call<ApiResponse> call, Throwable t) {
+                        if (!isAdded()) return;
+                        Toast.makeText(requireContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 });
     }
 
@@ -258,7 +310,9 @@ public class Rider_Fragment_Dashboard extends Fragment {
         tvAddress.setText(order.getAddress());
         tvTotalAmount.setText(String.format("%.2f", order.getTotalAmount()));
         tvPaymentMethod.setText(order.getPaymentMethod());
-        tvOrderStatus.setText(order.getStatus());
+
+        // ✅ Apply StatusFormatter to the dialog status
+        tvOrderStatus.setText(StatusFormatter.format(order.getStatus()));
 
         btnMark.setText("Mark as Picked Up");
         btnMark.setOnClickListener(v -> {
@@ -291,7 +345,9 @@ public class Rider_Fragment_Dashboard extends Fragment {
         tvAddress.setText(order.getAddress());
         tvTotalAmount.setText(String.format("%.2f", order.getTotalAmount()));
         tvPaymentMethod.setText(order.getPaymentMethod());
-        tvOrderStatus.setText(order.getStatus());
+
+        // ✅ Apply StatusFormatter to the dialog status
+        tvOrderStatus.setText(StatusFormatter.format(order.getStatus()));
 
         btnMarkDelivered.setOnClickListener(v -> {
             markAsDelivered(order);

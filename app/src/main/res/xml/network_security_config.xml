@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <base-config cleartextTrafficPermitted="true">
+    <!-- Allow cleartext traffic for your domain -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">sismoya.bsit3b.site</domain>
+    </domain-config>
+
+    <!-- Default config for other domains -->
+    <base-config cleartextTrafficPermitted="false">
         <trust-anchors>
             <certificates src="system" />
-            <certificates src="user" />
         </trust-anchors>
     </base-config>
-
-    <!-- Trust your specific domain -->
-    <domain-config cleartextTrafficPermitted="false">
-        <domain includeSubdomains="true">sismoya.bsit3b.site</domain>
-        <trust-anchors>
-            <certificates src="system" />
-        </trust-anchors>
-    </domain-config>
 </network-security-config>

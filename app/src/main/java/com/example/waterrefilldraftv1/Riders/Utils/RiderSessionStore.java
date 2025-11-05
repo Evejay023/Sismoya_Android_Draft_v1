@@ -24,6 +24,12 @@ public class RiderSessionStore {
         return j == null ? null : gson.fromJson(j, Rider.class);
     }
 
+    // ✅ Add method to check if rider is logged in
+    public boolean isRiderLoggedIn() {
+        Rider rider = getRider();
+        return rider != null && "rider".equalsIgnoreCase(rider.getRole());
+    }
+
     public void savePickupOrders(String json) {
         prefs.edit().putString("pickup_orders", json).apply();
     }

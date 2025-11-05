@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.example.waterrefilldraftv1.Login_Customer_and_Riders.LoginActivity;
 import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.Riders.UserInterrface.Activities.Rider_PersonalInformationActivity;
 import com.example.waterrefilldraftv1.Riders.UserInterrface.Activities.Rider_Change_Password_Activity;
+import com.example.waterrefilldraftv1.Riders.Utils.RiderAuthHelper;
 import com.example.waterrefilldraftv1.Riders.models.Rider;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
@@ -142,11 +144,12 @@ public class Rider_Fragment_Profile extends Fragment {
 
 
     private void logoutRider() {
-        sharedPreferences.edit().clear().apply();
-        TokenManager.clearToken();
-        Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(requireContext(), LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        Log.d("LOGOUT", "Logout button clicked");
+
+        // Use the centralized helper
+        RiderAuthHelper.logoutRider(requireContext());
+        requireActivity().finish(); // Finish the current activity
+
+        Log.d("LOGOUT", "Logout process completed");
     }
-}
+    }

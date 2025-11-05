@@ -3,25 +3,25 @@
     <item
         android:id="@+id/nav_dashboard"
         android:icon="@drawable/ic_rider_dashboard"
-        android:title="Dashboard" />
+        android:title="." />
 
     <item
         android:id="@+id/nav_to_pickup"
         android:icon="@drawable/ic_rider_to_pick_up"
-        android:title="To Pick-Up" />
+        android:title="." />
 
     <item
         android:id="@+id/nav_to_deliver"
         android:icon="@drawable/ic_rider_to_deliver"
-        android:title="To Deliver" />
+        android:title="." />
 
     <item
         android:id="@+id/nav_delivery_history"
         android:icon="@drawable/ic_rider_history"
-        android:title="History" />
+        android:title="." />
 
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_rider_profile"
-        android:title="Profile" />
+        android:title="." />
 </menu>

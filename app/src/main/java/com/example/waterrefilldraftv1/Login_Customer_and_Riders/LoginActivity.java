@@ -2,6 +2,7 @@ package com.example.waterrefilldraftv1.Login_Customer_and_Riders;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -20,6 +21,8 @@ import com.example.waterrefilldraftv1.Global.network.NetworkManager;
 import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.Riders.UserInterrface.Activities.RiderDashboardActivity;
 
+import com.example.waterrefilldraftv1.Riders.Utils.RiderSessionStore;
+import com.example.waterrefilldraftv1.Riders.models.Rider;
 import com.google.gson.Gson;
 
 public class LoginActivity extends AppCompatActivity {
@@ -95,6 +98,9 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.show();
 
         networkManager.loginUser(usernameOrEmail, password, new NetworkManager.ApiCallback<LoginResponse>() {
+            // In your LoginActivity success callback after login:
+            // After successful login in LoginActivity:
+            // In your LoginActivity success callback:
             @Override
             public void onSuccess(LoginResponse response) {
                 progressDialog.dismiss();
@@ -102,39 +108,60 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccess() && response.getUser() != null) {
                     String role = response.getUser().getRole();
 
-                    // ✅ Allow only riders
                     if (role != null && role.equalsIgnoreCase("rider")) {
                         if (response.getToken() != null) {
+                            // Save token everywhere
                             sessionStore.saveToken(response.getToken());
                             TokenManager.saveToken(LoginActivity.this, response.getToken());
                         }
 
+                        // Save user data to BOTH session stores
                         sessionStore.saveUser(response.getUser());
-                        Gson gson = new Gson();
-                        String userJson = gson.toJson(response.getUser());
+
+                        // Convert and save to RiderSessionStore
+                        RiderSessionStore riderSessionStore = new RiderSessionStore(LoginActivity.this);
+                        Rider rider = convertUserToRider(response.getUser());
+                        riderSessionStore.saveRider(rider);
+
+                        // Also save to RiderPrefs for compatibility
+                        SharedPreferences riderPrefs = getSharedPreferences("RiderPrefs", MODE_PRIVATE);
+                        riderPrefs.edit().putString("rider", new Gson().toJson(rider)).apply();
 
                         Toast.makeText(LoginActivity.this,
                                 "Welcome " + response.getUser().getFirstName() + " (Rider)!",
                                 Toast.LENGTH_SHORT).show();
 
                         Intent riderIntent = new Intent(LoginActivity.this, RiderDashboardActivity.class);
-                        riderIntent.putExtra("rider_data", userJson);
                         riderIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(riderIntent);
                     } else {
-                        // ❌ Reject customers or other roles
+                        // Reject non-riders
                         Toast.makeText(LoginActivity.this,
-                                " Only riders can log in using the mobile app.",
+                                "Only riders can log in using the mobile app.",
                                 Toast.LENGTH_LONG).show();
                     }
-
                 } else {
+                    // Error handling
                     String errorMessage = response.getMessage();
                     if (errorMessage == null || errorMessage.isEmpty()) {
                         errorMessage = "Login failed. Please check your credentials.";
                     }
                     Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_LONG).show();
                 }
+            }
+
+            // ✅ Add this method to convert User to Rider
+            private Rider convertUserToRider(com.example.waterrefilldraftv1.Customer.models.User user) {
+                Rider rider = new Rider();
+                rider.setUser_id(user.getUserId());
+                rider.setFirst_name(user.getFirstName());
+                rider.setLast_name(user.getLastName());
+                rider.setEmail(user.getEmail());
+                rider.setContact_no(user.getContactNo());
+                rider.setUsername(user.getUsername());
+                rider.setRole(user.getRole());
+                rider.setStatus(user.getStatus());
+                return rider;
             }
 
             @Override

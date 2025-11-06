@@ -29,6 +29,7 @@ import com.example.waterrefilldraftv1.Global.network.TokenManager;
 import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.Riders.Adapter.PickupAdapter;
 import com.example.waterrefilldraftv1.Riders.Adapter.RiderDeliveryAdapter;
+import com.example.waterrefilldraftv1.Riders.Utils.DateTimeUtils;
 import com.example.waterrefilldraftv1.Riders.Utils.ImageFormatter;
 import com.example.waterrefilldraftv1.Riders.Utils.StatusFormatter;
 import com.example.waterrefilldraftv1.Riders.models.PickupOrder;
@@ -37,9 +38,14 @@ import com.example.waterrefilldraftv1.Riders.models.RiderDelivery;
 import com.example.waterrefilldraftv1.Riders.models.RiderOrdersResponse;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -52,6 +58,7 @@ public class Rider_Fragment_Dashboard extends Fragment {
     private Rider rider;
 
     private TextView tvRiderName, tvEmptyPickup, tvEmptyDelivery;
+    private TextView tvDate, tvTime; // ADD THESE FOR DATE/TIME
     private RecyclerView rvDashboardPickups, rvDashboardDeliveries;
 
     private PickupAdapter pickupAdapter;
@@ -63,7 +70,17 @@ public class Rider_Fragment_Dashboard extends Fragment {
     private List<RiderDelivery> allDelivery = new ArrayList<>();
 
     private Handler handler = new Handler();
-    private final int REFRESH_INTERVAL = 5000; // 5 seconds
+    private final int REFRESH_INTERVAL = 5000; // 5 seconds for orders
+    private final int TIME_UPDATE_INTERVAL = 30000; // 30 seconds for time updates
+
+    // ADD: Runnable for updating time
+    private final Runnable timeUpdateRunnable = new Runnable() {
+        @Override
+        public void run() {
+            updateCurrentDateTime();
+            handler.postDelayed(this, TIME_UPDATE_INTERVAL);
+        }
+    };
 
     public static Rider_Fragment_Dashboard newInstance(Rider rider) {
         Rider_Fragment_Dashboard fragment = new Rider_Fragment_Dashboard();
@@ -94,9 +111,14 @@ public class Rider_Fragment_Dashboard extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // INITIALIZE ALL VIEWS
         tvRiderName = view.findViewById(R.id.tv_rider_name);
         tvEmptyPickup = view.findViewById(R.id.tv_empty_pickup);
         tvEmptyDelivery = view.findViewById(R.id.tv_empty_delivery);
+
+        // ADD: Initialize date and time views from your XML
+        tvDate = view.findViewById(R.id.tv_date);
+        tvTime = view.findViewById(R.id.tv_time);
 
         rvDashboardPickups = view.findViewById(R.id.rv_dashboard_pickups);
         rvDashboardDeliveries = view.findViewById(R.id.rv_dashboard_deliveries);
@@ -108,7 +130,41 @@ public class Rider_Fragment_Dashboard extends Fragment {
             tvRiderName.setText(rider.getFullName());
         }
 
+        // UPDATE: Set current date and time immediately
+        updateCurrentDateTime();
+
         fetchOrders();
+    }
+
+    // ADD: Method to update date and time based on device time
+    private void updateCurrentDateTime() {
+        if (!isAdded()) return;
+
+        try {
+            // Get current device time
+            Calendar calendar = Calendar.getInstance();
+
+            // Format date: "September 15, 2025"
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
+            String currentDate = dateFormat.format(calendar.getTime());
+
+            // Format time: "11:00 AM"
+            SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+            String currentTime = timeFormat.format(calendar.getTime());
+
+            // Update the TextViews
+            if (tvDate != null) {
+                tvDate.setText(currentDate);
+            }
+            if (tvTime != null) {
+                tvTime.setText(currentTime);
+            }
+
+            Log.d("DASHBOARD_TIME", "Updated time: " + currentDate + " " + currentTime);
+
+        } catch (Exception e) {
+            Log.e("DASHBOARD_TIME", "Error updating time", e);
+        }
     }
 
     private void fetchOrders() {
@@ -153,6 +209,9 @@ public class Rider_Fragment_Dashboard extends Fragment {
                         allDelivery.clear();
 
                         int invalidCount = 0;
+                        int todayPickupCount = 0;
+                        int tomorrowPickupCount = 0;
+                        int futurePickupCount = 0;
 
                         for (PickupOrder o : all) {
                             if (o.getStatus() == null) {
@@ -172,7 +231,18 @@ public class Rider_Fragment_Dashboard extends Fragment {
                             }
 
                             if (s.equals("to_pickup")) {
-                                allPickup.add(o);
+                                // ✅ FIXED: Only show TODAY's pickup orders
+                                if (o.shouldShowInPickupList()) {
+                                    allPickup.add(o);
+                                    todayPickupCount++;
+                                    Log.d("DASHBOARD_FILTER", "✅ TODAY Pickup: " + o.getOrderId() + " - " + o.getPickupDatetime());
+                                } else if (o.isTomorrowOrder()) {
+                                    tomorrowPickupCount++;
+                                    Log.d("DASHBOARD_FILTER", "🚫 TOMORROW Pickup (HIDDEN): " + o.getOrderId() + " - " + o.getPickupDatetime());
+                                } else {
+                                    futurePickupCount++;
+                                    Log.d("DASHBOARD_FILTER", "🚫 FUTURE Pickup (HIDDEN): " + o.getOrderId() + " - " + o.getPickupDatetime());
+                                }
                             } else if (s.equals("to_deliver")) {
                                 allDelivery.add(new RiderDelivery(
                                         o.getOrderId(),
@@ -187,8 +257,34 @@ public class Rider_Fragment_Dashboard extends Fragment {
                             }
                         }
 
-                        if (invalidCount > 0) {
-                            Log.w("DASHBOARD_FILTER", "Filtered out " + invalidCount + " invalid orders");
+                        // ✅ NEW: SORT PICKUP ORDERS BY TIME (ASCENDING - Earliest First)
+                        Collections.sort(allPickup, (o1, o2) -> {
+                            Date date1 = DateTimeUtils.parseDateTimeForSorting(o1.getPickupDatetime());
+                            Date date2 = DateTimeUtils.parseDateTimeForSorting(o2.getPickupDatetime());
+
+                            if (date1 == null && date2 == null) return 0;
+                            if (date1 == null) return -1;
+                            if (date2 == null) return 1;
+
+                            // Normal comparison for ascending order (earliest first)
+                            return date1.compareTo(date2);
+                        });
+
+                        // ✅ OPTIONAL: Sort delivery orders too if needed
+                        Collections.sort(allDelivery, (d1, d2) -> {
+                            // Add similar logic for delivery orders if they have datetime
+                            return 0; // Adjust as needed
+                        });
+
+                        // Log filtering results
+                        Log.d("DASHBOARD_FILTER", "Results - Today: " + todayPickupCount +
+                                ", Tomorrow: " + tomorrowPickupCount +
+                                ", Future: " + futurePickupCount +
+                                ", Invalid: " + invalidCount);
+
+                        // Log sorted times for verification
+                        for (PickupOrder order : allPickup) {
+                            Log.d("DASHBOARD_SORTED", "Sorted Pickup: " + order.getFormattedPickupDatetime());
                         }
 
                         bindAdapters();
@@ -485,13 +581,20 @@ public class Rider_Fragment_Dashboard extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        // Start both timers
         handler.postDelayed(refreshRunnable, REFRESH_INTERVAL);
+        handler.postDelayed(timeUpdateRunnable, TIME_UPDATE_INTERVAL);
+
+        // Also update time immediately when resuming
+        updateCurrentDateTime();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        // Remove both timers
         handler.removeCallbacks(refreshRunnable);
+        handler.removeCallbacks(timeUpdateRunnable);
     }
 
     public void updateRiderName(String fullName) {

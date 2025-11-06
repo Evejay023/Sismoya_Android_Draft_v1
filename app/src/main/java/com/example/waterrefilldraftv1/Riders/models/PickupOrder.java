@@ -1,11 +1,9 @@
 package com.example.waterrefilldraftv1.Riders.models;
 
+import com.example.waterrefilldraftv1.Riders.Utils.DateTimeUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -14,7 +12,7 @@ public class PickupOrder implements Serializable {
     private static final String BASE_IMAGE_HOST = "https://sismoya.bsit3b.site/";
 
     @SerializedName("order_id")
-    private String orderId; // CHANGED: String instead of int
+    private String orderId;
 
     @SerializedName("pickup_datetime")
     private String pickupDatetime;
@@ -63,7 +61,7 @@ public class PickupOrder implements Serializable {
     private Integer addressId;
 
     // ------------------- Basic getters -------------------
-    public String getOrderId() { return orderId; } // CHANGED: String return type
+    public String getOrderId() { return orderId; }
     public String getPickupDatetime() { return pickupDatetime; }
     public String getPaymentMethod() { return paymentMethod; }
     public String getPaymentStatus() { return paymentStatus; }
@@ -131,20 +129,51 @@ public class PickupOrder implements Serializable {
     }
 
     // ------------------- Datetime formatting -------------------
+
+    // In your PickupOrder class, add this method:
+    public String getUrgentRelativeTime() {
+        return DateTimeUtils.getRelativeTimeIfUrgent(pickupDatetime);
+    }
     public String getFormattedPickupDatetime() {
-        if (pickupDatetime == null) return "";
+        return DateTimeUtils.formatDateTimeForDisplay(pickupDatetime);
+    }
 
-        try {
-            Date d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                    .parse(pickupDatetime);
+    // ✅ NEW: Check if this order should be shown in pickup lists
+    public boolean shouldShowInPickupList() {
+        return DateTimeUtils.isPickupScheduledForToday(pickupDatetime);
+    }
 
-            if (d != null) {
-                return new SimpleDateFormat("MMM dd, h:mm a", Locale.getDefault())
-                        .format(d);
-            }
-        } catch (ParseException ignored) {}
+    // ✅ NEW: Check if this is a tomorrow order
+    public boolean isTomorrowOrder() {
+        return DateTimeUtils.isPickupScheduledForTomorrow(pickupDatetime);
+    }
 
-        return pickupDatetime;
+    // ✅ NEW: Check if this order can be marked as picked up
+    public boolean canMarkAsPickedUp() {
+        return DateTimeUtils.isPickupScheduledForToday(pickupDatetime) && !DateTimeUtils.isPickupInPast(pickupDatetime);
+    }
+
+    // ✅ NEW: Get pickup date category for debugging
+    public String getPickupDateCategory() {
+        if (DateTimeUtils.isPickupScheduledForToday(pickupDatetime)) {
+            return "TODAY";
+        } else if (DateTimeUtils.isPickupScheduledForTomorrow(pickupDatetime)) {
+            return "TOMORROW";
+        } else if (DateTimeUtils.isPickupInPast(pickupDatetime)) {
+            return "PAST";
+        } else {
+            return "FUTURE";
+        }
+    }
+
+    // Add this new method for relative time
+    public String getRelativePickupTime() {
+        return DateTimeUtils.getRelativeTime(pickupDatetime);
+    }
+
+    // Add this method to check if pickup is valid for display
+    public boolean isValidForPickup() {
+        return DateTimeUtils.isPickupScheduledForTodayOrFuture(pickupDatetime);
     }
 
     // ------------------- Status helpers -------------------

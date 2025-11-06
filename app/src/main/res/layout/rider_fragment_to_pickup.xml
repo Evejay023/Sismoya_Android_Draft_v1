@@ -14,13 +14,6 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="To Pick Up"
-            android:textSize="16sp"
-            android:textColor="@color/primary_blue"
-            android:fontFamily="@font/r_regular"/>
 
         <TextView
             android:layout_width="wrap_content"

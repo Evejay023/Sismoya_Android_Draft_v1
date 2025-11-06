@@ -30,12 +30,15 @@ import com.example.waterrefilldraftv1.Global.network.RetrofitClient;
 import com.example.waterrefilldraftv1.Global.network.TokenManager;
 import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.Riders.Adapter.PickupAdapter;
+import com.example.waterrefilldraftv1.Riders.Utils.DateTimeUtils;
 import com.example.waterrefilldraftv1.Riders.models.PickupOrder;
 import com.example.waterrefilldraftv1.Riders.models.Rider;
 import com.example.waterrefilldraftv1.Riders.models.RiderOrdersResponse;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -145,24 +148,51 @@ public class Rider_Fragment_To_PickUp extends Fragment {
                 List<PickupOrder> allOrders = response.body().getData();
                 pickupList.clear();
 
+                int todayCount = 0;
+                int tomorrowCount = 0;
+
                 if (allOrders != null) {
                     for (PickupOrder order : allOrders) {
-                        // ✅ FILTER: Only add valid orders with customer data
+                        // ✅ FIXED: Only add TODAY's pickup orders
                         if ("to_pickup".equalsIgnoreCase(order.getStatus()) &&
                                 order.getCustomerName() != null &&
                                 order.getItems() != null &&
-                                !order.getItems().isEmpty()) {
+                                !order.getItems().isEmpty() &&
+                                order.shouldShowInPickupList()) {
 
                             pickupList.add(order);
+                            todayCount++;
+                            Log.d("TO_PICKUP_FILTER", "✅ TODAY Pickup: " + order.getOrderId() + " - " + order.getPickupDatetime());
+                        } else if ("to_pickup".equalsIgnoreCase(order.getStatus()) && order.isTomorrowOrder()) {
+                            tomorrowCount++;
+                            Log.d("TO_PICKUP_FILTER", "🚫 TOMORROW Pickup (HIDDEN): " + order.getOrderId() + " - " + order.getPickupDatetime());
                         }
                     }
                 }
+
+                // ✅ NEW: SORT PICKUP ORDERS BY TIME (ASCENDING - Earliest First)
+                Collections.sort(pickupList, (o1, o2) -> {
+                    Date date1 = DateTimeUtils.parseDateTimeForSorting(o1.getPickupDatetime());
+                    Date date2 = DateTimeUtils.parseDateTimeForSorting(o2.getPickupDatetime());
+
+                    if (date1 == null && date2 == null) return 0;
+                    if (date1 == null) return -1;
+                    if (date2 == null) return 1;
+
+                    // Normal comparison for ascending order (earliest first)
+                    return date1.compareTo(date2);
+                });
 
                 adapter.notifyDataSetChanged();
                 updatePendingCount();
                 showEmpty(pickupList.isEmpty());
 
-                Log.d("PICKUP_FRAGMENT", "Loaded " + pickupList.size() + " valid pickup orders");
+                // Log sorted order for verification
+                for (PickupOrder order : pickupList) {
+                    Log.d("TO_PICKUP_SORTED", "Sorted: " + order.getFormattedPickupDatetime());
+                }
+
+                Log.d("TO_PICKUP_FRAGMENT", "Results - Today: " + todayCount + ", Tomorrow: " + tomorrowCount + ", Total: " + pickupList.size());
             }
 
             @Override
@@ -190,7 +220,18 @@ public class Rider_Fragment_To_PickUp extends Fragment {
         layoutEmpty.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
+    // ✅ FIXED: Update the method call in markAsPickedUp
     private void markAsPickedUp(PickupOrder order) {
+        // ✅ DOUBLE CHECK: Prevent marking tomorrow's orders
+        if (!order.canMarkAsPickedUp()) {
+            if (order.isTomorrowOrder()) {
+                Toast.makeText(requireContext(), "❌ Cannot mark tomorrow's order as picked up", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(requireContext(), "❌ This order cannot be picked up at this time", Toast.LENGTH_LONG).show();
+            }
+            return;
+        }
+
         String token = TokenManager.getToken(requireContext());
         if (token == null) {
             Toast.makeText(requireContext(), "Please login again", Toast.LENGTH_SHORT).show();
@@ -202,7 +243,6 @@ public class Rider_Fragment_To_PickUp extends Fragment {
 
         Toast.makeText(requireContext(), "Updating...", Toast.LENGTH_SHORT).show();
 
-        // ✅ FIXED: order.getOrderId() returns String
         apiService.updateRiderOrderStatus("Bearer " + token, order.getOrderId(), body)
                 .enqueue(new Callback<ApiResponse>() {
                     @Override
@@ -210,18 +250,25 @@ public class Rider_Fragment_To_PickUp extends Fragment {
                         if (!isAdded()) return;
 
                         if (response.isSuccessful()) {
-                            // ✅ SUCCESS - Always refresh the list when we get 200 response
                             Toast.makeText(requireContext(), "✅ Marked as Picked Up", Toast.LENGTH_SHORT).show();
-                            fetchPickups(); // This will reload fresh data from server
+                            fetchPickups(); // ✅ FIXED: Call the correct method name
                         } else {
-                            Toast.makeText(requireContext(), "Update failed", Toast.LENGTH_SHORT).show();
+                            if (response.code() == 401) {
+                                Toast.makeText(requireContext(), "Session expired. Please login again.", Toast.LENGTH_SHORT).show();
+                            } else if (response.code() == 404) {
+                                Toast.makeText(requireContext(), "Order not found", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(requireContext(), "Update failed", Toast.LENGTH_SHORT).show();
+                            }
+                            Log.e("MARK_PICKED_UP", "Failed with code: " + response.code());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ApiResponse> call, Throwable t) {
                         if (!isAdded()) return;
-                        Toast.makeText(requireContext(), "Network error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e("MARK_PICKED_UP", "Network failure", t);
                     }
                 });
     }
@@ -244,7 +291,7 @@ public class Rider_Fragment_To_PickUp extends Fragment {
         ImageView close = d.findViewById(R.id.btn_close);
 
         // ✅ SET ORDER ID
-        tvOrderId.setText(order.getOrderId()); // This will show the real order ID like "ABCD1234"
+        tvOrderId.setText(order.getOrderId());
         tvCustomer.setText(order.getCustomerName());
         tvQty.setText("x" + order.getPrimaryQuantity());
 
@@ -260,9 +307,31 @@ public class Rider_Fragment_To_PickUp extends Fragment {
                 .placeholder(R.drawable.img_slim_container)
                 .into(iv);
 
+        // ✅ FIXED: Add the same button logic as in the adapter
+        boolean canMarkAsPickedUp = order.canMarkAsPickedUp();
+        btn.setEnabled(canMarkAsPickedUp);
+        btn.setAlpha(canMarkAsPickedUp ? 1.0f : 0.5f);
+
+        if (!canMarkAsPickedUp) {
+            if (order.isTomorrowOrder()) {
+                btn.setText("Tomorrow's Order");
+            } else {
+                btn.setText("Not Available");
+            }
+        } else {
+            btn.setText("Mark as Picked Up");
+        }
+
         btn.setOnClickListener(v -> {
-            markAsPickedUp(order);
-            d.dismiss();
+            if (order.canMarkAsPickedUp()) {
+                markAsPickedUp(order);
+                d.dismiss();
+            } else {
+                String message = order.isTomorrowOrder() ?
+                        "This order is scheduled for tomorrow and cannot be marked as picked up yet." :
+                        "This order cannot be marked as picked up at this time.";
+                Toast.makeText(ctx, message, Toast.LENGTH_LONG).show();
+            }
         });
 
         close.setOnClickListener(v -> d.dismiss());

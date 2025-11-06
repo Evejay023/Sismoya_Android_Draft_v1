@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -167,10 +168,31 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onError(String error) {
                 progressDialog.dismiss();
-                String userMessage = "Login failed. Please check your internet connection.";
-                if (error.contains("401")) userMessage = "Invalid username/email or password.";
-                else if (error.contains("500")) userMessage = "Server error. Try again later.";
+
+                String userMessage;
+                if (error.toLowerCase().contains("no internet") ||
+                        error.toLowerCase().contains("network error") ||
+                        error.toLowerCase().contains("unknownhost") ||
+                        error.toLowerCase().contains("connectexception")) {
+                    userMessage = "No internet connection. Please check your network and try again.";
+                } else if (error.toLowerCase().contains("timeout")) {
+                    userMessage = "Connection timeout. Please try again.";
+                } else if (error.toLowerCase().contains("invalid username") ||
+                        error.toLowerCase().contains("invalid password") ||
+                        error.toLowerCase().contains("401")) {
+                    userMessage = "Invalid username/email or password. Please try again.";
+                } else if (error.toLowerCase().contains("account not found") ||
+                        error.toLowerCase().contains("404")) {
+                    userMessage = "Account not found. Please check your credentials.";
+                } else if (error.toLowerCase().contains("server error") ||
+                        error.toLowerCase().contains("500")) {
+                    userMessage = "Server error. Please try again later.";
+                } else {
+                    userMessage = error; // Use the specific error message from server
+                }
+
                 Toast.makeText(LoginActivity.this, userMessage, Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Login error: " + error);
             }
         });
     }

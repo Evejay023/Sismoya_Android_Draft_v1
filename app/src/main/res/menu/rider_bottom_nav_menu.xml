@@ -2,26 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_dashboard"
-        android:icon="@drawable/ic_rider_dashboard"
+        android:icon="@drawable/img_dashboard_icon"
         android:title="." />
 
     <item
         android:id="@+id/nav_to_pickup"
-        android:icon="@drawable/ic_rider_to_pick_up"
+        android:icon="@drawable/img_to_pick"
         android:title="." />
 
     <item
         android:id="@+id/nav_to_deliver"
-        android:icon="@drawable/ic_rider_to_deliver"
+        android:icon="@drawable/img_to_deliver"
         android:title="." />
 
     <item
         android:id="@+id/nav_delivery_history"
-        android:icon="@drawable/ic_rider_history"
+        android:icon="@drawable/img_order_history"
         android:title="." />
 
     <item
         android:id="@+id/nav_profile"
-        android:icon="@drawable/ic_rider_profile"
+        android:icon="@drawable/img_profile"
         android:title="." />
 </menu>

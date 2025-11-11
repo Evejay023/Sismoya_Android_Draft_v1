@@ -135,13 +135,36 @@ public class Rider_Fragment_Profile extends Fragment {
                     .commit();
         });
 
-
         llChangePassword.setOnClickListener(v ->
                 startActivity(new Intent(requireContext(), Rider_Change_Password_Activity.class)));
 
-        llLogout.setOnClickListener(v -> logoutRider());
+        // ✅ UPDATED: Show confirmation dialog before logout
+        llLogout.setOnClickListener(v -> showLogoutConfirmation());
     }
 
+    // ✅ ADDED: Logout confirmation dialog
+    private void showLogoutConfirmation() {
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(requireContext());
+        builder.setTitle("Logout Confirmation");
+        builder.setMessage("Are you sure you want to logout from your account?");
+
+        builder.setPositiveButton("Yes, Logout", (dialog, which) -> {
+            // User confirmed logout
+            logoutRider();
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> {
+            // User cancelled, do nothing
+            dialog.dismiss();
+        });
+
+        androidx.appcompat.app.AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Optional: Customize button colors
+        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(requireContext(), R.color.error_red));
+        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(requireContext(), R.color.primary_blue));
+    }
 
     private void logoutRider() {
         Log.d("LOGOUT", "Logout button clicked");
@@ -152,4 +175,4 @@ public class Rider_Fragment_Profile extends Fragment {
 
         Log.d("LOGOUT", "Logout process completed");
     }
-    }
+}

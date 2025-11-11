@@ -59,7 +59,6 @@ public class DateTimeUtils {
         return dateTimeString;
     }
 
-    // ✅ Check if pickup is scheduled for TODAY only
     public static boolean isPickupScheduledForToday(String pickupDatetime) {
         if (pickupDatetime == null || pickupDatetime.isEmpty()) return false;
 
@@ -72,7 +71,6 @@ public class DateTimeUtils {
 
             Calendar today = Calendar.getInstance();
 
-            // Compare year, month, and day only (ignore time)
             return pickupCal.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
                     pickupCal.get(Calendar.MONTH) == today.get(Calendar.MONTH) &&
                     pickupCal.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH);
@@ -83,7 +81,6 @@ public class DateTimeUtils {
         }
     }
 
-    // ✅ Check if pickup is scheduled for tomorrow
     public static boolean isPickupScheduledForTomorrow(String pickupDatetime) {
         if (pickupDatetime == null || pickupDatetime.isEmpty()) return false;
 
@@ -95,9 +92,8 @@ public class DateTimeUtils {
             pickupCal.setTime(pickupDate);
 
             Calendar tomorrow = Calendar.getInstance();
-            tomorrow.add(Calendar.DAY_OF_MONTH, 1); // Add 1 day to get tomorrow
+            tomorrow.add(Calendar.DAY_OF_MONTH, 1);
 
-            // Compare year, month, and day only
             return pickupCal.get(Calendar.YEAR) == tomorrow.get(Calendar.YEAR) &&
                     pickupCal.get(Calendar.MONTH) == tomorrow.get(Calendar.MONTH) &&
                     pickupCal.get(Calendar.DAY_OF_MONTH) == tomorrow.get(Calendar.DAY_OF_MONTH);
@@ -108,7 +104,7 @@ public class DateTimeUtils {
         }
     }
 
-    // ✅ Check if pickup is in the past
+    // ✅ MODIFIED: Allow pickup for ANY today's order (remove time restriction)
     public static boolean isPickupInPast(String pickupDatetime) {
         if (pickupDatetime == null || pickupDatetime.isEmpty()) return false;
 
@@ -117,7 +113,22 @@ public class DateTimeUtils {
             Date pickupDate = format.parse(pickupDatetime);
             Date now = new Date();
 
-            return pickupDate.before(now);
+            // For today's orders, we don't care if the time has passed
+            // Only check if it's actually in the past (like yesterday)
+            Calendar pickupCal = Calendar.getInstance();
+            pickupCal.setTime(pickupDate);
+
+            Calendar today = Calendar.getInstance();
+
+            // If it's not today, then check if it's in the past
+            if (pickupCal.get(Calendar.YEAR) != today.get(Calendar.YEAR) ||
+                    pickupCal.get(Calendar.MONTH) != today.get(Calendar.MONTH) ||
+                    pickupCal.get(Calendar.DAY_OF_MONTH) != today.get(Calendar.DAY_OF_MONTH)) {
+                return pickupDate.before(now);
+            }
+
+            // If it's today, always return false (allow pickup regardless of time)
+            return false;
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -125,7 +136,33 @@ public class DateTimeUtils {
         }
     }
 
-    // ✅ Check if pickup is today or in the future
+    // ✅ NEW: Simple method to check if order is from yesterday or earlier
+    public static boolean isHistoricalOrder(String pickupDatetime) {
+        if (pickupDatetime == null || pickupDatetime.isEmpty()) return false;
+
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            Date pickupDate = format.parse(pickupDatetime);
+            Date now = new Date();
+
+            Calendar pickupCal = Calendar.getInstance();
+            pickupCal.setTime(pickupDate);
+
+            Calendar today = Calendar.getInstance();
+            Calendar yesterday = Calendar.getInstance();
+            yesterday.add(Calendar.DAY_OF_MONTH, -1);
+
+            // Return true if pickup date is before today
+            return pickupCal.get(Calendar.YEAR) < today.get(Calendar.YEAR) ||
+                    (pickupCal.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
+                            pickupCal.get(Calendar.DAY_OF_YEAR) < today.get(Calendar.DAY_OF_YEAR));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static boolean isPickupScheduledForTodayOrFuture(String pickupDatetime) {
         if (pickupDatetime == null || pickupDatetime.isEmpty()) return false;
 
@@ -134,7 +171,6 @@ public class DateTimeUtils {
             Date pickupDate = format.parse(pickupDatetime);
             Date now = new Date();
 
-            // Return true if pickup is today or in the future
             return !pickupDate.before(now);
 
         } catch (ParseException e) {
@@ -143,6 +179,7 @@ public class DateTimeUtils {
         }
     }
 
+    // ✅ ADD THIS MISSING METHOD
     public static String getRelativeTime(String dateTimeString) {
         if (dateTimeString == null || dateTimeString.isEmpty()) return "";
 
@@ -168,7 +205,7 @@ public class DateTimeUtils {
             return "";
         }
     }
-    // Add this method to your DateTimeUtils class
+
     public static String getRelativeTimeIfUrgent(String dateTimeString) {
         if (dateTimeString == null || dateTimeString.isEmpty()) return "";
 
@@ -181,7 +218,6 @@ public class DateTimeUtils {
             long hours = TimeUnit.MILLISECONDS.toHours(diff);
             long minutes = TimeUnit.MILLISECONDS.toMinutes(diff) % 60;
 
-            // Only show relative time if less than 2 hours away
             if (hours < 2 && hours >= 0) {
                 if (hours > 0) {
                     return String.format(Locale.getDefault(), "in %dh %dm", hours, minutes);
@@ -192,14 +228,14 @@ public class DateTimeUtils {
                 }
             }
 
-            return ""; // Return empty string for orders more than 2 hours away
+            return "";
 
         } catch (ParseException e) {
             e.printStackTrace();
             return "";
         }
     }
-    // Add this method to your DateTimeUtils class
+
     public static Date parseDateTimeForSorting(String dateTimeString) {
         if (dateTimeString == null || dateTimeString.isEmpty()) return null;
 

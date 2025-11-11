@@ -98,7 +98,7 @@
                 android:id="@+id/btn_mark_picked_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mark"
+                android:text="Mark as Picked"
                 android:textAllCaps="false"
                 android:textSize="12sp"
                 android:background="@drawable/button_primary"

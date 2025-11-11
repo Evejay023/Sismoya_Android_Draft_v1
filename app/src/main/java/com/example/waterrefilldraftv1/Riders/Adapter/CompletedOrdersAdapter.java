@@ -123,27 +123,31 @@ public class CompletedOrdersAdapter extends RecyclerView.Adapter<CompletedOrders
             return "Unknown time";
         }
         try {
-            // Format: "11/04/25 12:45AM" -> "Nov 04, 12:45 AM"
-            String[] parts = deliveredAt.split(" ");
-            if (parts.length >= 2) {
-                String datePart = parts[0]; // "11/04/25"
-                String timePart = parts[1]; // "12:45AM"
+            // ✅ FIXED: Handle the format "11-11-2025 08:48 AM" from API
+            // Replace hyphens with slashes for easier parsing
+            String normalized = deliveredAt.replace("-", "/");
 
-                // Parse date (MM/dd/yy)
+            String[] parts = normalized.split(" ");
+            if (parts.length >= 2) {
+                String datePart = parts[0]; // "11/11/2025"
+                String timePart = parts[1] + (parts.length > 2 ? " " + parts[2] : ""); // "08:48 AM"
+
+                // Parse date (MM/dd/yyyy)
                 String[] dateParts = datePart.split("/");
                 if (dateParts.length == 3) {
                     int month = Integer.parseInt(dateParts[0]);
                     int day = Integer.parseInt(dateParts[1]);
-                    String year = "20" + dateParts[2]; // Convert to full year
+                    String year = dateParts[2];
 
-                    // Format time (add space between time and AM/PM)
-                    String formattedTime = timePart.replaceAll("([0-9])([AP]M)", "$1 $2");
+                    // Format time properly
+                    String formattedTime = timePart; // Already in "08:48 AM" format
 
                     return String.format("Delivered: %02d/%02d/%s %s", month, day, year, formattedTime);
                 }
             }
             return "Delivered: " + deliveredAt; // Return original if parsing fails
         } catch (Exception e) {
+            Log.e("TimeFormat", "Error formatting time: " + deliveredAt, e);
             return "Delivered: " + deliveredAt; // Return original if any error
         }
     }
@@ -159,8 +163,7 @@ public class CompletedOrdersAdapter extends RecyclerView.Adapter<CompletedOrders
             // Find all views with null checks
             TextView tvOrderId = dialog.findViewById(R.id.tv_order_id);
             TextView tvCustomerName = dialog.findViewById(R.id.tv_customer_name);
-            TextView tvContactNo = dialog.findViewById(R.id.tv_contact_no);
-            TextView tvAddress = dialog.findViewById(R.id.tv_address);
+            TextView tvAddress = dialog.findViewById(R.id.tv_address); // ✅ REMOVED: Contact No
             TextView tvTotalAmount = dialog.findViewById(R.id.tv_total_amount);
             TextView tvPaymentMethod = dialog.findViewById(R.id.tv_payment_method);
             TextView tvOrderStatus = dialog.findViewById(R.id.tv_order_status);
@@ -173,16 +176,17 @@ public class CompletedOrdersAdapter extends RecyclerView.Adapter<CompletedOrders
             // Set order details with null checks
             if (tvOrderId != null) tvOrderId.setText(String.valueOf(order.getOrderId()));
             if (tvCustomerName != null) tvCustomerName.setText(order.getCustomerName());
-            if (tvContactNo != null)
-                tvContactNo.setText(order.getContactNo() != null ? order.getContactNo() : "N/A");
             if (tvAddress != null) tvAddress.setText(order.getAddress());
             if (tvTotalAmount != null) tvTotalAmount.setText(order.getFormattedTotal());
             if (tvPaymentMethod != null)
                 tvPaymentMethod.setText(order.getPaymentMethod() != null ? order.getPaymentMethod() : "N/A");
             if (tvOrderStatus != null)
                 tvOrderStatus.setText(StatusFormatter.format(order.getStatus()));
-            if (tvDeliveredAt != null)
-                tvDeliveredAt.setText(formatDeliveryTime(order.getDeliveredAt()));
+            if (tvDeliveredAt != null) {
+                // ✅ FIXED: Format the delivered time properly
+                String deliveredTime = formatDialogDeliveryTime(order.getDeliveredAt());
+                tvDeliveredAt.setText(deliveredTime);
+            }
             if (tvGallonName != null) tvGallonName.setText(order.getPrimaryGallonName());
             if (tvQuantity != null) tvQuantity.setText("Quantity: " + order.getPrimaryQuantity());
 
@@ -203,6 +207,42 @@ public class CompletedOrdersAdapter extends RecyclerView.Adapter<CompletedOrders
         } catch (Exception e) {
             Log.e("CompletedOrdersAdapter", "Error showing dialog", e);
             Toast.makeText(context, "Error showing order details", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // ✅ ADD: Special formatting for dialog (more detailed)
+    private String formatDialogDeliveryTime(String deliveredAt) {
+        if (deliveredAt == null || deliveredAt.isEmpty()) {
+            return "Unknown delivery time";
+        }
+        try {
+            // Handle format "11-11-2025 08:48 AM"
+            String normalized = deliveredAt.replace("-", "/");
+
+            String[] parts = normalized.split(" ");
+            if (parts.length >= 3) {
+                String datePart = parts[0]; // "11/11/2025"
+                String timePart = parts[1]; // "08:48"
+                String period = parts[2]; // "AM"
+
+                String[] dateParts = datePart.split("/");
+                if (dateParts.length == 3) {
+                    int month = Integer.parseInt(dateParts[0]);
+                    int day = Integer.parseInt(dateParts[1]);
+                    String year = dateParts[2];
+
+                    // Convert to more readable format
+                    String[] monthNames = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+                    String monthName = monthNames[month - 1];
+
+                    return String.format("%s %d, %s at %s %s", monthName, day, year, timePart, period);
+                }
+            }
+            return deliveredAt; // Return original if parsing fails
+        } catch (Exception e) {
+            Log.e("TimeFormat", "Error formatting dialog time: " + deliveredAt, e);
+            return deliveredAt;
         }
     }
 

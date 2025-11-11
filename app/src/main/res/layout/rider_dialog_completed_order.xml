@@ -156,33 +156,7 @@
                         android:gravity="end"/>
                 </LinearLayout>
 
-                <!-- Contact Number -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="@dimen/detail_item_margin_bottom">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Contact No.:"
-                        android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/text_dark"
-                        android:fontFamily="@font/roboto_bold"/>
-
-                    <TextView
-                        android:id="@+id/tv_contact_no"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="+9906253556"
-                        android:textSize="@dimen/detail_text_size"
-                        android:textColor="@color/text_dark"
-                        android:fontFamily="@font/r_regular"
-                        android:gravity="end"/>
-                </LinearLayout>
 
                 <!-- Address -->
                 <LinearLayout

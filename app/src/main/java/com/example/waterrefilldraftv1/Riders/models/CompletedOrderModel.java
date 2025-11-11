@@ -7,10 +7,10 @@ import java.util.List;
 public class CompletedOrderModel implements Serializable {
 
     @SerializedName("order_id")
-    private String orderId; // CHANGED: String instead of int
+    private String orderId;
 
-    @SerializedName("delivered_at")
-    private String deliveredAt;
+    @SerializedName("created_at") // ✅ CHANGE: Use created_at from API
+    private String createdAt;
 
     @SerializedName("customer_name")
     private String customerName;
@@ -43,10 +43,13 @@ public class CompletedOrderModel implements Serializable {
     private List<OrderItem> items;
 
     // Getters
-    public String getOrderId() { return orderId; } // CHANGED: String return type
+    public String getOrderId() { return orderId; }
+
+    // ✅ CHANGE: Use createdAt as delivered time
     public String getDeliveredAt() {
-        return deliveredAt != null ? deliveredAt : "";
+        return createdAt != null ? createdAt : "";
     }
+
     public String getCustomerName() { return customerName; }
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName; }

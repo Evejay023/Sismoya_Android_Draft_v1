@@ -281,19 +281,42 @@ public class Rider_Fragment_To_PickUp extends Fragment {
         d.getWindow().setLayout((int)(getResources().getDisplayMetrics().widthPixels * 0.9),
                 LayoutParams.WRAP_CONTENT);
 
-        // ✅ ADD ORDER ID TEXTVIEW
+        // ✅ FIXED: Get ALL views including the new ones
         TextView tvOrderId = d.findViewById(R.id.tv_order_id);
         ImageView iv = d.findViewById(R.id.iv_gallon_image);
         TextView tvCustomer = d.findViewById(R.id.tv_customer_name);
+        TextView tvContactNo = d.findViewById(R.id.tv_contact_no); // ✅ ADD THIS
+        TextView tvAddress = d.findViewById(R.id.tv_address); // ✅ ADD THIS
         TextView tvQty = d.findViewById(R.id.tv_gallon_quantity);
+        TextView tvGallonName = d.findViewById(R.id.tv_gallon_name); // ✅ ADD THIS
         TextView tvMulti = d.findViewById(R.id.tv_more_items);
+        TextView tvPickupTime = d.findViewById(R.id.tv_pickup_time); // ✅ THIS EXISTS IN YOUR LAYOUT
+        TextView tvPaymentMethod = d.findViewById(R.id.tv_payment_method); // ✅ ADD THIS
+        TextView tvTotalAmount = d.findViewById(R.id.tv_total_amount); // ✅ ADD THIS
+        TextView tvOrderStatus = d.findViewById(R.id.tv_order_status); // ✅ ADD THIS
         Button btn = d.findViewById(R.id.btn_mark_picked_up);
         ImageView close = d.findViewById(R.id.btn_close);
 
-        // ✅ SET ORDER ID
+        // ✅ SET ALL ORDER DETAILS
         tvOrderId.setText(order.getOrderId());
         tvCustomer.setText(order.getCustomerName());
+        tvContactNo.setText(order.getContactNumber() != null ? order.getContactNumber() : "N/A");
+        tvAddress.setText(order.getAddress());
         tvQty.setText("x" + order.getPrimaryQuantity());
+        tvGallonName.setText(order.getPrimaryGallonName());
+        tvPaymentMethod.setText(order.getPaymentMethod() != null ? order.getPaymentMethod() : "Cash");
+        tvTotalAmount.setText(order.getFormattedTotal());
+        tvOrderStatus.setText(order.getDisplayStatus());
+
+        // ✅ FIXED: Set formatted pickup time instead of raw datetime
+        String pickupInfo = order.getFormattedPickupDatetime();
+        String urgentTime = order.getUrgentRelativeTime();
+
+        if (!urgentTime.isEmpty()) {
+            tvPickupTime.setText(pickupInfo + " • " + urgentTime);
+        } else {
+            tvPickupTime.setText(pickupInfo); // This will show "Today, 1:00 PM" etc.
+        }
 
         if (order.hasMultipleGallons()) {
             tvMulti.setText("+" + (order.getItemCount() - 1) + " more items");
@@ -307,7 +330,7 @@ public class Rider_Fragment_To_PickUp extends Fragment {
                 .placeholder(R.drawable.img_slim_container)
                 .into(iv);
 
-        // ✅ FIXED: Add the same button logic as in the adapter
+        // ✅ FIXED: Update button logic for late pickups
         boolean canMarkAsPickedUp = order.canMarkAsPickedUp();
         btn.setEnabled(canMarkAsPickedUp);
         btn.setAlpha(canMarkAsPickedUp ? 1.0f : 0.5f);
@@ -319,7 +342,13 @@ public class Rider_Fragment_To_PickUp extends Fragment {
                 btn.setText("Not Available");
             }
         } else {
-            btn.setText("Mark as Picked Up");
+            // Show "Late Pickup" for today's orders that are past their scheduled time
+            if (DateTimeUtils.isPickupInPast(order.getPickupDatetime()) &&
+                    DateTimeUtils.isPickupScheduledForToday(order.getPickupDatetime())) {
+                btn.setText("Late Pickup");
+            } else {
+                btn.setText("Mark as Picked Up");
+            }
         }
 
         btn.setOnClickListener(v -> {

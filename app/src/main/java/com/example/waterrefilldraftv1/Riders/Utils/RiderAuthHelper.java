@@ -12,12 +12,22 @@ import com.example.waterrefilldraftv1.Riders.models.Rider;
 
 public class RiderAuthHelper {
 
-    public static void logoutRider(Context context) {
+    // ✅ ADD: Track if user has logged in at least once
+    public static void setUserHasLoggedInBefore(Context context, boolean value) {
+        SharedPreferences prefs = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("user_has_logged_in_before", value).apply();
+    }
 
+    public static boolean hasUserLoggedInBefore(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+        return prefs.getBoolean("user_has_logged_in_before", false);
+    }
+
+    public static void logoutRider(Context context) {
         // ✅ SET FLAG: Direct to login on next app start
         setDirectToLoginFlag(context, true);
 
-        // Clear all session data
+        // Clear all session data (but keep Remember Me credentials)
         clearAllSessionData(context);
 
         Toast.makeText(context, "Logged out successfully", Toast.LENGTH_SHORT).show();

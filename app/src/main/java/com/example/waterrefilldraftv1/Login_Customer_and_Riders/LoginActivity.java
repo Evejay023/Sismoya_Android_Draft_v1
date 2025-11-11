@@ -8,6 +8,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.CheckBox; // ✅ ADD THIS IMPORT
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.example.waterrefilldraftv1.Global.network.NetworkManager;
 import com.example.waterrefilldraftv1.R;
 import com.example.waterrefilldraftv1.Riders.UserInterrface.Activities.RiderDashboardActivity;
 
+import com.example.waterrefilldraftv1.Riders.Utils.RiderAuthHelper;
 import com.example.waterrefilldraftv1.Riders.Utils.RiderSessionStore;
 import com.example.waterrefilldraftv1.Riders.models.Rider;
 import com.google.gson.Gson;
@@ -29,15 +31,21 @@ import com.google.gson.Gson;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
+    private static final String PREF_NAME = "LoginPrefs";
+    private static final String KEY_REMEMBER_ME = "remember_me";
+    private static final String KEY_USERNAME = "username";
+    private static final String KEY_PASSWORD = "password";
 
     private EditText etUsername, etPassword;
     private Button btnLogin;
     private ImageView ivPasswordToggle;
     private TextView tvForgotPassword;
+    private CheckBox cbRememberMe; // ✅ ADD CheckBox
     private NetworkManager networkManager;
     private ProgressDialog progressDialog;
     private boolean isPasswordVisible = false;
     private SessionStore sessionStore;
+    private SharedPreferences loginPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +56,14 @@ public class LoginActivity extends AppCompatActivity {
 
         networkManager = new NetworkManager(this);
         sessionStore = new SessionStore(this);
+        loginPrefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
 
         etUsername = findViewById(R.id.et_username);
         etPassword = findViewById(R.id.et_password);
         btnLogin = findViewById(R.id.btn_login);
         ivPasswordToggle = findViewById(R.id.iv_password_toggle);
-        tvForgotPassword = findViewById(R.id.tv_forgot_password); // ✅ Added Forgot Password TextView
+        tvForgotPassword = findViewById(R.id.tv_forgot_password);
+        cbRememberMe = findViewById(R.id.cb_remember_me); // ✅ ADD CheckBox
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Logging in...");
@@ -67,6 +77,40 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
             startActivity(intent);
         });
+
+        // ✅ Load saved credentials if "Remember Me" was checked
+        loadSavedCredentials();
+    }
+
+    // ✅ ADD: Load saved credentials
+    private void loadSavedCredentials() {
+        boolean rememberMe = loginPrefs.getBoolean(KEY_REMEMBER_ME, false);
+        if (rememberMe) {
+            String savedUsername = loginPrefs.getString(KEY_USERNAME, "");
+            String savedPassword = loginPrefs.getString(KEY_PASSWORD, "");
+
+            etUsername.setText(savedUsername);
+            etPassword.setText(savedPassword);
+            cbRememberMe.setChecked(true);
+        }
+    }
+
+    // ✅ ADD: Save credentials method
+    private void saveCredentials(String username, String password) {
+        SharedPreferences.Editor editor = loginPrefs.edit();
+        editor.putBoolean(KEY_REMEMBER_ME, true);
+        editor.putString(KEY_USERNAME, username);
+        editor.putString(KEY_PASSWORD, password);
+        editor.apply();
+    }
+
+    // ✅ ADD: Clear saved credentials method
+    private void clearCredentials() {
+        SharedPreferences.Editor editor = loginPrefs.edit();
+        editor.putBoolean(KEY_REMEMBER_ME, false);
+        editor.remove(KEY_USERNAME);
+        editor.remove(KEY_PASSWORD);
+        editor.apply();
     }
 
     private void togglePasswordVisibility() {
@@ -99,9 +143,6 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.show();
 
         networkManager.loginUser(usernameOrEmail, password, new NetworkManager.ApiCallback<LoginResponse>() {
-            // In your LoginActivity success callback after login:
-            // After successful login in LoginActivity:
-            // In your LoginActivity success callback:
             @Override
             public void onSuccess(LoginResponse response) {
                 progressDialog.dismiss();
@@ -110,21 +151,27 @@ public class LoginActivity extends AppCompatActivity {
                     String role = response.getUser().getRole();
 
                     if (role != null && role.equalsIgnoreCase("rider")) {
+                        // ✅ MARK: User has logged in at least once
+                        RiderAuthHelper.setUserHasLoggedInBefore(LoginActivity.this, true);
+
+                        // ✅ SAVE OR CLEAR CREDENTIALS BASED ON CHECKBOX
+                        if (cbRememberMe.isChecked()) {
+                            saveCredentials(usernameOrEmail, password);
+                        } else {
+                            clearCredentials();
+                        }
+
                         if (response.getToken() != null) {
-                            // Save token everywhere
                             sessionStore.saveToken(response.getToken());
                             TokenManager.saveToken(LoginActivity.this, response.getToken());
                         }
 
-                        // Save user data to BOTH session stores
                         sessionStore.saveUser(response.getUser());
 
-                        // Convert and save to RiderSessionStore
                         RiderSessionStore riderSessionStore = new RiderSessionStore(LoginActivity.this);
                         Rider rider = convertUserToRider(response.getUser());
                         riderSessionStore.saveRider(rider);
 
-                        // Also save to RiderPrefs for compatibility
                         SharedPreferences riderPrefs = getSharedPreferences("RiderPrefs", MODE_PRIVATE);
                         riderPrefs.edit().putString("rider", new Gson().toJson(rider)).apply();
 
@@ -136,13 +183,11 @@ public class LoginActivity extends AppCompatActivity {
                         riderIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(riderIntent);
                     } else {
-                        // Reject non-riders
                         Toast.makeText(LoginActivity.this,
                                 "Only riders can log in using the mobile app.",
                                 Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    // Error handling
                     String errorMessage = response.getMessage();
                     if (errorMessage == null || errorMessage.isEmpty()) {
                         errorMessage = "Login failed. Please check your credentials.";
@@ -151,7 +196,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
 
-            // ✅ Add this method to convert User to Rider
             private Rider convertUserToRider(com.example.waterrefilldraftv1.Customer.models.User user) {
                 Rider rider = new Rider();
                 rider.setUser_id(user.getUserId());

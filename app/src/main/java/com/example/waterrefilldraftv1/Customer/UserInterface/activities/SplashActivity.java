@@ -18,7 +18,7 @@ import com.example.waterrefilldraftv1.Riders.Utils.RiderAuthHelper;
  */
 public class SplashActivity extends AppCompatActivity {
 
-    private static final int SPLASH_DURATION = 3000; // 3 seconds
+    private static final int SPLASH_DURATION = 3000;
     private static final String TAG = "SplashActivity";
 
     @Override
@@ -26,38 +26,46 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.global_splash_screen);
 
-        // Initialize TokenManager with context
         TokenManager.init(this);
 
-        // Hide action bar for full screen experience
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
 
-        // Navigate based on authentication status after splash duration
         new Handler().postDelayed(() -> {
             checkAuthenticationStatus();
         }, SPLASH_DURATION);
     }
 
-    /**
-     * Check if rider is already logged in using your existing RiderAuthHelper
-     */
     private void checkAuthenticationStatus() {
-        // ✅ CHECK: If we should go directly to login (after logout)
-        if (RiderAuthHelper.shouldDirectToLogin(this)) {
+        boolean shouldDirectToLogin = RiderAuthHelper.shouldDirectToLogin(this);
+        boolean isRiderLoggedIn = RiderAuthHelper.isRiderLoggedIn(this);
+        boolean hasLoggedInBefore = RiderAuthHelper.hasUserLoggedInBefore(this);
+
+        Log.d(TAG, "🔍 AUTH STATUS CHECK:");
+        Log.d(TAG, "  - shouldDirectToLogin: " + shouldDirectToLogin);
+        Log.d(TAG, "  - isRiderLoggedIn: " + isRiderLoggedIn);
+        Log.d(TAG, "  - hasLoggedInBefore: " + hasLoggedInBefore);
+
+        // ✅ CHECK 1: Direct login flag (after logout)
+        if (shouldDirectToLogin) {
             Log.d(TAG, "✅ DIRECT TO LOGIN FLAG SET - Going to LoginActivity");
-            RiderAuthHelper.clearDirectToLoginFlag(this); // Clear the flag
+            RiderAuthHelper.clearDirectToLoginFlag(this);
             redirectToLogin();
         }
-        // ✅ CHECK: If rider is already logged in
-        else if (RiderAuthHelper.isRiderLoggedIn(this)) {
+        // ✅ CHECK 2: Actually logged in (valid token + rider data)
+        else if (isRiderLoggedIn) {
             Log.d(TAG, "✅ USER IS LOGGED IN - Going to Dashboard");
             redirectToRiderDashboard();
         }
-        // ✅ DEFAULT: New user flow
+        // ✅ CHECK 3: User has logged in before (but not currently logged in)
+        else if (hasLoggedInBefore) {
+            Log.d(TAG, "🔵 USER HAS LOGGED IN BEFORE - Going to LoginActivity");
+            redirectToLogin();
+        }
+        // ✅ CHECK 4: New user (never logged in before)
         else {
-            Log.d(TAG, "❌ USER NOT LOGGED IN - Going to GetStarted");
+            Log.d(TAG, "❌ NEW USER - Going to GetStarted");
             redirectToGetStarted();
         }
     }

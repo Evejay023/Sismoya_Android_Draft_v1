@@ -40,9 +40,6 @@ public class Rider_PersonalInformationActivity extends AppCompatActivity {
 
     // ✅ Validation Patterns
     private static final Pattern NAME_PATTERN = Pattern.compile("^[A-Za-z\\s\\-]+$");
-    // Accepts either 09XXXXXXXXX or +639XXXXXXXXX (PH format)
-    private static final Pattern PHONE_PATTERN = Pattern.compile("^(?:\\+639\\d{9}|09\\d{9})$");
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +83,26 @@ public class Rider_PersonalInformationActivity extends AppCompatActivity {
         tvContactValue.setText(rider.getContactNo() != null ? rider.getContactNo() : "No Contact");
     }
 
+    // ✅ FIX: Add this method to convert contact number for backend
+    private String formatContactForBackend(String contactNo) {
+        if (contactNo == null) return null;
+
+        // Remove any non-digit characters first
+        String digitsOnly = contactNo.replaceAll("\\D", "");
+
+        // Convert +63 format to 09 format for backend
+        if (digitsOnly.startsWith("63") && digitsOnly.length() == 11) {
+            return "0" + digitsOnly.substring(2); // +639098312656 → 09098312656
+        }
+
+        // If it's already in 09 format, return as is
+        if (digitsOnly.startsWith("09") && digitsOnly.length() == 11) {
+            return digitsOnly;
+        }
+
+        return digitsOnly;
+    }
+
     private void showEditNameDialog() {
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -116,7 +133,9 @@ public class Rider_PersonalInformationActivity extends AppCompatActivity {
                 return;
             }
 
-            updateProfilePartial(first, last, currentRider.getEmail(), currentRider.getContactNo());
+            // ✅ FIX: Convert contact number before sending
+            String formattedContact = formatContactForBackend(currentRider.getContactNo());
+            updateProfilePartial(first, last, currentRider.getEmail(), formattedContact);
             dialog.dismiss();
         });
 
@@ -145,7 +164,9 @@ public class Rider_PersonalInformationActivity extends AppCompatActivity {
                 return;
             }
 
-            updateProfilePartial(currentRider.getFirstName(), currentRider.getLastName(), email, currentRider.getContactNo());
+            // ✅ FIX: Convert contact number before sending
+            String formattedContact = formatContactForBackend(currentRider.getContactNo());
+            updateProfilePartial(currentRider.getFirstName(), currentRider.getLastName(), email, formattedContact);
             dialog.dismiss();
         });
 
@@ -165,7 +186,12 @@ public class Rider_PersonalInformationActivity extends AppCompatActivity {
         etContact.setFilters(new android.text.InputFilter[]{});
 
         if (currentRider != null && currentRider.getContactNo() != null) {
-            etContact.setText(currentRider.getContactNo());
+            // ✅ Convert existing +63 format to 09 format for display
+            String displayContact = currentRider.getContactNo();
+            if (displayContact.startsWith("+63")) {
+                displayContact = "0" + displayContact.substring(3); // +639098312656 → 09098312656
+            }
+            etContact.setText(displayContact);
         }
 
         ivClose.setOnClickListener(v -> dialog.dismiss());
@@ -173,55 +199,26 @@ public class Rider_PersonalInformationActivity extends AppCompatActivity {
         btnSave.setOnClickListener(v -> {
             String contact = etContact.getText().toString().trim().replaceAll("\\s+", "");
 
-            // ✅ Validate after typing is finished, not while typing
-            if (contact.startsWith("+63")) {
-                // +63 + 9 digits = 13 characters total
-                if (contact.length() < 13) {
-                    etContact.setError("Incomplete number. Use +639XXXXXXXXX");
-                    return;
-                } else if (contact.length() > 13) {
-                    etContact.setError("Too long. Use +639XXXXXXXXX");
-                    return;
-                }
-            } else if (contact.startsWith("09")) {
-                // 09 + 9 digits = 11 characters total
-                if (contact.length() < 11) {
-                    etContact.setError("Incomplete number. Use 09XXXXXXXXX");
-                    return;
-                } else if (contact.length() > 11) {
-                    etContact.setError("Too long. Use 09XXXXXXXXX");
-                    return;
-                }
-            } else {
-                etContact.setError("PH format only: +639XXXXXXXXX or 09XXXXXXXXX");
+            // ✅ Validate 09 format
+            if (!contact.startsWith("09") || contact.length() != 11) {
+                etContact.setError("Must start with '09' and be exactly 11 digits");
                 return;
             }
 
-            // ✅ Normalize format for storage (always save as +63)
-            if (contact.startsWith("09")) {
-                contact = "+63" + contact.substring(1); // convert 09XXXXXXXXX → +639XXXXXXXXX
-            }
-
-            // ✅ Format for display (spacing only)
-            String formatted = contact.replaceFirst("(\\+63)(\\d{3})(\\d{3})(\\d{4})", "$1 $2 $3 $4");
-
+            // ✅ No conversion needed - already in correct format for backend
             updateProfilePartial(
                     currentRider.getFirstName(),
                     currentRider.getLastName(),
                     currentRider.getEmail(),
-                    contact
+                    contact // Already in 09XXXXXXXXX format
             );
 
             dialog.dismiss();
-            Toast.makeText(this, "Contact formatted: " + formatted, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Contact updated successfully!", Toast.LENGTH_SHORT).show();
         });
 
         dialog.show();
     }
-
-
-
-
 
     private void updateProfilePartial(String first, String last, String email, String contact) {
         if (token == null) {
@@ -229,11 +226,14 @@ public class Rider_PersonalInformationActivity extends AppCompatActivity {
             return;
         }
 
+        // ✅ FIX: Contact is now already in correct format (09XXXXXXXXX)
         Map<String, String> body = new HashMap<>();
         body.put("first_name", first);
         body.put("last_name", last);
         body.put("email", email);
-        body.put("contact_no", contact);
+        body.put("contact_no", contact); // Already in correct format
+
+        Log.d(TAG, "Sending to backend - First: " + first + ", Last: " + last + ", Email: " + email + ", Contact: " + contact);
 
         ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
         Call<ApiResponse> call = apiService.updateProfilePartial("Bearer " + token, body);
@@ -244,11 +244,17 @@ public class Rider_PersonalInformationActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     Toast.makeText(Rider_PersonalInformationActivity.this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
 
-                    // ✅ Update local data
+                    // ✅ Update local data (convert to +63 format for display)
                     currentRider.setFirstName(first);
                     currentRider.setLastName(last);
                     currentRider.setEmail(email);
-                    currentRider.setContactNo(contact);
+
+                    // Convert to +63 format for better display
+                    String displayContact = contact;
+                    if (contact.startsWith("09")) {
+                        displayContact = "+63" + contact.substring(1); // 09098312656 → +639098312656
+                    }
+                    currentRider.setContactNo(displayContact);
 
                     getSharedPreferences("RiderPrefs", MODE_PRIVATE)
                             .edit()
@@ -264,6 +270,7 @@ public class Rider_PersonalInformationActivity extends AppCompatActivity {
                 } else {
                     String msg = response.body() != null ? response.body().getMessage() : "Update failed!";
                     Toast.makeText(Rider_PersonalInformationActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Update failed: " + msg);
                 }
             }
 

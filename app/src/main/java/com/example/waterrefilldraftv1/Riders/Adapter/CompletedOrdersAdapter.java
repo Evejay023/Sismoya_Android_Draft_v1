@@ -188,7 +188,7 @@ public class CompletedOrdersAdapter extends RecyclerView.Adapter<CompletedOrders
                 tvDeliveredAt.setText(deliveredTime);
             }
             if (tvGallonName != null) tvGallonName.setText(order.getPrimaryGallonName());
-            if (tvQuantity != null) tvQuantity.setText("Quantity: " + order.getPrimaryQuantity());
+
 
             // ✅ Use ImageFormatter for dialog image
             if (ivGallon != null) {

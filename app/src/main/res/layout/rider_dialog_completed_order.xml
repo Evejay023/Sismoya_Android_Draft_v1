@@ -87,7 +87,7 @@
                     android:id="@+id/tv_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Quantity: 1"
+                    android:text=""
                     android:textSize="@dimen/detail_text_size"
                     android:textColor="@color/text_dark"
                     android:fontFamily="@font/r_regular"

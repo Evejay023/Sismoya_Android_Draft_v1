@@ -83,12 +83,7 @@ public class CompletedOrderModel implements Serializable {
         return null;
     }
 
-    public int getPrimaryQuantity() {
-        if (items != null && !items.isEmpty()) {
-            return items.get(0).getQuantity();
-        }
-        return 0;
-    }
+
 
     // Format total price with currency
     public String getFormattedTotal() {
